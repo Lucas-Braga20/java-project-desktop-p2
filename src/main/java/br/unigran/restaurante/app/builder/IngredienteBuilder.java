@@ -14,6 +14,11 @@ public class IngredienteBuilder {
         this.unidadeMedida = unidadeMedida;
         this.valor = valor;
     }
+    public IngredienteBuilder(Ingrediente ingrediente) {
+        this.descricao = ingrediente.getDescricao();
+        this.unidadeMedida = ingrediente.getUnidadeMedida();
+        this.valor = ingrediente.getValor();
+    }
 
     public IngredienteBuilder quantidade(Float quantidade) {
         this.quantidade = quantidade;

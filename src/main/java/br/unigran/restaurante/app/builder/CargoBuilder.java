@@ -8,6 +8,9 @@ public class CargoBuilder {
     public CargoBuilder(String descricao) {
         this.descricao = descricao;
     }
+    public CargoBuilder(Cargo cargo) {
+        this.descricao = cargo.getDescricao();
+    }
 
     public void validate() throws Exception {
         if (descricao.isBlank() || descricao.isEmpty()) {
