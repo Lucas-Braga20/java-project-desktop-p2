@@ -1,11 +1,12 @@
 package br.unigran.restaurante.app.repository;
 
-import br.unigran.restaurante.app.casouso.CargoUC;
+import br.unigran.restaurante.app.builder.ProdutoBuilder;
+import br.unigran.restaurante.app.casouso.ProdutoUC;
+import br.unigran.restaurante.app.persistence.ProdutoDAO;
 
 public class Teste {
     public static void main(String[] args) {
         try {
-            new CargoUC().listarTodos();
         } catch(Exception e) {
             System.out.println(e);
         }

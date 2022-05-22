@@ -53,4 +53,12 @@ public class Produto implements Serializable {
     public void setValor(Float valor) {
         this.valor = valor;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "\nProduto: \n\tID: %d\n\tNome: %s\n\tDescrição: %s\n\tValor: %f", 
+            this.getId(), this.getNome(), this.getDescricao(), this.getValor()
+        );
+    }
 }

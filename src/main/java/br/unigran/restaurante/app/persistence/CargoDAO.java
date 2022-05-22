@@ -17,7 +17,7 @@ public class CargoDAO {
             } else {
                 if (!em.contains(cargo)) {
                     if (em.find(Cargo.class, cargo.getId()) == null) {
-                        throw new Exception("Erro ao atualizar a categoria");
+                        throw new Exception("Erro ao atualizar a cargo");
                     }
                 }
                 cargo = em.merge(cargo);

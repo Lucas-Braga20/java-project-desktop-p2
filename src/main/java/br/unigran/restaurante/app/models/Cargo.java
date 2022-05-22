@@ -35,6 +35,8 @@ public class Cargo implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("\nCargo: \n\tID: %d\n\tDescrição: %s", this.getId(), this.getDescricao());
+        return String.format(
+            "\nCargo: \n\tID: %d\n\tDescrição: %s", this.getId(), this.getDescricao()
+        );
     }
 }

@@ -39,7 +39,9 @@ public class CargoUC {
 
     public Cargo consultarPorId(Integer id) throws Exception {
         Cargo cargo = new CargoDAO().consultarPorId(id);
+
         System.out.println(cargo.toString());
+
         return cargo;
     }
 }
