@@ -16,7 +16,7 @@ public class ProdutoPedido implements Serializable {
     private Long id;
 
     @Column(scale = 9, precision = 2)
-    private Float valor_unitario;
+    private Float valorUnitario;
 
     private Integer quantidade;
 
@@ -36,12 +36,12 @@ public class ProdutoPedido implements Serializable {
         this.id = id;
     }
 
-    public Float getValor_unitario() {
-        return valor_unitario;
+    public Float getValorUnitario() {
+        return valorUnitario;
     }
 
-    public void setValor_unitario(Float valor_unitario) {
-        this.valor_unitario = valor_unitario;
+    public void setValorUnitario(Float valorUnitario) {
+        this.valorUnitario = valorUnitario;
     }
 
     public Integer getQuantidade() {
