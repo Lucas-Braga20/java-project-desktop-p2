@@ -61,4 +61,12 @@ public class Cliente implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
 }
