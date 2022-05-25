@@ -28,3 +28,18 @@
 - Listar funcionários (Alocar papéis)
 
 - Edição de cliente (create/update)
+
+- [X] Cargo;
+- [] CargoPapel;
+- [X] Cliente;
+- [X] Endereço;
+- [] Funcionário;
+- [X] Ingrediente;
+- [] IngredientePrato;
+- [X] Mesa;
+- [X] Papel;
+- [X] Pedido;
+- [X] Prato;
+- [X] PratoPedido;
+- [X] Produto;
+- [X] ProdutoPedido;
