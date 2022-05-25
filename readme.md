@@ -18,13 +18,13 @@
 - Registrar mesa
 - Listar mesa (Remover, Ocupar mesa)
 
--> Edição de endereços
--> Listagem (Read/Delete)
+- Edição de endereços
+- Listagem (Read/Delete)
 
--> Edição de cargos
--> Listar cargos
+- Edição de cargos
+- Listar cargos
 
--> Edição de funcionários
--> Listar funcionários (Alocar papéis)
+- Edição de funcionários
+- Listar funcionários (Alocar papéis)
 
--> Edição de cliente (create/update)
+- Edição de cliente (create/update)
