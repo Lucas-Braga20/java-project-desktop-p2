@@ -30,7 +30,7 @@
 - Edição de cliente (create/update)
 
 - [X] Cargo;
-- [] CargoPapel;
+- [X] CargoPapel;
 - [X] Cliente;
 - [X] Endereço;
 - [] Funcionário;
