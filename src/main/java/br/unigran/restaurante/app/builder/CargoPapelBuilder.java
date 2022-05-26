@@ -12,9 +12,18 @@ public class CargoPapelBuilder {
         this.papel = papel; 
         this.cargo = cargo;
     }
+    public CargoPapelBuilder(CargoPapel cargoPapel) {
+        this.papel = cargoPapel.getPapel();
+        this.cargo = cargoPapel.getCargo();
+    }
 
     public CargoPapel build() throws Exception {
         CargoPapel cargoPapel = new CargoPapel();
+        cargoPapel.setCargo(cargo);
+        cargoPapel.setPapel(papel);
+        return cargoPapel;
+    }
+    public CargoPapel build(CargoPapel cargoPapel) throws Exception {
         cargoPapel.setCargo(cargo);
         cargoPapel.setPapel(papel);
         return cargoPapel;

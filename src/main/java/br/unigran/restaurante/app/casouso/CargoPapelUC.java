@@ -3,12 +3,14 @@ package br.unigran.restaurante.app.casouso;
 import java.util.List;
 
 import br.unigran.restaurante.app.builder.CargoPapelBuilder;
+import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.CargoPapel;
-import br.unigran.restaurante.app.persistence.CargoPapelDAO;
+import br.unigran.restaurante.app.persistence.DAO;
 
 public class CargoPapelUC {
   public CargoPapel salvar(CargoPapelBuilder cargoPapelBuilder) throws Exception {
-    CargoPapel cargoPapel = new CargoPapelDAO().salvar(cargoPapelBuilder.build());
+    CargoPapel cargoPapel = cargoPapelBuilder.build();
+    cargoPapel = new DAO<CargoPapel>().salvar(cargoPapel, CargoPapel.class, cargoPapel.getId());
 
     System.out.println(cargoPapel.toString());
 
@@ -16,7 +18,8 @@ public class CargoPapelUC {
   }
 
   public CargoPapel atualizar(CargoPapelBuilder cargoPapelBuilder, CargoPapel cargoPapel) throws Exception {
-    CargoPapel cargoPapelAtualizado = new CargoPapelDAO().salvar(cargoPapelBuilder.build(cargoPapel));
+    CargoPapel cargoPapelAnterior = cargoPapelBuilder.build(cargoPapel);
+    CargoPapel cargoPapelAtualizado = new DAO<CargoPapel>().salvar(cargoPapelAnterior, CargoPapel.class, cargoPapelAnterior.getId());
 
     System.out.println(cargoPapelAtualizado.toString());
 
@@ -24,21 +27,21 @@ public class CargoPapelUC {
   }
 
   public void remover(Integer id) throws Exception {
-    new CargoPapelDAO().remover(id);
+    new DAO<CargoPapel>().remover(id, CargoPapel.class);
   }
 
   public List<CargoPapel> listarTodos() throws Exception {
-    List<CargoPapel> cargoPapels = new CargoPapelDAO().listarTodos();
+    List<CargoPapel> cargoPapeis = new DAO<CargoPapel>().listarTodos(CargoPapel.class);
 
-    for (int i = 0; i < cargoPapels.size(); i++) {
-      System.out.println(cargoPapels.get(i).toString());
+    for (int i = 0; i < cargoPapeis.size(); i++) {
+      System.out.println(cargoPapeis.get(i).toString());
     }
 
-    return cargoPapels;
+    return cargoPapeis;
   }
 
   public CargoPapel consultarPorId(Integer id) throws Exception {
-    CargoPapel cargoPapel = new CargoPapelDAO().consultarPorId(id);
+    CargoPapel cargoPapel = new DAO<CargoPapel>().consultarPorId(id, CargoPapel.class);
 
     System.out.println(cargoPapel.toString());
 
