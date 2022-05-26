@@ -3,7 +3,6 @@ package br.unigran.restaurante.app.casouso;
 import java.util.List;
 
 import br.unigran.restaurante.app.builder.CargoPapelBuilder;
-import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.CargoPapel;
 import br.unigran.restaurante.app.persistence.DAO;
 

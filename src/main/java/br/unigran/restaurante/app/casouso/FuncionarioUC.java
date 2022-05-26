@@ -4,44 +4,46 @@ import java.util.List;
 
 import br.unigran.restaurante.app.builder.FuncionarioBuilder;
 import br.unigran.restaurante.app.models.Funcionario;
-import br.unigran.restaurante.app.persistence.FuncionarioDAO;
+import br.unigran.restaurante.app.persistence.DAO;
 
 public class FuncionarioUC {
-    public Funcionario salvar(FuncionarioBuilder funcionarioBuilder) throws Exception {
-        Funcionario funcionario = new FuncionarioDAO().salvar(funcionarioBuilder.build());
+  public Funcionario salvar(FuncionarioBuilder funcionarioBuilder) throws Exception {
+    Funcionario funcionario = funcionarioBuilder.build();
+    funcionario = new DAO<Funcionario>().salvar(funcionario, Funcionario.class, funcionario.getId().intValue());
 
-        System.out.println(funcionario.toString());
+    System.out.println(funcionario.toString());
 
-        return funcionario;
+    return funcionario;
+  }
+
+  public Funcionario atualizar(FuncionarioBuilder funcionarioBuilder, Funcionario funcionario) throws Exception {
+    Funcionario funcionarioAnterior = funcionarioBuilder.build(funcionario);
+    Funcionario funcionarioAtualizado = new DAO<Funcionario>().salvar(funcionarioAnterior, Funcionario.class, funcionarioAnterior.getId().intValue());
+
+    System.out.println(funcionarioAtualizado.toString());
+
+    return funcionarioAtualizado;
+  }
+
+  public void remover(Integer id) throws Exception {
+    new DAO<Funcionario>().remover(id, Funcionario.class);
+  }
+
+  public List<Funcionario> listarTodos() throws Exception {
+    List<Funcionario> funcionarios = new DAO<Funcionario>().listarTodos(Funcionario.class);
+
+    for (int i = 0; i < funcionarios.size(); i++) {
+      System.out.println(funcionarios.get(i).toString());
     }
 
-    public Funcionario atualizar(FuncionarioBuilder funcionarioBuilder, Funcionario funcionario) throws Exception {
-        Funcionario funcionarioAtualizado = new FuncionarioDAO().salvar(funcionarioBuilder.build(funcionario));
+    return funcionarios;
+  }
 
-        System.out.println(funcionarioAtualizado.toString());
+  public Funcionario consultarPorId(Integer id) throws Exception {
+    Funcionario funcionario = new DAO<Funcionario>().consultarPorId(id, Funcionario.class);
 
-        return funcionarioAtualizado;
-    }
+    System.out.println(funcionario.toString());
 
-    public void remover(Integer id) throws Exception {
-        new FuncionarioDAO().remover(id);
-    }
-
-    public List<Funcionario> listarTodos() throws Exception {
-        List<Funcionario> funcionarios = new FuncionarioDAO().listarTodos();
-
-        for (int i = 0; i < funcionarios.size(); i++) {
-            System.out.println(funcionarios.get(i).toString());
-        }
-
-        return funcionarios;
-    }
-
-    public Funcionario consultarPorId(Integer id) throws Exception {
-        Funcionario funcionario = new FuncionarioDAO().consultarPorId(id);
-
-        System.out.println(funcionario.toString());
-
-        return funcionario;
-    }
+    return funcionario;
+  }
 }

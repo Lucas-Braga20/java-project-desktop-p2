@@ -1,6 +1,6 @@
 package br.unigran.restaurante.app.builder;
 
-import java.sql.Date;
+import java.util.Date;
 
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.Endereco;
@@ -25,6 +25,15 @@ public class FuncionarioBuilder {
         this.cpf = cpf;
         this.cargo = cargo;
         this.endereco = endereco;
+    }
+    public FuncionarioBuilder(Funcionario funcionario) {
+        this.nome = funcionario.getNome();
+        this.apelido = funcionario.getApelido();
+        this.senha = funcionario.getSenha();
+        this.dataNascimento = funcionario.getDataNascimento();
+        this.cpf = funcionario.getCpf();
+        this.cargo = funcionario.getCargo();
+        this.endereco = funcionario.getEndereco();
     }
 
     public FuncionarioBuilder unidadeMedida(String nome) {
@@ -60,6 +69,19 @@ public class FuncionarioBuilder {
         validate();
 
         Funcionario funcionario = new Funcionario();
+        funcionario.setNome(nome);
+        funcionario.setApelido(apelido);
+        funcionario.setSenha(senha);
+        funcionario.setCpf(cpf);
+        funcionario.setDataNascimento(dataNascimento);
+        funcionario.setEndereco(endereco);
+        funcionario.setCargo(cargo);
+
+        return funcionario;
+    }
+    public Funcionario build(Funcionario funcionario) throws Exception {
+        validate();
+
         funcionario.setNome(nome);
         funcionario.setApelido(apelido);
         funcionario.setSenha(senha);
