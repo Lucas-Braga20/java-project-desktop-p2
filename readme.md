@@ -35,9 +35,9 @@
 - [X] CargoPapel;
 - [X] Cliente;
 - [X] Endereço;
-- [ ] Funcionário;
+- [X] Funcionário;
 - [X] Ingrediente;
-- [ ] IngredientePrato;
+- [X] IngredientePrato;
 - [X] Mesa;
 - [X] Papel;
 - [X] Pedido;
