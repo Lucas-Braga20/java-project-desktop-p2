@@ -16,6 +16,12 @@ public class ProdutoPedidoBuilder {
         this.produto = produto;
         this.pedido = pedido;
     }
+    public ProdutoPedidoBuilder(ProdutoPedido produtoPedido) {
+        this.valorUnitario = produtoPedido.getValorUnitario();
+        this.quantidade = produtoPedido.getQuantidade();
+        this.produto = produtoPedido.getProduto();
+        this.pedido = produtoPedido.getPedido();
+    }
 
     public void validate() throws Exception {
         if (valorUnitario < 0) {
@@ -31,6 +37,16 @@ public class ProdutoPedidoBuilder {
         validate();
 
         ProdutoPedido produtoPedido = new ProdutoPedido();
+        produtoPedido.setValorUnitario(valorUnitario);
+        produtoPedido.setQuantidade(quantidade);
+        produtoPedido.setProduto(produto);
+        produtoPedido.setPedido(pedido);
+
+        return produtoPedido;
+    }
+    public ProdutoPedido build(ProdutoPedido produtoPedido) throws Exception {
+        validate();
+
         produtoPedido.setValorUnitario(valorUnitario);
         produtoPedido.setQuantidade(quantidade);
         produtoPedido.setProduto(produto);

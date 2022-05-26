@@ -16,6 +16,12 @@ public class PratoPedidoBuilder {
         this.prato = prato;
         this.pedido = pedido;
     }
+    public PratoPedidoBuilder(PratoPedido pratoPedido) {
+        this.quantidade = pratoPedido.getQuantidade();
+        this.valor = pratoPedido.getValor();
+        this.prato = pratoPedido.getPrato();
+        this.pedido = pratoPedido.getPedido();
+    }
 
     public void validate() throws Exception {
         if (valor <= 0) {
@@ -31,6 +37,16 @@ public class PratoPedidoBuilder {
         validate();
 
         PratoPedido pratoPedido = new PratoPedido();
+        pratoPedido.setPedido(pedido);
+        pratoPedido.setPrato(prato);
+        pratoPedido.setQuantidade(quantidade);
+        pratoPedido.setValor(valor);
+
+        return pratoPedido;
+    }
+    public PratoPedido build(PratoPedido pratoPedido) throws Exception {
+        validate();
+
         pratoPedido.setPedido(pedido);
         pratoPedido.setPrato(prato);
         pratoPedido.setQuantidade(quantidade);

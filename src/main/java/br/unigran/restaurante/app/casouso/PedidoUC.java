@@ -4,11 +4,12 @@ import java.util.List;
 
 import br.unigran.restaurante.app.builder.PedidoBuilder;
 import br.unigran.restaurante.app.models.Pedido;
-import br.unigran.restaurante.app.persistence.PedidoDAO;
+import br.unigran.restaurante.app.persistence.DAO;
 
 public class PedidoUC {
   public Pedido salvar(PedidoBuilder pedidoBuilder) throws Exception {
-    Pedido pedido = new PedidoDAO().salvar(pedidoBuilder.build());
+    Pedido pedido = pedidoBuilder.build();
+    pedido = new DAO<Pedido>().salvar(pedido, Pedido.class, pedido.getId().intValue());
 
     System.out.println(pedido.toString());
 
@@ -16,7 +17,8 @@ public class PedidoUC {
   }
 
   public Pedido atualizar(PedidoBuilder pedidoBuilder, Pedido pedido) throws Exception {
-    Pedido pedidoAtualizado = new PedidoDAO().salvar(pedidoBuilder.build(pedido));
+    Pedido pedidoAnterior = pedidoBuilder.build(pedido);
+    Pedido pedidoAtualizado = new DAO<Pedido>().salvar(pedidoAnterior, Pedido.class, pedidoAnterior.getId().intValue());
 
     System.out.println(pedidoAtualizado.toString());
 
@@ -24,11 +26,11 @@ public class PedidoUC {
   }
 
   public void remover(Integer id) throws Exception {
-    new PedidoDAO().remover(id);
+    new DAO<Pedido>().remover(id, Pedido.class);
   }
 
   public List<Pedido> listarTodos() throws Exception {
-    List<Pedido> pedidos = new PedidoDAO().listarTodos();
+    List<Pedido> pedidos = new DAO<Pedido>().listarTodos(Pedido.class);
 
     for (int i = 0; i < pedidos.size(); i++) {
       System.out.println(pedidos.get(i).toString());
@@ -38,7 +40,7 @@ public class PedidoUC {
   }
 
   public Pedido consultarPorId(Integer id) throws Exception {
-    Pedido pedido = new PedidoDAO().consultarPorId(id);
+    Pedido pedido = new DAO<Pedido>().consultarPorId(id, Pedido.class);
 
     System.out.println(pedido.toString());
 

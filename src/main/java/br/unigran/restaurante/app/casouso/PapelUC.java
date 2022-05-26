@@ -4,11 +4,12 @@ import java.util.List;
 
 import br.unigran.restaurante.app.builder.PapelBuilder;
 import br.unigran.restaurante.app.models.Papel;
-import br.unigran.restaurante.app.persistence.PapelDAO;
+import br.unigran.restaurante.app.persistence.DAO;
 
 public class PapelUC {
   public Papel salvar(PapelBuilder papelBuilder) throws Exception {
-    Papel papel = new PapelDAO().salvar(papelBuilder.build());
+    Papel papel = papelBuilder.build();
+    papel = new DAO<Papel>().salvar(papel, Papel.class, papel.getId().intValue());
 
     System.out.println(papel.toString());
 
@@ -16,7 +17,8 @@ public class PapelUC {
   }
 
   public Papel atualizar(PapelBuilder papelBuilder, Papel papel) throws Exception {
-    Papel papelAtualizado = new PapelDAO().salvar(papelBuilder.build(papel));
+    Papel papelAnterior = papelBuilder.build(papel);
+    Papel papelAtualizado = new DAO<Papel>().salvar(papelAnterior, Papel.class, papelAnterior.getId().intValue());
 
     System.out.println(papelAtualizado.toString());
 
@@ -24,21 +26,21 @@ public class PapelUC {
   }
 
   public void remover(Integer id) throws Exception {
-    new PapelDAO().remover(id);
+    new DAO<Papel>().remover(id, Papel.class);
   }
 
   public List<Papel> listarTodos() throws Exception {
-    List<Papel> papels = new PapelDAO().listarTodos();
+    List<Papel> papeis = new DAO<Papel>().listarTodos(Papel.class);
 
-    for (int i = 0; i < papels.size(); i++) {
-      System.out.println(papels.get(i).toString());
+    for (int i = 0; i < papeis.size(); i++) {
+      System.out.println(papeis.get(i).toString());
     }
 
-    return papels;
+    return papeis;
   }
 
   public Papel consultarPorId(Integer id) throws Exception {
-    Papel papel = new PapelDAO().consultarPorId(id);
+    Papel papel = new DAO<Papel>().consultarPorId(id, Papel.class);
 
     System.out.println(papel.toString());
 
