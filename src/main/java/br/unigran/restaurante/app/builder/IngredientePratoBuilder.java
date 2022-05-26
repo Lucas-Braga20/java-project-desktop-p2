@@ -21,6 +21,13 @@ public class IngredientePratoBuilder {
         this.ingrediente = ingrediente;
         this.prato = prato;
     }
+    public IngredientePratoBuilder(IngredientePrato ingredientePrato) {
+        this.quantidade = ingredientePrato.getQuantidade();
+        this.valor = ingredientePrato.getValor();
+        this.unidadeMedida = ingredientePrato.getUnidadeMedida();
+        this.ingrediente = ingredientePrato.getIngrediente();
+        this.prato = ingredientePrato.getPrato();
+    }
 
     public IngredientePratoBuilder unidadeMedida(UnidadeMedida unidadeMedida) {
         this.unidadeMedida = unidadeMedida;
@@ -52,7 +59,18 @@ public class IngredientePratoBuilder {
 
         IngredientePrato ingredientePrato = new IngredientePrato();
         ingredientePrato.setQuantidade(quantidade);
-        ingredientePrato.setUnidade_medida(unidadeMedida);
+        ingredientePrato.setUnidadeMedida(unidadeMedida);
+        ingredientePrato.setValor(valor);
+        ingredientePrato.setIngrediente(ingrediente);
+        ingredientePrato.setPrato(prato);
+
+        return ingredientePrato;
+    }
+    public IngredientePrato build(IngredientePrato ingredientePrato) throws Exception {
+        validate();
+
+        ingredientePrato.setQuantidade(quantidade);
+        ingredientePrato.setUnidadeMedida(unidadeMedida);
         ingredientePrato.setValor(valor);
         ingredientePrato.setIngrediente(ingrediente);
         ingredientePrato.setPrato(prato);

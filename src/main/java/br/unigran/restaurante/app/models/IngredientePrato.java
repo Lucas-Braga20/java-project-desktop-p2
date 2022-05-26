@@ -24,7 +24,7 @@ public class IngredientePrato implements Serializable {
     private Float valor;
 
     @Enumerated(EnumType.ORDINAL)
-    private UnidadeMedida unidade_medida;
+    private UnidadeMedida unidadeMedida;
 
     @Column(scale = 5, precision = 5)
     private Float quantidade;
@@ -69,12 +69,12 @@ public class IngredientePrato implements Serializable {
         this.valor = valor;
     }
 
-    public UnidadeMedida getUnidade_medida() {
-        return unidade_medida;
+    public UnidadeMedida getUnidadeMedida() {
+        return unidadeMedida;
     }
 
-    public void setUnidade_medida(UnidadeMedida unidade_medida) {
-        this.unidade_medida = unidade_medida;
+    public void setUnidadeMedida(UnidadeMedida unidadeMedida) {
+        this.unidadeMedida = unidadeMedida;
     }
 
     public Float getQuantidade() {
