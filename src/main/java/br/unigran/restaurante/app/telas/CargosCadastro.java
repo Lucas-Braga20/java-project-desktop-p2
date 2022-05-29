@@ -26,18 +26,67 @@ public class CargosCadastro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        Cabecalho = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        Corpo = new javax.swing.JPanel();
+        Rodape = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 600));
+
+        Cabecalho.setBackground(new java.awt.Color(78, 80, 82));
+        Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
+
+        jLabel1.setText("Cadastrar Cargo");
+
+        javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
+        Cabecalho.setLayout(CabecalhoLayout);
+        CabecalhoLayout.setHorizontalGroup(
+            CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(CabecalhoLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        CabecalhoLayout.setVerticalGroup(
+            CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+            .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(CabecalhoLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
+
+        getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
+
+        javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
+        Corpo.setLayout(CorpoLayout);
+        CorpoLayout.setHorizontalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        CorpoLayout.setVerticalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
+
+        Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
+        Rodape.setLayout(new java.awt.GridLayout());
+
+        jButton1.setText("Cancelar");
+        Rodape.add(jButton1);
+
+        jButton2.setText("Salvar");
+        Rodape.add(jButton2);
+
+        getContentPane().add(Rodape, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -78,5 +127,11 @@ public class CargosCadastro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Cabecalho;
+    private javax.swing.JPanel Corpo;
+    private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

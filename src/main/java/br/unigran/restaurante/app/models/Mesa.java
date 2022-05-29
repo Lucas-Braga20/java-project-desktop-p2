@@ -8,10 +8,11 @@ import javax.persistence.Id;
 
 @Entity
 public class Mesa implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
+    
+    private Integer numero;
     
     private Boolean ocupada;
 
@@ -23,11 +24,19 @@ public class Mesa implements Serializable {
         this.ocupada = ocupada;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 }

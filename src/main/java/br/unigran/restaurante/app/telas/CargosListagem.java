@@ -31,12 +31,22 @@ public class CargosListagem extends javax.swing.JPanel {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
+        MenuFiltro = new javax.swing.JPanel();
+        label1 = new java.awt.Label();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        Corpo = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCargos = new javax.swing.JTable();
+        Rodape = new javax.swing.JPanel();
+        jButtonSair = new javax.swing.JButton();
 
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(new java.awt.BorderLayout());
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setLayout(new java.awt.GridLayout(2, 0));
 
         MenuBotoes.setLayout(new java.awt.GridLayout());
 
@@ -57,7 +67,56 @@ public class CargosListagem extends javax.swing.JPanel {
 
         Cabecalho.add(MenuBotoes);
 
+        MenuFiltro.setPreferredSize(new java.awt.Dimension(800, 40));
+        MenuFiltro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label1.setForeground(new java.awt.Color(187, 187, 187));
+        label1.setText("Pesquisar");
+        MenuFiltro.add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jTextField1.setPreferredSize(new java.awt.Dimension(300, 22));
+        MenuFiltro.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
+
+        jButton1.setText("Pesquisar");
+        MenuFiltro.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, -1));
+
+        Cabecalho.add(MenuFiltro);
+
         add(Cabecalho, java.awt.BorderLayout.PAGE_START);
+
+        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableCargos);
+
+        javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
+        Corpo.setLayout(CorpoLayout);
+        CorpoLayout.setHorizontalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+        );
+        CorpoLayout.setVerticalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+        );
+
+        add(Corpo, java.awt.BorderLayout.CENTER);
+
+        Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
+        Rodape.setLayout(new java.awt.CardLayout());
+
+        jButtonSair.setText("Sair");
+        Rodape.add(jButtonSair, "card2");
+
+        add(Rodape, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
@@ -67,9 +126,18 @@ public class CargosListagem extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Cabecalho;
+    private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
+    private javax.swing.JPanel MenuFiltro;
+    private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonRemover;
+    private javax.swing.JButton jButtonSair;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCargos;
+    private javax.swing.JTextField jTextField1;
+    private java.awt.Label label1;
     // End of variables declaration//GEN-END:variables
 }

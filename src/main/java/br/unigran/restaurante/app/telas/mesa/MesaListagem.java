@@ -1,25 +1,45 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package br.unigran.restaurante.app.telas.mesa;
 
-import java.util.List;
-
+import br.unigran.restaurante.app.builder.MesaBuilder;
 import br.unigran.restaurante.app.casouso.MesaUC;
 import br.unigran.restaurante.app.models.Mesa;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Lucas
  */
-public class MesaListagem extends javax.swing.JFrame {
+public class MesaListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form MesaListagem
+     * Creates new form MesasListagem
      */
-    public MesaListagem() {
+    public MesaListagem(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
+        atualizarTabela();
+    }
+    
+    public void atualizarTabela() {
+        try {
+            List<Mesa> mesas = new MesaUC().listarTodos();
+            int tamanho = mesas.size();
+            String[] colunas = new String[] {"Número da mesa", "Ocupada"};
+            Object[][] linhas = new Object[tamanho][colunas.length];
+            for (int i = 0; i < mesas.size(); i++) {
+                linhas[i][0] = mesas.get(i).getId();
+                linhas[i][1] = mesas.get(i).getOcupada();
+            }
+            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+        } catch(Exception e) {
+            System.err.println("\n\nError: \n" + e);
+            dispose();
+        }
     }
 
     /**
@@ -31,21 +51,103 @@ public class MesaListagem extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        Cabecalho = new javax.swing.JPanel();
+        MenuBotoes = new javax.swing.JPanel();
+        jButtonAdicionar = new javax.swing.JButton();
+        jButtonOcupar = new javax.swing.JButton();
+        jButtonRemover = new javax.swing.JButton();
+        Corpo = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCargos = new javax.swing.JTable();
+        Rodape = new javax.swing.JPanel();
+        jButtonSair = new javax.swing.JButton();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
+        Cabecalho.setLayout(new java.awt.GridLayout());
+
+        MenuBotoes.setLayout(new java.awt.GridLayout());
+
+        jButtonAdicionar.setText("Adicionar Mesa");
+        jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
+        jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButtonAdicionar);
+
+        jButtonOcupar.setText("Ocupar Mesa");
+        MenuBotoes.add(jButtonOcupar);
+
+        jButtonRemover.setText("Remover Mesa");
+        jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoverActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButtonRemover);
+
+        Cabecalho.add(MenuBotoes);
+
+        getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
+
+        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTableCargos.setColumnSelectionAllowed(true);
+        jScrollPane1.setViewportView(jTableCargos);
+        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+
+        javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
+        Corpo.setLayout(CorpoLayout);
+        CorpoLayout.setHorizontalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        CorpoLayout.setVerticalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
+
+        getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
+
+        Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
+        Rodape.setLayout(new java.awt.CardLayout());
+
+        jButtonSair.setText("Sair");
+        jButtonSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSairActionPerformed(evt);
+            }
+        });
+        Rodape.add(jButtonSair, "card2");
+
+        getContentPane().add(Rodape, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
+        // TODO add your handling code here:
+        new MesaCadastro(parent, true).setVisible(true);
+    }//GEN-LAST:event_jButtonAdicionarActionPerformed
+
+    private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Click no botão de remover");
+    }//GEN-LAST:event_jButtonRemoverActionPerformed
+
+    private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_jButtonSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -73,15 +175,33 @@ public class MesaListagem extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MesaListagem().setVisible(true);
+                MesaListagem dialog = new MesaListagem(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Cabecalho;
+    private javax.swing.JPanel Corpo;
+    private javax.swing.JPanel MenuBotoes;
+    private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButtonAdicionar;
+    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonRemover;
+    private javax.swing.JButton jButtonSair;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCargos;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,9 +3,13 @@ package br.unigran.restaurante.app.repository;
 import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
 import br.unigran.restaurante.app.models.Cargo;
+import br.unigran.restaurante.app.models.Mesa;
 
 public class Teste {
     public static void main(String[] args) {
+        Mesa mesa = new Mesa();
+        mesa.setNumero(1);
+        mesa.setOcupada(false);
         /*
             CRIAÇÃO GENÉRICO
 
