@@ -39,4 +39,9 @@ public class Mesa implements Serializable {
     public void setNumero(Integer numero) {
         this.numero = numero;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(this.numero);
+    }
 }

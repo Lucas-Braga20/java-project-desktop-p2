@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 public class Pedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(scale = 9, precision = 2)
     private Float total;
@@ -37,11 +37,11 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "mesaId", nullable = false)
     private Mesa mesa;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -17,7 +17,7 @@ public class ProdutoUC {
     public Produto atualizar(ProdutoBuilder produtoBuilder, Produto produto) throws Exception {
         Produto produtoAnterior = produtoBuilder.build(produto);
         Produto produtoAtualizado = new DAO<Produto>().salvar(produtoAnterior, Produto.class,
-                produtoAnterior.getId().intValue());
+                produtoAnterior.getId());
 
         return produtoAtualizado;
     }

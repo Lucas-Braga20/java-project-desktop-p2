@@ -9,18 +9,14 @@ import br.unigran.restaurante.app.persistence.DAO;
 public class PedidoUC {
   public Pedido salvar(PedidoBuilder pedidoBuilder) throws Exception {
     Pedido pedido = pedidoBuilder.build();
-    pedido = new DAO<Pedido>().salvar(pedido, Pedido.class, pedido.getId().intValue());
-
-    System.out.println(pedido.toString());
+    pedido = new DAO<Pedido>().salvar(pedido, Pedido.class, pedido.getId());
 
     return pedido;
   }
 
   public Pedido atualizar(PedidoBuilder pedidoBuilder, Pedido pedido) throws Exception {
     Pedido pedidoAnterior = pedidoBuilder.build(pedido);
-    Pedido pedidoAtualizado = new DAO<Pedido>().salvar(pedidoAnterior, Pedido.class, pedidoAnterior.getId().intValue());
-
-    System.out.println(pedidoAtualizado.toString());
+    Pedido pedidoAtualizado = new DAO<Pedido>().salvar(pedidoAnterior, Pedido.class, pedidoAnterior.getId());
 
     return pedidoAtualizado;
   }
@@ -32,17 +28,11 @@ public class PedidoUC {
   public List<Pedido> listarTodos() throws Exception {
     List<Pedido> pedidos = new DAO<Pedido>().listarTodos(Pedido.class);
 
-    for (int i = 0; i < pedidos.size(); i++) {
-      System.out.println(pedidos.get(i).toString());
-    }
-
     return pedidos;
   }
 
   public Pedido consultarPorId(Integer id) throws Exception {
     Pedido pedido = new DAO<Pedido>().consultarPorId(id, Pedido.class);
-
-    System.out.println(pedido.toString());
 
     return pedido;
   }

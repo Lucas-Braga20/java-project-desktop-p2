@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 public class PratoPedido implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private Integer id;
 
   private Integer quantidade;
 
@@ -29,11 +29,11 @@ public class PratoPedido implements Serializable {
   @JoinColumn(name = "pedidoId", nullable = false)
   private Pedido pedido;
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 

@@ -9,18 +9,14 @@ import br.unigran.restaurante.app.persistence.DAO;
 public class ProdutoPedidoUC {
   public ProdutoPedido salvar(ProdutoPedidoBuilder produtoPedidoBuilder) throws Exception {
     ProdutoPedido produtoPedido = produtoPedidoBuilder.build();
-    produtoPedido = new DAO<ProdutoPedido>().salvar(produtoPedido, ProdutoPedido.class, produtoPedido.getId().intValue());
-
-    System.out.println(produtoPedido.toString());
+    produtoPedido = new DAO<ProdutoPedido>().salvar(produtoPedido, ProdutoPedido.class, produtoPedido.getId());
 
     return produtoPedido;
   }
 
   public ProdutoPedido atualizar(ProdutoPedidoBuilder produtoPedidoBuilder, ProdutoPedido produtoPedido) throws Exception {
     ProdutoPedido produtoPedidoAnterior = produtoPedidoBuilder.build(produtoPedido);
-    ProdutoPedido produtoPedidoAtualizado = new DAO<ProdutoPedido>().salvar(produtoPedidoAnterior, ProdutoPedido.class, produtoPedidoAnterior.getId().intValue());
-
-    System.out.println(produtoPedidoAtualizado.toString());
+    ProdutoPedido produtoPedidoAtualizado = new DAO<ProdutoPedido>().salvar(produtoPedidoAnterior, ProdutoPedido.class, produtoPedidoAnterior.getId());
 
     return produtoPedidoAtualizado;
   }
@@ -32,17 +28,11 @@ public class ProdutoPedidoUC {
   public List<ProdutoPedido> listarTodos() throws Exception {
     List<ProdutoPedido> produtoPedidos = new DAO<ProdutoPedido>().listarTodos(ProdutoPedido.class);
 
-    for (int i = 0; i < produtoPedidos.size(); i++) {
-      System.out.println(produtoPedidos.get(i).toString());
-    }
-
     return produtoPedidos;
   }
 
   public ProdutoPedido consultarPorId(Long id) throws Exception {
     ProdutoPedido produtoPedido = new DAO<ProdutoPedido>().consultarPorId(id.intValue(), ProdutoPedido.class);
-
-    System.out.println(produtoPedido.toString());
 
     return produtoPedido;
   }

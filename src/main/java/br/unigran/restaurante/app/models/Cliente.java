@@ -69,4 +69,9 @@ public class Cliente implements Serializable {
     public Endereco getEndereco() {
         return endereco;
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }
