@@ -11,16 +11,12 @@ public class CargoUC {
         Cargo cargo = cargoBuilder.build();
         cargo = new DAO<Cargo>().salvar(cargo, Cargo.class, cargo.getId());
 
-        System.out.println(cargo.toString());
-
         return cargo;
     }
 
     public Cargo atualizar(CargoBuilder cargoBuilder, Cargo cargo) throws Exception {
         Cargo cargoAnterior = cargoBuilder.build(cargo);
         Cargo cargoAtualizado = new DAO<Cargo>().salvar(cargoAnterior, Cargo.class, cargoAnterior.getId());
-
-        System.out.println(cargoAtualizado.toString());
 
         return cargoAtualizado;
     }
@@ -32,17 +28,11 @@ public class CargoUC {
     public List<Cargo> listarTodos() throws Exception {
         List<Cargo> cargos = new DAO<Cargo>().listarTodos(Cargo.class);
 
-        for (int i = 0; i < cargos.size(); i++) {
-            System.out.println(cargos.get(i).toString());
-        }
-
         return cargos;
     }
 
     public Cargo consultarPorId(Integer id) throws Exception {
         Cargo cargo = new DAO<Cargo>().consultarPorId(id, Cargo.class);
-
-        System.out.println(cargo.toString());
 
         return cargo;
     }

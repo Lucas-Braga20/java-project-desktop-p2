@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 50)
     private String nome;
@@ -30,11 +30,11 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "enderecoId", nullable = false)
     private Endereco endereco;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

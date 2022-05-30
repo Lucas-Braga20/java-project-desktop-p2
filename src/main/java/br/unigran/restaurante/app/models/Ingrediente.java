@@ -15,7 +15,7 @@ import br.unigran.restaurante.app.enums.UnidadeMedida;
 public class Ingrediente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(columnDefinition = "TEXT")
     private String descricao;
@@ -45,11 +45,11 @@ public class Ingrediente implements Serializable {
         this.descricao = descricao;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -67,5 +67,10 @@ public class Ingrediente implements Serializable {
 
     public void setQuantidade(Float quantidade) {
         this.quantidade = quantidade;
+    }
+
+    @Override
+    public String toString() {
+        return this.descricao;
     }
 }

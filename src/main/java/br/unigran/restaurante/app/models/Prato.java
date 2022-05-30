@@ -12,7 +12,7 @@ import javax.persistence.Id;
 public class Prato implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 50)
     private String nome;
@@ -31,11 +31,11 @@ public class Prato implements Serializable {
         this.descricao = descricao;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -55,4 +55,8 @@ public class Prato implements Serializable {
         this.valor = valor;
     }
 
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

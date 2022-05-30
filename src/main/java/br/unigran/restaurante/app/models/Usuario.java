@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 30)
     private String apelido;
@@ -27,11 +27,11 @@ public class Usuario implements Serializable {
         this.apelido = apelido;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 50)
     private String nome;
@@ -22,11 +22,11 @@ public class Produto implements Serializable {
     @Column(scale = 9, precision = 2)
     private Float valor;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

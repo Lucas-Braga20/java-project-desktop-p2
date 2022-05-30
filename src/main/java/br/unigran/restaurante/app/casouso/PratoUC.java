@@ -9,9 +9,7 @@ import br.unigran.restaurante.app.persistence.DAO;
 public class PratoUC {
     public Prato salvar(PratoBuilder pratoBuilder) throws Exception {
         Prato prato = pratoBuilder.build();
-        prato = new DAO<Prato>().salvar(prato, Prato.class, prato.getId().intValue());
-
-        System.out.println(prato.toString());
+        prato = new DAO<Prato>().salvar(prato, Prato.class, prato.getId());
 
         return prato;
     }
@@ -19,9 +17,7 @@ public class PratoUC {
     public Prato atualizar(PratoBuilder pratoBuilder, Prato prato) throws Exception {
         Prato pratoAnterior = pratoBuilder.build(prato);
         Prato pratoAtualizado = new DAO<Prato>().salvar(pratoAnterior, Prato.class,
-                pratoAnterior.getId().intValue());
-
-        System.out.println(pratoAtualizado.toString());
+                pratoAnterior.getId());
 
         return pratoAtualizado;
     }
@@ -33,17 +29,11 @@ public class PratoUC {
     public List<Prato> listarTodos() throws Exception {
         List<Prato> pratos = new DAO<Prato>().listarTodos(Prato.class);
 
-        for (int i = 0; i < pratos.size(); i++) {
-            System.out.println(pratos.get(i).toString());
-        }
-
         return pratos;
     }
 
     public Prato consultarPorId(Integer id) throws Exception {
         Prato prato = new DAO<Prato>().consultarPorId(id, Prato.class);
-
-        System.out.println(prato.toString());
 
         return prato;
     }

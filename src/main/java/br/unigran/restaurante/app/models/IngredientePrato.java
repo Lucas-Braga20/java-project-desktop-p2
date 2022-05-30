@@ -18,7 +18,7 @@ import javax.persistence.Column;
 public class IngredientePrato implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(scale = 9, precision = 2)
     private Float valor;
@@ -37,11 +37,11 @@ public class IngredientePrato implements Serializable {
     @JoinColumn(name = "pratoId", nullable = false)
     private Prato prato;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

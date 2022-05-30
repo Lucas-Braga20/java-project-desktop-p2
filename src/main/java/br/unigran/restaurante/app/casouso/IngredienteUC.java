@@ -9,7 +9,7 @@ import br.unigran.restaurante.app.persistence.DAO;
 public class IngredienteUC {
     public Ingrediente salvar(IngredienteBuilder ingredienteBuilder) throws Exception {
         Ingrediente ingrediente = ingredienteBuilder.build();
-        ingrediente = new DAO<Ingrediente>().salvar(ingrediente, Ingrediente.class, ingrediente.getId().intValue());
+        ingrediente = new DAO<Ingrediente>().salvar(ingrediente, Ingrediente.class, ingrediente.getId());
 
         System.out.println(ingrediente.toString());
 
@@ -19,7 +19,7 @@ public class IngredienteUC {
     public Ingrediente atualizar(IngredienteBuilder ingredienteBuilder, Ingrediente ingrediente) throws Exception {
         Ingrediente ingredienteAnterior = ingredienteBuilder.build(ingrediente);
         Ingrediente ingredienteAtualizado = new DAO<Ingrediente>().salvar(ingredienteAnterior, Ingrediente.class,
-                ingredienteAnterior.getId().intValue());
+                ingredienteAnterior.getId());
 
         System.out.println(ingredienteAtualizado.toString());
 

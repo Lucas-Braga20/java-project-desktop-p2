@@ -15,7 +15,7 @@ import br.unigran.restaurante.app.enums.Cidade;
 public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 100)
     private String rua;
@@ -29,11 +29,11 @@ public class Endereco implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Cidade cidade;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -67,5 +67,10 @@ public class Endereco implements Serializable {
 
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
+    }
+
+    @Override
+    public String toString() {
+        return this.bairro + ", " + this.rua + ", " + this.numero + " / " + this.cidade;
     }
 }

@@ -11,16 +11,12 @@ public class CargoPapelUC {
     CargoPapel cargoPapel = cargoPapelBuilder.build();
     cargoPapel = new DAO<CargoPapel>().salvar(cargoPapel, CargoPapel.class, cargoPapel.getId());
 
-    System.out.println(cargoPapel.toString());
-
     return cargoPapel;
   }
 
   public CargoPapel atualizar(CargoPapelBuilder cargoPapelBuilder, CargoPapel cargoPapel) throws Exception {
     CargoPapel cargoPapelAnterior = cargoPapelBuilder.build(cargoPapel);
     CargoPapel cargoPapelAtualizado = new DAO<CargoPapel>().salvar(cargoPapelAnterior, CargoPapel.class, cargoPapelAnterior.getId());
-
-    System.out.println(cargoPapelAtualizado.toString());
 
     return cargoPapelAtualizado;
   }
@@ -32,17 +28,11 @@ public class CargoPapelUC {
   public List<CargoPapel> listarTodos() throws Exception {
     List<CargoPapel> cargoPapeis = new DAO<CargoPapel>().listarTodos(CargoPapel.class);
 
-    for (int i = 0; i < cargoPapeis.size(); i++) {
-      System.out.println(cargoPapeis.get(i).toString());
-    }
-
     return cargoPapeis;
   }
 
   public CargoPapel consultarPorId(Integer id) throws Exception {
     CargoPapel cargoPapel = new DAO<CargoPapel>().consultarPorId(id, CargoPapel.class);
-
-    System.out.println(cargoPapel.toString());
 
     return cargoPapel;
   }
