@@ -14,6 +14,8 @@ public class Papel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private Integer numero;
+    
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
@@ -31,6 +33,14 @@ public class Papel implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     @Override
