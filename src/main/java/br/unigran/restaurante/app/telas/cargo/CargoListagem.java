@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.mesa;
+package br.unigran.restaurante.app.telas.cargo;
 
-import br.unigran.restaurante.app.builder.MesaBuilder;
-import br.unigran.restaurante.app.casouso.MesaUC;
-import br.unigran.restaurante.app.models.Mesa;
+import br.unigran.restaurante.app.telas.cargo.*;
+import br.unigran.restaurante.app.builder.CargoBuilder;
+import br.unigran.restaurante.app.casouso.CargoUC;
+import br.unigran.restaurante.app.models.Cargo;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +15,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lucas
  */
-public class MesaListagem extends javax.swing.JDialog {
+public class CargoListagem extends javax.swing.JDialog {
 
     /**
      * Creates new form MesasListagem
      */
-    public MesaListagem(java.awt.Frame parent, boolean modal) {
+    public CargoListagem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         carregarTabela();
@@ -27,13 +28,13 @@ public class MesaListagem extends javax.swing.JDialog {
     
     public void carregarTabela() {
         try {
-            List<Mesa> mesas = new MesaUC().listarTodos();
-            int tamanho = mesas.size();
-            String[] colunas = new String[] {"Número da mesa", "Ocupada"};
+            List<Cargo> cargos = new CargoUC().listarTodos();
+            int tamanho = cargos.size();
+            String[] colunas = new String[] {"Número da Cargo", "Descrição"};
             Object[][] linhas = new Object[tamanho][colunas.length];
-            for (int i = 0; i < mesas.size(); i++) {
-                linhas[i][0] = mesas.get(i).getId();
-                linhas[i][1] = mesas.get(i).getOcupada();
+            for (int i = 0; i < cargos.size(); i++) {
+                linhas[i][0] = cargos.get(i).getId();
+                linhas[i][1] = cargos.get(i).getDescricao();
             }
             jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
         } catch(Exception e) {
@@ -63,13 +64,15 @@ public class MesaListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setPreferredSize(new java.awt.Dimension(324, 40));
+        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
-        MenuBotoes.setLayout(new java.awt.GridLayout());
+        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar Mesa");
+        jButtonAdicionar.setText("Adicionar Cargo");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,10 +81,10 @@ public class MesaListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Mesa");
+        jButtonOcupar.setText("Ocupar Cargo");
         MenuBotoes.add(jButtonOcupar);
 
-        jButtonRemover.setText("Remover Mesa");
+        jButtonRemover.setText("Remover Cargo");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -136,7 +139,7 @@ public class MesaListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        // new CargoCadastro(parent, true).setVisible(true);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
@@ -166,21 +169,23 @@ public class MesaListagem extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MesaListagem dialog = new MesaListagem(new javax.swing.JFrame(), true);
+                CargoListagem dialog = new CargoListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

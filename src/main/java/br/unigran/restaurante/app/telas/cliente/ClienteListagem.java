@@ -2,11 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.mesa;
+package br.unigran.restaurante.app.telas.cliente;
 
-import br.unigran.restaurante.app.builder.MesaBuilder;
-import br.unigran.restaurante.app.casouso.MesaUC;
-import br.unigran.restaurante.app.models.Mesa;
+import br.unigran.restaurante.app.telas.cliente.*;
+import br.unigran.restaurante.app.builder.ClienteBuilder;
+import br.unigran.restaurante.app.casouso.ClienteUC;
+import br.unigran.restaurante.app.models.Cliente;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -14,12 +15,12 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lucas
  */
-public class MesaListagem extends javax.swing.JDialog {
+public class ClienteListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form MesasListagem
+     * Creates new form EnderecosListagem
      */
-    public MesaListagem(java.awt.Frame parent, boolean modal) {
+    public ClienteListagem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         carregarTabela();
@@ -27,13 +28,16 @@ public class MesaListagem extends javax.swing.JDialog {
     
     public void carregarTabela() {
         try {
-            List<Mesa> mesas = new MesaUC().listarTodos();
-            int tamanho = mesas.size();
-            String[] colunas = new String[] {"Número da mesa", "Ocupada"};
+            List<Cliente> clientes = new ClienteUC().listarTodos();
+            int tamanho = clientes.size();
+            String[] colunas = new String[] {"Número do Endereco", "Rua", "Numero", "Bairro", "Cidade"};
             Object[][] linhas = new Object[tamanho][colunas.length];
-            for (int i = 0; i < mesas.size(); i++) {
-                linhas[i][0] = mesas.get(i).getId();
-                linhas[i][1] = mesas.get(i).getOcupada();
+            for (int i = 0; i < clientes.size(); i++) {
+                linhas[i][0] = clientes.get(i).getId();
+                linhas[i][1] = clientes.get(i).getNome();
+                linhas[i][2] = clientes.get(i).getCpf();
+                linhas[i][3] = clientes.get(i).getDataNascimento();
+                linhas[i][4] = clientes.get(i).getEndereco().getRua()+ ", " + clientes.get(i).getEndereco().getNumero();
             }
             jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
         } catch(Exception e) {
@@ -65,11 +69,11 @@ public class MesaListagem extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
-        MenuBotoes.setLayout(new java.awt.GridLayout());
+        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar Mesa");
+        jButtonAdicionar.setText("Adicionar Cliente");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,10 +82,10 @@ public class MesaListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Mesa");
+        jButtonOcupar.setText("Ocupar Cliente");
         MenuBotoes.add(jButtonOcupar);
 
-        jButtonRemover.setText("Remover Mesa");
+        jButtonRemover.setText("Remover Cliente");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -136,7 +140,7 @@ public class MesaListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        // new ClienteCadastro(parent, true).setVisible(true);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
@@ -166,21 +170,27 @@ public class MesaListagem extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MesaListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ClienteListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MesaListagem dialog = new MesaListagem(new javax.swing.JFrame(), true);
+                ClienteListagem dialog = new ClienteListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
