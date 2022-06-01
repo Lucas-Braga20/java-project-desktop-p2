@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.papel;
+package br.unigran.restaurante.app.telas.prato;
 
 import br.unigran.restaurante.app.casouso.PapelUC;
+import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.models.Papel;
+import br.unigran.restaurante.app.models.Prato;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -13,27 +15,28 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author laboratorio
  */
-public class PapelListagem extends javax.swing.JDialog {
+public class PratoListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form PapelListagem
+     * Creates new form PratoListagem
      */
-    public PapelListagem(java.awt.Frame parent, boolean modal) {
+    public PratoListagem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        carregarTabela();
+        carergarTabela();
     }
     
-    public void carregarTabela() {
+    public void carergarTabela() {
         try {
-            List<Papel> papeis = new PapelUC().listarTodos();
-            int tamanho = papeis.size();
-            String[] colunas = new String[] {"Número do papel", "Descrição"};
+            List<Prato> pratos = new PratoUC().listarTodos();
+            int tamanho = pratos.size();
+            String[] colunas = new String[] {"Nome", "Descrição", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
-            for (int i = 0; i < papeis.size(); i++) {
+            for (int i = 0; i < pratos.size(); i++) {
                 System.out.println(i);
-                linhas[i][0] = papeis.get(i).getId();
-                linhas[i][1] = papeis.get(i).getDescricao();
+                linhas[i][0] = pratos.get(i).getNome();
+                linhas[i][1] = pratos.get(i).getDescricao();
+                linhas[i][2] = pratos.get(i).getValor();
             }
             jTable1.setModel(new DefaultTableModel(linhas, colunas));
         } catch(Exception e) {
@@ -53,7 +56,7 @@ public class PapelListagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonOcupar = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -62,14 +65,14 @@ public class PapelListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de papel");
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
+        Cabecalho.setLayout(new java.awt.GridLayout());
 
-        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
+        MenuBotoes.setLayout(new java.awt.GridLayout());
 
-        jButtonAdicionar.setText("Adicionar Mesa");
+        jButtonAdicionar.setText("Adicionar");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,10 +81,10 @@ public class PapelListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Mesa");
-        MenuBotoes.add(jButtonOcupar);
+        jButtonAtualizar.setText("Atualizar");
+        MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover Mesa");
+        jButtonRemover.setText("Remover");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -167,20 +170,20 @@ public class PapelListagem extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PapelListagem dialog = new PapelListagem(new javax.swing.JFrame(), true);
+                PratoListagem dialog = new PratoListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -198,7 +201,7 @@ public class PapelListagem extends javax.swing.JDialog {
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;

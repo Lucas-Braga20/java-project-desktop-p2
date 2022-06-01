@@ -224,7 +224,7 @@ public class ProdutoPedidoCadastro extends javax.swing.JDialog {
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
 
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
-        Rodape.setLayout(new java.awt.GridLayout());
+        Rodape.setLayout(new java.awt.GridLayout(1, 0));
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
