@@ -70,7 +70,6 @@ public class CargoCadastro extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de cargo");
         setPreferredSize(new java.awt.Dimension(800, 600));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 

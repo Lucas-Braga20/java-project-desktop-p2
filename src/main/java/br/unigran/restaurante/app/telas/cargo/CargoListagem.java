@@ -4,12 +4,13 @@
  */
 package br.unigran.restaurante.app.telas.cargo;
 
-import br.unigran.restaurante.app.telas.cargo.*;
-import br.unigran.restaurante.app.builder.CargoBuilder;
 import br.unigran.restaurante.app.casouso.CargoUC;
+import br.unigran.restaurante.app.telas.cargo.CargoCadastro;
 import br.unigran.restaurante.app.models.Cargo;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -26,6 +27,8 @@ public class CargoListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    
     public void carregarTabela() {
         try {
             List<Cargo> cargos = new CargoUC().listarTodos();
@@ -36,7 +39,13 @@ public class CargoListagem extends javax.swing.JDialog {
                 linhas[i][0] = cargos.get(i).getId();
                 linhas[i][1] = cargos.get(i).getDescricao();
             }
-            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTableCargos.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -55,7 +64,7 @@ public class CargoListagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonOcupar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -64,7 +73,6 @@ public class CargoListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setPreferredSize(new java.awt.Dimension(324, 40));
@@ -81,8 +89,13 @@ public class CargoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Cargo");
-        MenuBotoes.add(jButtonOcupar);
+        jButtonEditar.setText("Atualizar Cargo");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButtonEditar);
 
         jButtonRemover.setText("Remover Cargo");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -139,18 +152,29 @@ public class CargoListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new CargoCadastro(parent, true).setVisible(true);
+        new CargoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
+        try {
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
+            System.out.println(id);
+            new CargoUC().remover(id);
+        } catch(Exception e) {
+            System.err.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +227,7 @@ public class CargoListagem extends javax.swing.JDialog {
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
