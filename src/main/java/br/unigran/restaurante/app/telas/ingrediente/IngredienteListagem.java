@@ -82,7 +82,7 @@ public class IngredienteListagem extends javax.swing.JDialog {
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.setText("Adicionar Ingrediente");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,10 +91,15 @@ public class IngredienteListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.setText("Atualizar Ingrediente");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Remover Ingrediente");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -151,7 +156,7 @@ public class IngredienteListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new IngredienteCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new IngredienteCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -170,6 +175,17 @@ public class IngredienteListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new IngredienteCadastro(new javax.swing.JFrame(), true, ingredientes.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -6,6 +6,7 @@ package br.unigran.restaurante.app.telas.mesa;
 
 import br.unigran.restaurante.app.builder.MesaBuilder;
 import br.unigran.restaurante.app.casouso.MesaUC;
+import br.unigran.restaurante.app.models.Mesa;
 
 /**
  *
@@ -16,9 +17,19 @@ public class MesaCadastro extends javax.swing.JDialog {
     /**
      * Creates new form MesaCadastro
      */
-    public MesaCadastro(java.awt.Frame parent, boolean modal) {
+    public MesaCadastro(java.awt.Frame parent, boolean modal, Mesa mesa) {
         super(parent, modal);
         initComponents();
+        if (mesa != null) {
+            this.mesa = mesa;
+            carregarMesa();
+        }
+    }
+    
+    Mesa mesa = null;
+    
+    public void carregarMesa() {
+        jTextFieldNumero.setText(mesa.getNumero().toString());
     }
 
     /**
@@ -129,8 +140,14 @@ public class MesaCadastro extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             Integer numero = Integer.parseInt(jTextFieldNumero.getText());
-            MesaBuilder mesaBuilder = new MesaBuilder(false, numero);
-            new MesaUC().salvar(mesaBuilder);
+            
+            if (mesa == null) {
+                MesaBuilder mesaBuilder = new MesaBuilder(false, numero);
+                new MesaUC().salvar(mesaBuilder);
+            } else {
+                MesaBuilder mesaBuilder = new MesaBuilder(mesa.getOcupada(), numero);
+                new MesaUC().atualizar(mesaBuilder, mesa);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

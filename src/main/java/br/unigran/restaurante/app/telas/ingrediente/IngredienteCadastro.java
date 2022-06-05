@@ -7,6 +7,7 @@ package br.unigran.restaurante.app.telas.ingrediente;
 import br.unigran.restaurante.app.builder.IngredienteBuilder;
 import br.unigran.restaurante.app.casouso.IngredienteUC;
 import br.unigran.restaurante.app.enums.UnidadeMedida;
+import br.unigran.restaurante.app.models.Ingrediente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -20,10 +21,22 @@ public class IngredienteCadastro extends javax.swing.JDialog {
     /**
      * Creates new form IngredienteCadastro
      */
-    public IngredienteCadastro(java.awt.Frame parent, boolean modal) {
+    public IngredienteCadastro(java.awt.Frame parent, boolean modal, Ingrediente ingrediente) {
         super(parent, modal);
         initComponents();
+        if (ingrediente != null) {
+            this.ingrediente = ingrediente;
+            carregarIngrediente();
+        }
         carregaUnidadeMedida();
+    }
+    
+    Ingrediente ingrediente;
+    
+    public void carregarIngrediente() {
+        jTextArea1.setText(ingrediente.getDescricao());
+        jTextField1.setText(ingrediente.getQuantidade().toString());
+        jTextField2.setText(ingrediente.getValor().toString());
     }
     
     public void carregaUnidadeMedida() {
@@ -185,9 +198,16 @@ public class IngredienteCadastro extends javax.swing.JDialog {
             String unidadeMedida = (String) jComboBox1.getSelectedItem();
             Float quantidade = Float.parseFloat(jTextField1.getText());
             Float valor = Float.parseFloat(jTextField2.getText());
-            IngredienteBuilder ingredienteBuilder = new IngredienteBuilder(descricao, UnidadeMedida.valueOf(unidadeMedida), valor);
-            ingredienteBuilder.quantidade(quantidade);
-            new IngredienteUC().salvar(ingredienteBuilder);
+            
+            if (ingrediente == null) {
+                IngredienteBuilder ingredienteBuilder = new IngredienteBuilder(descricao, UnidadeMedida.valueOf(unidadeMedida), valor);
+                ingredienteBuilder.quantidade(quantidade);
+                new IngredienteUC().salvar(ingredienteBuilder);
+            } else {
+                IngredienteBuilder ingredienteBuilder = new IngredienteBuilder(descricao, UnidadeMedida.valueOf(unidadeMedida), valor);
+                ingredienteBuilder.quantidade(quantidade);
+                new IngredienteUC().atualizar(ingredienteBuilder, ingrediente);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

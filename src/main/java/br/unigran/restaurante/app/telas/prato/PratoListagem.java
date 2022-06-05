@@ -84,7 +84,7 @@ public class PratoListagem extends javax.swing.JDialog {
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.setText("Adicionar Prato");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,10 +93,15 @@ public class PratoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.setText("Atualizar Prato");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Remover Prato");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -161,7 +166,7 @@ public class PratoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new PratoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new PratoCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -191,6 +196,17 @@ public class PratoListagem extends javax.swing.JDialog {
             System.err.println(e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new PratoCadastro(new javax.swing.JFrame(), true, pratos.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

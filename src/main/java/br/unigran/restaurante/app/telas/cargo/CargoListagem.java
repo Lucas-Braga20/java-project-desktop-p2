@@ -166,7 +166,7 @@ public class CargoListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new CargoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new CargoCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -188,6 +188,13 @@ public class CargoListagem extends javax.swing.JDialog {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new CargoCadastro(new javax.swing.JFrame(), true, cargos.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

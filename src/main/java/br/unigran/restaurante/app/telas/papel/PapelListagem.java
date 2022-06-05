@@ -89,6 +89,11 @@ public class PapelListagem extends javax.swing.JDialog {
         MenuBotoes.add(jButtonAdicionar);
 
         jButtonAtualizar.setText("Atualizar Papel");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonAtualizar);
 
         jButtonRemover.setText("Remover Papel");
@@ -148,7 +153,7 @@ public class PapelListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new PapelCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new PapelCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -167,6 +172,17 @@ public class PapelListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new PapelCadastro(new javax.swing.JFrame(), true, papeis.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

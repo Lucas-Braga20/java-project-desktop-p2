@@ -29,10 +29,6 @@ public class Produto implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "produtoId")
     private List<ProdutoPedido> produtoPedidos;
-    
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "produtoId")
-    private List<PratoPedido> pratoPedidos;
 
     public Integer getId() {
         return id;

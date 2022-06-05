@@ -6,6 +6,7 @@ package br.unigran.restaurante.app.telas.produto;
 
 import br.unigran.restaurante.app.builder.ProdutoBuilder;
 import br.unigran.restaurante.app.casouso.ProdutoUC;
+import br.unigran.restaurante.app.models.Produto;
 
 /**
  *
@@ -16,9 +17,21 @@ public class ProdutoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form ProdutoCadastro
      */
-    public ProdutoCadastro(java.awt.Frame parent, boolean modal) {
+    public ProdutoCadastro(java.awt.Frame parent, boolean modal, Produto produto) {
         super(parent, modal);
         initComponents();
+        if (produto != null) {
+            this.produto = produto;
+            carregarProduto();
+        }
+    }
+    
+    Produto produto;
+    
+    public void carregarProduto() {
+        jTextField1.setText(produto.getNome());
+        jTextField2.setText(produto.getValor().toString());
+        jTextArea1.setText(produto.getDescricao());
     }
 
     /**
@@ -160,9 +173,16 @@ public class ProdutoCadastro extends javax.swing.JDialog {
             String nome = jTextField1.getText();
             String descricao = jTextArea1.getText();
             Float valor = Float.parseFloat(jTextField2.getText());
-            ProdutoBuilder produtoBuilder = new ProdutoBuilder(nome, valor);
-            produtoBuilder.descricao(descricao);
-            new ProdutoUC().salvar(produtoBuilder);
+            
+            if (produto == null) {
+                ProdutoBuilder produtoBuilder = new ProdutoBuilder(nome, valor);
+                produtoBuilder.descricao(descricao);
+                new ProdutoUC().salvar(produtoBuilder);
+            } else {
+                ProdutoBuilder produtoBuilder = new ProdutoBuilder(nome, valor);
+                produtoBuilder.descricao(descricao);
+                new ProdutoUC().atualizar(produtoBuilder, produto);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

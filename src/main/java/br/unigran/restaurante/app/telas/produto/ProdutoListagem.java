@@ -91,6 +91,11 @@ public class ProdutoListagem extends javax.swing.JDialog {
         MenuBotoes.add(jButtonAdicionar);
 
         jButtonAtualizar.setText("Atualizar Produto");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonAtualizar);
 
         jButtonRemover.setText("Remover Produto");
@@ -150,7 +155,7 @@ public class ProdutoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new ProdutoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new ProdutoCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -169,6 +174,17 @@ public class ProdutoListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new ProdutoCadastro(new javax.swing.JFrame(), true, produtos.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

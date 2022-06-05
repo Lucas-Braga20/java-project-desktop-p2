@@ -5,6 +5,7 @@ import java.util.List;
 import br.unigran.restaurante.app.builder.MesaBuilder;
 import br.unigran.restaurante.app.models.Mesa;
 import br.unigran.restaurante.app.persistence.DAO;
+import br.unigran.restaurante.app.persistence.MesaDAO;
 
 public class MesaUC {
   public Mesa salvar(MesaBuilder mesaBuilder) throws Exception {
@@ -23,6 +24,14 @@ public class MesaUC {
 
   public void remover(Integer id) throws Exception {
     new DAO<Mesa>().remover(id, Mesa.class);
+  }
+  
+  public void OcuparMesa(Integer id) throws Exception {
+      new MesaDAO().ocuparMesa(id);
+  }
+  
+  public void DesocuparMesa(Integer id) throws Exception {
+      new MesaDAO().desocuparMesa(id);
   }
 
   public List<Mesa> listarTodos() throws Exception {

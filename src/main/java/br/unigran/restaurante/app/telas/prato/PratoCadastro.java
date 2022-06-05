@@ -6,6 +6,7 @@ package br.unigran.restaurante.app.telas.prato;
 
 import br.unigran.restaurante.app.builder.PratoBuilder;
 import br.unigran.restaurante.app.casouso.PratoUC;
+import br.unigran.restaurante.app.models.Prato;
 
 /**
  *
@@ -16,9 +17,21 @@ public class PratoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form PratoCadastro
      */
-    public PratoCadastro(java.awt.Frame parent, boolean modal) {
+    public PratoCadastro(java.awt.Frame parent, boolean modal, Prato prato) {
         super(parent, modal);
         initComponents();
+        if (prato != null) {
+            this.prato = prato;
+            carregarPrato();
+        }
+    }
+    
+    Prato prato;
+    
+    public void carregarPrato() {
+        jTextField1.setText(prato.getNome());
+        jTextArea1.setText(prato.getDescricao());
+        jTextField2.setText(prato.getValor().toString());
     }
 
     /**
@@ -160,9 +173,16 @@ public class PratoCadastro extends javax.swing.JDialog {
             String nome = jTextField1.getText();
             String descricao = jTextArea1.getText();
             Float valor = Float.parseFloat(jTextField2.getText());
-            PratoBuilder pratoBuilder = new PratoBuilder(nome, valor);
-            pratoBuilder.descricao(descricao);
-            new PratoUC().salvar(pratoBuilder);
+            
+            if (prato == null) {
+                PratoBuilder pratoBuilder = new PratoBuilder(nome, valor);
+                pratoBuilder.descricao(descricao);
+                new PratoUC().salvar(pratoBuilder);
+            } else {
+                PratoBuilder pratoBuilder = new PratoBuilder(nome, valor);
+                pratoBuilder.descricao(descricao);
+                new PratoUC().atualizar(pratoBuilder, prato);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -24,10 +24,15 @@ public class CargoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form CargoCadastro
      */
-    public CargoCadastro(java.awt.Frame parent, boolean modal) {
+    public CargoCadastro(java.awt.Frame parent, boolean modal, Cargo cargo) {
         super(parent, modal);
         initComponents();
+        if (cargo != null) {
+            this.cargo = cargo;
+        }
     }
+    
+    Cargo cargo;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -140,8 +145,14 @@ public class CargoCadastro extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String descricao = jTextArea1.getText();
-            CargoBuilder cargoBuilder = new CargoBuilder(descricao);
-            new CargoUC().salvar(cargoBuilder);
+            
+            if (cargo == null) {
+                CargoBuilder cargoBuilder = new CargoBuilder(descricao);
+                new CargoUC().salvar(cargoBuilder);
+            } else {
+                CargoBuilder cargoBuilder = new CargoBuilder(descricao);
+                new CargoUC().atualizar(cargoBuilder, cargo);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }

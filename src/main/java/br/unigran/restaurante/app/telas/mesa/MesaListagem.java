@@ -65,6 +65,8 @@ public class MesaListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonOcupar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCargos = new javax.swing.JTable();
@@ -103,6 +105,22 @@ public class MesaListagem extends javax.swing.JDialog {
             }
         });
         MenuBotoes.add(jButtonRemover);
+
+        jButton1.setText("Atualizar Mesa");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton1);
+
+        jButton2.setText("Desocupar Mesa");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton2);
 
         Cabecalho.add(MenuBotoes);
 
@@ -151,7 +169,7 @@ public class MesaListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new MesaCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new MesaCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -173,7 +191,36 @@ public class MesaListagem extends javax.swing.JDialog {
 
     private void jButtonOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOcuparActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTableCargos.getSelectedRow();
+            new MesaUC().OcuparMesa(mesas.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonOcuparActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTableCargos.getSelectedRow();
+            new MesaCadastro(new javax.swing.JFrame(), true, mesas.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer indice = jTableCargos.getSelectedRow();
+            new MesaUC().DesocuparMesa(mesas.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,6 +270,8 @@ public class MesaListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonOcupar;
     private javax.swing.JButton jButtonRemover;

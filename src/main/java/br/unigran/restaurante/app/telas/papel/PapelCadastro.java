@@ -6,6 +6,7 @@ package br.unigran.restaurante.app.telas.papel;
 
 import br.unigran.restaurante.app.builder.PapelBuilder;
 import br.unigran.restaurante.app.casouso.PapelUC;
+import br.unigran.restaurante.app.models.Papel;
 
 /**
  *
@@ -16,9 +17,20 @@ public class PapelCadastro extends javax.swing.JDialog {
     /**
      * Creates new form PapelCadastro
      */
-    public PapelCadastro(java.awt.Frame parent, boolean modal) {
+    public PapelCadastro(java.awt.Frame parent, boolean modal, Papel papel) {
         super(parent, modal);
         initComponents();
+        if (papel != null) {
+            this.papel = papel;
+            carregarPapel();
+        }
+    }
+    
+    Papel papel;
+    
+    public void carregarPapel() {
+        jTextField1.setText(papel.getDescricao());
+        jTextField2.setText(papel.getNumero().toString());
     }
 
     /**
@@ -149,8 +161,14 @@ public class PapelCadastro extends javax.swing.JDialog {
         try {
             String descricao = jTextField1.getText();
             Integer numero = Integer.parseInt(jTextField2.getText());
-            PapelBuilder papelBuilder = new PapelBuilder(descricao, numero);
-            new PapelUC().salvar(papelBuilder);
+            
+            if (papel == null) {
+                PapelBuilder papelBuilder = new PapelBuilder(descricao, numero);
+                new PapelUC().salvar(papelBuilder);
+            } else {
+                PapelBuilder papelBuilder = new PapelBuilder(descricao, numero);
+                new PapelUC().atualizar(papelBuilder, papel);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
