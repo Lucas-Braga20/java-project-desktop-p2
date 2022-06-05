@@ -8,3 +8,19 @@
 - [ ] Fazer a lógica de negócio;
 - [ ] Criar autenticação;
 - [ ] Verificar permissões;
+
+### Update
+
+- [X] Produto
+- [ ] ProdutoPedido
+- [ ] Pedido
+- [ ] Cliente
+- [ ] Endereço
+- [X] Papel
+- [X] Cargo
+- [ ] Funcionário
+- [X] Mesa
+- [ ] PratoPedido
+- [X] Prato
+- [ ] IngredientePrato
+- [X] Ingrediente
