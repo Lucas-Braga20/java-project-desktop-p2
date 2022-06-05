@@ -284,7 +284,7 @@
           <SubComponents>
             <Component class="com.toedter.calendar.JDateChooser" name="jtData">
               <Properties>
-                <Property name="dateFormatString" type="java.lang.String" value="DD&apos;/&apos;MM&apos;/&apos;yyyy"/>
+                <Property name="dateFormatString" type="java.lang.String" value="dd&apos;/&apos;MM&apos;/&apos;y"/>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[105, 35]"/>
                 </Property>

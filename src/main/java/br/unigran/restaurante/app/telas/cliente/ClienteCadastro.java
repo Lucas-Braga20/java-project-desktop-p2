@@ -8,6 +8,7 @@ import br.unigran.restaurante.app.builder.ClienteBuilder;
 import br.unigran.restaurante.app.casouso.ClienteUC;
 import br.unigran.restaurante.app.casouso.EnderecoUC;
 import br.unigran.restaurante.app.models.Endereco;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -177,7 +178,7 @@ public class ClienteCadastro extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jtData.setDateFormatString("DD'/'MM'/'yyyy");
+        jtData.setDateFormatString("dd'/'MM'/'y");
         jtData.setPreferredSize(new java.awt.Dimension(105, 35));
 
         jLabel5.setText("Data de nascimento");
@@ -263,8 +264,7 @@ public class ClienteCadastro extends javax.swing.JDialog {
         try {
             String nome = jTextField1.getText();
             String cpf = jTextField2.getText();
-            Date dataNascimento = new Date();
-            // Date dataNascimento = jtData.getDate();
+            Date dataNascimento = jtData.getDate();
             System.out.println(jtData.getDate());
             Endereco endereco = (Endereco) jComboBox1.getSelectedItem();
             ClienteBuilder clienteBuilder = new ClienteBuilder(nome, dataNascimento, cpf, endereco);

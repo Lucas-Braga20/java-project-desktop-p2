@@ -2,17 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.pedido;
+package br.unigran.restaurante.app.telas.cargopapel;
 
-import br.unigran.restaurante.app.telas.pedido.*;
-import br.unigran.restaurante.app.builder.PedidoBuilder;
-import br.unigran.restaurante.app.casouso.PedidoUC;
-import br.unigran.restaurante.app.casouso.PratoUC;
-import br.unigran.restaurante.app.models.Pedido;
-import br.unigran.restaurante.app.models.Prato;
-import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
-import br.unigran.restaurante.app.telas.pratopedido.PratoPedidoListagem;
-import br.unigran.restaurante.app.telas.produtopedido.ProdutoPedidoListagem;
+import br.unigran.restaurante.app.models.Cargo;
+import br.unigran.restaurante.app.models.CargoPapel;
+import br.unigran.restaurante.app.persistence.CargoPapelDAO;
+import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,36 +15,39 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Lucas
  */
-public class PedidoLstagem extends javax.swing.JDialog {
+public class CargoPapelListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form EnderecosListagem
+     * Creates new form CargoPapelListagem
      */
-    public PedidoLstagem(java.awt.Frame parent, boolean modal) {
+    public CargoPapelListagem(java.awt.Frame parent, boolean modal, Cargo cargo) {
         super(parent, modal);
+        this.cargo = cargo;
         initComponents();
-        carregarTabela();
+        carregarTabela(cargo);
     }
     
+    Cargo cargo;
+    List<CargoPapel> papeis;
     DefaultTableModel tableModel;
     
-    public void carregarTabela() {
+    public void carregarTabela(Cargo cargo) {
         try {
-            List<Pedido> pedidos = new PedidoUC().listarTodos();
-            int tamanho = pedidos.size();
-            String[] colunas = new String[] {"Número do Pedido", "Data", "Situação", "Total", "Cliente", "Funcionario", "Mesa"};
+            papeis = new CargoPapelDAO().listarTodos(cargo);
+            int tamanho = papeis.size();
+            String[] colunas = new String[] {"Número do papel", "Descrição"};
             Object[][] linhas = new Object[tamanho][colunas.length];
-            for (int i = 0; i < pedidos.size(); i++) {
-                linhas[i][0] = pedidos.get(i).getId();
-                linhas[i][1] = pedidos.get(i).getData();
-                linhas[i][2] = pedidos.get(i).getFinalizado();
-                linhas[i][3] = pedidos.get(i).getTotal();
-                linhas[i][4] = pedidos.get(i).getCliente();
-                linhas[i][5] = pedidos.get(i).getFuncionario();
-                linhas[i][6] = pedidos.get(i).getMesa();
+            for (int i = 0; i < papeis.size(); i++) {
+                linhas[i][0] = papeis.get(i).getPapel().getNumero();
+                linhas[i][1] = papeis.get(i).getPapel().getDescricao();
             }
-            tableModel = new DefaultTableModel(linhas, colunas);
-            jTableCargos.setModel(tableModel);
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -68,25 +66,23 @@ public class PedidoLstagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCargos = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de pedidos");
+        setTitle("Listagem de papeis para o cargo");
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar Pedido");
+        jButtonAdicionar.setText("Adicionar Papel");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,10 +91,7 @@ public class PedidoLstagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar Pedido");
-        MenuBotoes.add(jButtonAtualizar);
-
-        jButtonRemover.setText("Remover Pedido");
+        jButtonRemover.setText("Remover Papel");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -106,27 +99,11 @@ public class PedidoLstagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
-        jButton1.setText("Ver Produtos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        MenuBotoes.add(jButton1);
-
-        jButton2.setText("Ver Pratos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        MenuBotoes.add(jButton2);
-
         Cabecalho.add(MenuBotoes);
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -134,8 +111,8 @@ public class PedidoLstagem extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTableCargos);
-        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTable1.setCellEditor(null);
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -145,7 +122,7 @@ public class PedidoLstagem extends javax.swing.JDialog {
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -165,43 +142,28 @@ public class PedidoLstagem extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new PedidoCadastro(new javax.swing.JFrame(), true).setVisible(true);
-        carregarTabela();
+        new CargoPapelCadastro(new javax.swing.JFrame(), true, cargo).setVisible(true);
+        carregarTabela(cargo);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new DAO<CargoPapel>().remover(papeis.get(indice).getId(), CargoPapel.class);
+            carregarTabela(cargo);
+        } catch(Exception e) {
+            System.err.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        try {
-            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
-            Pedido pedido = new PedidoUC().consultarPorId(id);
-            new ProdutoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
-        } catch(Exception e) {
-            System.err.println(e);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        try {
-            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
-            Pedido pedido = new PedidoUC().consultarPorId(id);
-            new PratoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,27 +182,20 @@ public class PedidoLstagem extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PedidoLstagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PedidoLstagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PedidoLstagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PedidoLstagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PedidoLstagem dialog = new PedidoLstagem(new javax.swing.JFrame(), true);
+                CargoPapelListagem dialog = new CargoPapelListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -257,13 +212,10 @@ public class PedidoLstagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCargos;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

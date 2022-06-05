@@ -1,10 +1,14 @@
 package br.unigran.restaurante.app.models;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Mesa implements Serializable {
@@ -15,6 +19,10 @@ public class Mesa implements Serializable {
     private Integer numero;
     
     private Boolean ocupada;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "mesaId")
+    private List<Pedido> pedidos;
 
     public Boolean getOcupada() {
         return ocupada;

@@ -26,9 +26,12 @@ public class IngredienteListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    List<Ingrediente> ingredientes;
+    
     public void carregarTabela() {
         try {
-            List<Ingrediente> ingredientes = new IngredienteUC().listarTodos();
+            ingredientes = new IngredienteUC().listarTodos();
             int tamanho = ingredientes.size();
             String[] colunas = new String[] {"Descrição", "Quantidade", "Unidade de medida", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
@@ -38,7 +41,13 @@ public class IngredienteListagem extends javax.swing.JDialog {
                 linhas[i][2] = ingredientes.get(i).getUnidadeMedida();
                 linhas[i][3] = ingredientes.get(i).getValor();
             }
-            jTable1.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -67,12 +76,11 @@ public class IngredienteListagem extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de funcionários");
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
-        MenuBotoes.setLayout(new java.awt.GridLayout());
+        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonAdicionar.setText("Adicionar");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
@@ -109,6 +117,7 @@ public class IngredienteListagem extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCellEditor(null);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -148,6 +157,13 @@ public class IngredienteListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new IngredienteUC().remover(ingredientes.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

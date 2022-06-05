@@ -2,31 +2,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.cargo;
+package br.unigran.restaurante.app.telas.cargopapel;
 
-import br.unigran.restaurante.app.builder.CargoBuilder;
 import br.unigran.restaurante.app.builder.CargoPapelBuilder;
 import br.unigran.restaurante.app.casouso.CargoPapelUC;
-import br.unigran.restaurante.app.casouso.CargoUC;
 import br.unigran.restaurante.app.casouso.PapelUC;
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.Papel;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 
 /**
  *
  * @author Lucas
  */
-public class CargoCadastro extends javax.swing.JDialog {
+public class CargoPapelCadastro extends javax.swing.JDialog {
 
     /**
-     * Creates new form CargoCadastro
+     * Creates new form CargoPapelCadastro
      */
-    public CargoCadastro(java.awt.Frame parent, boolean modal) {
+    public CargoPapelCadastro(java.awt.Frame parent, boolean modal, Cargo cargo) {
         super(parent, modal);
+        this.cargo = cargo;
         initComponents();
+        carregarPapeis();
+    }
+    
+    Cargo cargo;
+    
+    public void carregarPapeis() {
+        try {
+            List<Papel> papeis = new PapelUC().listarTodos();
+            jComboBox1.setModel(new DefaultComboBoxModel(papeis.toArray()));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
@@ -42,48 +52,46 @@ public class CargoCadastro extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jComboBox1 = new javax.swing.JComboBox<>();
         Rodape = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de cargo");
+        setTitle("Cadastro de papel no cargo");
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
-        jLabel2.setText("Cadastrar cargo");
+        jLabel2.setText("Cadastrar papel no cargo");
 
         javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
         Cabecalho.setLayout(CabecalhoLayout);
         CabecalhoLayout.setHorizontalGroup(
             CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 599, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
-                    .addGap(0, 258, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addGap(0, 258, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         CabecalhoLayout.setVerticalGroup(
             CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 40, Short.MAX_VALUE)
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
-                    .addGap(0, 12, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addGap(0, 12, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jLabel1.setText("Descrição");
+        jLabel1.setText("Papel");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -92,23 +100,23 @@ public class CargoCadastro extends javax.swing.JDialog {
             .addGroup(CorpoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CorpoLayout.createSequentialGroup()
+            .addGroup(CorpoLayout.createSequentialGroup()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(347, Short.MAX_VALUE))
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
 
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
-        Rodape.setLayout(new java.awt.GridLayout(1, 0));
+        Rodape.setLayout(new java.awt.GridLayout());
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -139,9 +147,9 @@ public class CargoCadastro extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-            String descricao = jTextArea1.getText();
-            CargoBuilder cargoBuilder = new CargoBuilder(descricao);
-            new CargoUC().salvar(cargoBuilder);
+            Papel papel = (Papel) jComboBox1.getSelectedItem();
+            CargoPapelBuilder cargoPapelBuilder = new CargoPapelBuilder(papel, cargo);
+            new CargoPapelUC().salvar(cargoPapelBuilder);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -166,20 +174,20 @@ public class CargoCadastro extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CargoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CargoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CargoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CargoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CargoPapelCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CargoCadastro dialog = new CargoCadastro(new javax.swing.JFrame(), true);
+                CargoPapelCadastro dialog = new CargoPapelCadastro(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -197,9 +205,8 @@ public class CargoCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

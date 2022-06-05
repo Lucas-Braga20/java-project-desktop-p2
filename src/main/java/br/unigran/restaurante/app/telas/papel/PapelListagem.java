@@ -7,6 +7,7 @@ package br.unigran.restaurante.app.telas.papel;
 import br.unigran.restaurante.app.casouso.CargoUC;
 import br.unigran.restaurante.app.casouso.PapelUC;
 import br.unigran.restaurante.app.models.Papel;
+import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,19 +26,25 @@ public class PapelListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    List<Papel> papeis;
     DefaultTableModel tableModel;
     
     public void carregarTabela() {
         try {
-            List<Papel> papeis = new PapelUC().listarTodos();
+            papeis = new PapelUC().listarTodos();
             int tamanho = papeis.size();
             String[] colunas = new String[] {"Número do papel", "Descrição"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < papeis.size(); i++) {
-                linhas[i][0] = papeis.get(i).getId();
+                linhas[i][0] = papeis.get(i).getNumero();
                 linhas[i][1] = papeis.get(i).getDescricao();
             }
-            tableModel = new DefaultTableModel(linhas, colunas);
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.out.println(e);
@@ -107,6 +114,7 @@ public class PapelListagem extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCellEditor(null);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -146,6 +154,13 @@ public class PapelListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new DAO<Papel>().remover(papeis.get(indice).getId(), Papel.class);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

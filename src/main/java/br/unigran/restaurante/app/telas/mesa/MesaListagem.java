@@ -25,17 +25,26 @@ public class MesaListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    List<Mesa> mesas;
+    DefaultTableModel tableModel;
+    
     public void carregarTabela() {
         try {
-            List<Mesa> mesas = new MesaUC().listarTodos();
+            mesas = new MesaUC().listarTodos();
             int tamanho = mesas.size();
             String[] colunas = new String[] {"Número da mesa", "Ocupada"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < mesas.size(); i++) {
-                linhas[i][0] = mesas.get(i).getId();
+                linhas[i][0] = mesas.get(i).getNumero();
                 linhas[i][1] = mesas.get(i).getOcupada();
             }
-            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTableCargos.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -80,6 +89,11 @@ public class MesaListagem extends javax.swing.JDialog {
         MenuBotoes.add(jButtonAdicionar);
 
         jButtonOcupar.setText("Ocupar Mesa");
+        jButtonOcupar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonOcuparActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonOcupar);
 
         jButtonRemover.setText("Remover Mesa");
@@ -102,7 +116,7 @@ public class MesaListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setColumnSelectionAllowed(true);
+        jTableCargos.setCellEditor(null);
         jScrollPane1.setViewportView(jTableCargos);
         jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -143,12 +157,23 @@ public class MesaListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTableCargos.getSelectedRow();
+            new MesaUC().remover(mesas.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOcuparActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonOcuparActionPerformed
 
     /**
      * @param args the command line arguments

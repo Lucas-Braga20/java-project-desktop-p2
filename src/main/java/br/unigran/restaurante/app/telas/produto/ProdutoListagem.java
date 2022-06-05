@@ -8,6 +8,7 @@ import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.casouso.ProdutoUC;
 import br.unigran.restaurante.app.models.Prato;
 import br.unigran.restaurante.app.models.Produto;
+import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,9 +27,12 @@ public class ProdutoListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    List<Produto> produtos;
+    DefaultTableModel tableModel;
+    
     public void carregarTabela() {
         try {
-            List<Produto> produtos = new ProdutoUC().listarTodos();
+            produtos = new ProdutoUC().listarTodos();
             int tamanho = produtos.size();
             String[] colunas = new String[] {"Nome", "Descrição", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
@@ -37,7 +41,13 @@ public class ProdutoListagem extends javax.swing.JDialog {
                 linhas[i][1] = produtos.get(i).getDescricao();
                 linhas[i][2] = produtos.get(i).getValor();
             }
-            jTable1.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -71,7 +81,7 @@ public class ProdutoListagem extends javax.swing.JDialog {
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.setText("Adicionar Produto");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,10 +90,10 @@ public class ProdutoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.setText("Atualizar Produto");
         MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Remover Produto");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -106,6 +116,7 @@ public class ProdutoListagem extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCellEditor(null);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -145,6 +156,13 @@ public class ProdutoListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new DAO<Produto>().remover(produtos.get(indice).getId(), Produto.class);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

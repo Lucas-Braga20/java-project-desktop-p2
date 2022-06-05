@@ -11,7 +11,7 @@ import br.unigran.restaurante.app.telas.funcionario.FuncionarioListagem;
 import br.unigran.restaurante.app.telas.ingrediente.IngredienteListagem;
 import br.unigran.restaurante.app.telas.mesa.MesaListagem;
 import br.unigran.restaurante.app.telas.papel.PapelListagem;
-import br.unigran.restaurante.app.telas.pedido.PedidoLstagem;
+import br.unigran.restaurante.app.telas.pedido.PedidoListagem;
 import br.unigran.restaurante.app.telas.prato.PratoListagem;
 import br.unigran.restaurante.app.telas.produto.ProdutoListagem;
 
@@ -234,7 +234,7 @@ public class PrincipalTela extends javax.swing.JFrame {
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        new PedidoLstagem(new javax.swing.JFrame(), true).setVisible(true);
+        new PedidoListagem(new javax.swing.JFrame(), true).setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**

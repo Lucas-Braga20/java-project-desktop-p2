@@ -2,45 +2,52 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.funcionario;
+package br.unigran.restaurante.app.telas.pedido;
 
-import br.unigran.restaurante.app.casouso.FuncionarioUC;
-import br.unigran.restaurante.app.casouso.MesaUC;
-import br.unigran.restaurante.app.models.Funcionario;
-import br.unigran.restaurante.app.models.Mesa;
+import br.unigran.restaurante.app.telas.pedido.*;
+import br.unigran.restaurante.app.builder.PedidoBuilder;
+import br.unigran.restaurante.app.casouso.PedidoUC;
+import br.unigran.restaurante.app.casouso.PratoUC;
+import br.unigran.restaurante.app.models.Pedido;
+import br.unigran.restaurante.app.models.Prato;
+import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
+import br.unigran.restaurante.app.telas.pratopedido.PratoPedidoListagem;
+import br.unigran.restaurante.app.telas.produtopedido.ProdutoPedidoListagem;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author laboratorio
+ * @author Lucas
  */
-public class FuncionarioListagem extends javax.swing.JDialog {
+public class PedidoListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form FuncionarioListagem
+     * Creates new form EnderecosListagem
      */
-    public FuncionarioListagem(java.awt.Frame parent, boolean modal) {
+    public PedidoListagem(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         carregarTabela();
     }
     
+    List<Pedido> pedidos;
     DefaultTableModel tableModel;
-    List<Funcionario> funcionarios;
     
     public void carregarTabela() {
         try {
-            funcionarios = new FuncionarioUC().listarTodos();
-            int tamanho = funcionarios.size();
-            String[] colunas = new String[] {"Nome", "Data de Nascimento", "CPF", "Cargo", "Endereco"};
+            pedidos = new PedidoUC().listarTodos();
+            int tamanho = pedidos.size();
+            String[] colunas = new String[] {"Número do Pedido", "Data", "Situação", "Total", "Cliente", "Funcionario", "Mesa"};
             Object[][] linhas = new Object[tamanho][colunas.length];
-            for (int i = 0; i < funcionarios.size(); i++) {
-                linhas[i][0] = funcionarios.get(i).getNome();
-                linhas[i][1] = funcionarios.get(i).getDataNascimento();
-                linhas[i][2] = funcionarios.get(i).getCpf();
-                linhas[i][3] = funcionarios.get(i).getCargo().getDescricao();
-                linhas[i][4] = funcionarios.get(i).getEndereco().getRua() + funcionarios.get(i).getEndereco().getNumero();
+            for (int i = 0; i < pedidos.size(); i++) {
+                linhas[i][0] = pedidos.get(i).getId();
+                linhas[i][1] = pedidos.get(i).getData();
+                linhas[i][2] = pedidos.get(i).getFinalizado();
+                linhas[i][3] = pedidos.get(i).getTotal();
+                linhas[i][4] = pedidos.get(i).getCliente();
+                linhas[i][5] = pedidos.get(i).getFuncionario();
+                linhas[i][6] = pedidos.get(i).getMesa();
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
                 @Override
@@ -48,7 +55,7 @@ public class FuncionarioListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTable1.setModel(tableModel);
+            jTableCargos.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -69,21 +76,23 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCargos = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de funcionário");
+        setTitle("Listagem de pedidos");
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.setText("Adicionar Pedido");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,10 +101,10 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.setText("Atualizar Pedido");
         MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Remover Pedido");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -103,21 +112,37 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
+        jButton1.setText("Ver Produtos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton1);
+
+        jButton2.setText("Ver Pratos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton2);
+
         Cabecalho.add(MenuBotoes);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
+
+        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jTable1.setCellEditor(null);
-        jScrollPane1.setViewportView(jTable1);
+        jTableCargos.setCellEditor(null);
+        jScrollPane1.setViewportView(jTableCargos);
+        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -130,6 +155,8 @@ public class FuncionarioListagem extends javax.swing.JDialog {
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
+        getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
+
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
         Rodape.setLayout(new java.awt.CardLayout());
 
@@ -141,48 +168,22 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         });
         Rodape.add(jButtonSair, "card2");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Corpo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Rodape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(Cabecalho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(Corpo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(Rodape, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        getContentPane().add(Rodape, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new FuncionarioCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new PedidoCadastro(new javax.swing.JFrame(), true).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
-            new FuncionarioUC().remover(funcionarios.get(indice).getId());
+            Integer indice = jTableCargos.getSelectedRow();
+            new PedidoUC().remover(pedidos.get(indice).getId());
             carregarTabela();
         } catch (Exception e) {
             System.out.println(e);
@@ -193,6 +194,28 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
+            Pedido pedido = new PedidoUC().consultarPorId(id);
+            new ProdutoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        } catch(Exception e) {
+            System.err.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
+            Pedido pedido = new PedidoUC().consultarPorId(id);
+            new PratoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,26 +228,41 @@ public class FuncionarioListagem extends javax.swing.JDialog {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("FlatLaf Dark".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FuncionarioListagem dialog = new FuncionarioListagem(new javax.swing.JFrame(), true);
+                PedidoListagem dialog = new PedidoListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -241,11 +279,13 @@ public class FuncionarioListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableCargos;
     // End of variables declaration//GEN-END:variables
 }

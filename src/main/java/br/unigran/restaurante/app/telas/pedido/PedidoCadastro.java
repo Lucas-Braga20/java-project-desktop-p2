@@ -129,9 +129,9 @@ public class PedidoCadastro extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Data de nascimento");
+        jLabel3.setText("Data");
 
-        jtData.setDateFormatString("dd/MM/YYYY");
+        jtData.setDateFormatString("d'/'MM'/'y");
         jtData.setPreferredSize(new java.awt.Dimension(105, 35));
 
         jToggleButton1.setText("Finalizado");

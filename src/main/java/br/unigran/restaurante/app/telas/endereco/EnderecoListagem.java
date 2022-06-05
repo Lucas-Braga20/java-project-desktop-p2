@@ -8,6 +8,7 @@ import br.unigran.restaurante.app.telas.endereco.*;
 import br.unigran.restaurante.app.builder.EnderecoBuilder;
 import br.unigran.restaurante.app.casouso.EnderecoUC;
 import br.unigran.restaurante.app.models.Endereco;
+import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,9 +27,12 @@ public class EnderecoListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    List<Endereco> enderecos;
+    
     public void carregarTabela() {
         try {
-            List<Endereco> enderecos = new EnderecoUC().listarTodos();
+            enderecos = new EnderecoUC().listarTodos();
             int tamanho = enderecos.size();
             String[] colunas = new String[] {"Número do Endereco", "Rua", "Numero", "Bairro", "Cidade"};
             Object[][] linhas = new Object[tamanho][colunas.length];
@@ -39,7 +43,13 @@ public class EnderecoListagem extends javax.swing.JDialog {
                 linhas[i][3] = enderecos.get(i).getBairro();
                 linhas[i][4] = enderecos.get(i).getCidade();
             }
-            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -62,7 +72,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCargos = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -103,7 +113,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -111,9 +121,9 @@ public class EnderecoListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTableCargos);
-        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTable1.setCellEditor(null);
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -152,6 +162,13 @@ public class EnderecoListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new DAO<Endereco>().remover(enderecos.get(indice).getId(), Endereco.class);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -218,6 +235,6 @@ public class EnderecoListagem extends javax.swing.JDialog {
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCargos;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

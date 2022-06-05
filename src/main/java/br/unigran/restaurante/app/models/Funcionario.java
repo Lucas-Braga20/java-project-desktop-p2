@@ -1,10 +1,13 @@
 package br.unigran.restaurante.app.models;
 
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -19,12 +22,16 @@ public class Funcionario extends Usuario {
     private String cpf;
 
     @ManyToOne
-    @JoinColumn(name = "cargoId", nullable = true)
+    @JoinColumn(name = "cargoId", nullable = false)
     private Cargo cargo;
 
     @ManyToOne
     @JoinColumn(name = "enderecoId", nullable = false)
     private Endereco endereco;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "funcionarioId")
+    private List<Pedido> pedidos;
 
     public String getNome() {
         return nome;

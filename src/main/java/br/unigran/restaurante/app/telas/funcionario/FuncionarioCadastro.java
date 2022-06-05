@@ -145,7 +145,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
 
         jLabel3.setText("Data de nascimento");
 
-        jtData.setDateFormatString("dd/MM/YYYY");
+        jtData.setDateFormatString("d'/'MM'/'y");
         jtData.setPreferredSize(new java.awt.Dimension(105, 35));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);

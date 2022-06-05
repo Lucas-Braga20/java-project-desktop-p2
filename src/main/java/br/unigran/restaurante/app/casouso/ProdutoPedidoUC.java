@@ -21,8 +21,8 @@ public class ProdutoPedidoUC {
     return produtoPedidoAtualizado;
   }
 
-  public void remover(Long id) throws Exception {
-    new DAO<ProdutoPedido>().remover(id.intValue(), ProdutoPedido.class);
+  public void remover(Integer id) throws Exception {
+    new DAO<ProdutoPedido>().remover(id, ProdutoPedido.class);
   }
 
   public List<ProdutoPedido> listarTodos() throws Exception {

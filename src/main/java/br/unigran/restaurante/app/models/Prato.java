@@ -1,12 +1,16 @@
 package br.unigran.restaurante.app.models;
 
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Prato implements Serializable {
@@ -22,7 +26,15 @@ public class Prato implements Serializable {
 
     @Column(scale = 9, precision = 2)
     private Float valor;
-
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pratoId")
+    List<IngredientePrato> ingredientePratos;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "pratoId")
+    List<PratoPedido> pratoPedidos;
+    
     public String getDescricao() {
         return descricao;
     }

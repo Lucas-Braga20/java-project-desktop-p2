@@ -2,6 +2,8 @@ package br.unigran.restaurante.app.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 @Entity
@@ -29,6 +32,10 @@ public class Cliente implements Serializable {
     @ManyToOne
     @JoinColumn(name = "enderecoId", nullable = false)
     private Endereco endereco;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "clienteId")
+    private List<Pedido> pedidos;
 
     public Integer getId() {
         return id;

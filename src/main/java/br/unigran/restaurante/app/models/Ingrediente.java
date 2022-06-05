@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import br.unigran.restaurante.app.enums.UnidadeMedida;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Ingrediente implements Serializable {
@@ -28,6 +32,10 @@ public class Ingrediente implements Serializable {
 
     @Column(scale = 9, precision = 2)
     private Float valor;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ingredienteId")
+    private List<IngredientePrato> ingredientePratos;
 
     public Float getValor() {
         return valor;

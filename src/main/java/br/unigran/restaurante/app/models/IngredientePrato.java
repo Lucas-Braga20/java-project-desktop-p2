@@ -30,7 +30,7 @@ public class IngredientePrato implements Serializable {
     private Float quantidade;
 
     @ManyToOne
-    @JoinColumn(name = "ingrediteId", nullable = false)
+    @JoinColumn(name = "ingredienteId", nullable = false)
     private Ingrediente ingrediente;
 
     @ManyToOne

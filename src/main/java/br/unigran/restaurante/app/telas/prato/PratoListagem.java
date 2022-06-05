@@ -28,11 +28,12 @@ public class PratoListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    List<Prato> pratos;
     DefaultTableModel tableModel;
     
     public void carregarTabela() {
         try {
-            List<Prato> pratos = new PratoUC().listarTodos();
+            pratos = new PratoUC().listarTodos();
             int tamanho = pratos.size();
             String[] colunas = new String[] {"Id", "Nome", "Descrição", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
@@ -42,7 +43,12 @@ public class PratoListagem extends javax.swing.JDialog {
                 linhas[i][2] = pratos.get(i).getDescricao();
                 linhas[i][3] = pratos.get(i).getValor();
             }
-            tableModel = new DefaultTableModel(linhas, colunas);
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.out.println(e);
@@ -121,6 +127,7 @@ public class PratoListagem extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setCellEditor(null);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -160,6 +167,13 @@ public class PratoListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new PratoUC().remover(pratos.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

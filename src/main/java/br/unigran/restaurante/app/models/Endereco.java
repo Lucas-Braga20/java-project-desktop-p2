@@ -10,6 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import br.unigran.restaurante.app.enums.Cidade;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Endereco implements Serializable {
@@ -28,6 +32,14 @@ public class Endereco implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private Cidade cidade;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "enderecoId")
+    List<Cliente> clientes;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "enderecoId")
+    List<Funcionario> funcionarios;
 
     public Integer getId() {
         return id;

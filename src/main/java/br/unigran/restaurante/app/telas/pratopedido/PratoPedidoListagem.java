@@ -4,6 +4,7 @@
  */
 package br.unigran.restaurante.app.telas.pratopedido;
 
+import br.unigran.restaurante.app.casouso.PratoPedidoUC;
 import br.unigran.restaurante.app.models.Pedido;
 import br.unigran.restaurante.app.models.PratoPedido;
 import br.unigran.restaurante.app.persistence.PratoPedidoDAO;
@@ -28,19 +29,25 @@ public class PratoPedidoListagem extends javax.swing.JDialog {
     
     Pedido pedido;
     DefaultTableModel tableModel;
+    List<PratoPedido> pratos;
     
     public void carregarTabela(Pedido pedido) {
         try {
-            List<PratoPedido> pratos = new PratoPedidoDAO().listarTodos(pedido);
+            pratos = new PratoPedidoDAO().listarTodos(pedido);
             int tamanho = pratos.size();
             String[] colunas = new String[] {"Prato", "Quantidade", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < pratos.size(); i++) {
-                linhas[i][0] = pratos.get(i).getPrato().getDescricao();
+                linhas[i][0] = pratos.get(i).getPrato().getNome();
                 linhas[i][1] = pratos.get(i).getQuantidade();
                 linhas[i][2] = pratos.get(i).getValor();
             }
-            tableModel = new DefaultTableModel(linhas, colunas);
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
             jTable1.setModel(tableModel);
         } catch (Exception e) {
             System.out.println(e);
@@ -68,12 +75,11 @@ public class PratoPedidoListagem extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de pratos para o pedido");
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
-        MenuBotoes.setLayout(new java.awt.GridLayout());
+        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonAdicionar.setText("Adicionar Prato");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
@@ -104,6 +110,7 @@ public class PratoPedidoListagem extends javax.swing.JDialog {
 
             }
         ));
+        jTable1.setCellEditor(null);
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -143,6 +150,13 @@ public class PratoPedidoListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new PratoPedidoUC().remover(pratos.get(indice).getId());
+            carregarTabela(pedido);
+        } catch(Exception e) {
+            System.err.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

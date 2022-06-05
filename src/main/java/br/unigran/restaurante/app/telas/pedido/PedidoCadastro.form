@@ -169,12 +169,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Data de nascimento"/>
+            <Property name="text" type="java.lang.String" value="Data"/>
           </Properties>
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="jtData">
           <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value="dd/MM/YYYY"/>
+            <Property name="dateFormatString" type="java.lang.String" value="d&apos;/&apos;MM&apos;/&apos;y"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[105, 35]"/>
             </Property>

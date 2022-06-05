@@ -26,9 +26,12 @@ public class ClienteListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    List<Cliente> clientes;
+    
     public void carregarTabela() {
         try {
-            List<Cliente> clientes = new ClienteUC().listarTodos();
+            clientes = new ClienteUC().listarTodos();
             int tamanho = clientes.size();
             String[] colunas = new String[] {"Id", "Nome", "CPF", "Data de nascimento", "Endereço"};
             Object[][] linhas = new Object[tamanho][colunas.length];
@@ -39,7 +42,13 @@ public class ClienteListagem extends javax.swing.JDialog {
                 linhas[i][3] = clientes.get(i).getDataNascimento();
                 linhas[i][4] = clientes.get(i).getEndereco().getRua()+ ", " + clientes.get(i).getEndereco().getNumero();
             }
-            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -62,7 +71,7 @@ public class ClienteListagem extends javax.swing.JDialog {
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCargos = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -98,7 +107,7 @@ public class ClienteListagem extends javax.swing.JDialog {
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -106,9 +115,9 @@ public class ClienteListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setColumnSelectionAllowed(true);
-        jScrollPane1.setViewportView(jTableCargos);
-        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTable1.setCellEditor(null);
+        jScrollPane1.setViewportView(jTable1);
+        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -147,6 +156,13 @@ public class ClienteListagem extends javax.swing.JDialog {
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new ClienteUC().remover(clientes.get(indice).getId());
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -213,6 +229,6 @@ public class ClienteListagem extends javax.swing.JDialog {
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCargos;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
