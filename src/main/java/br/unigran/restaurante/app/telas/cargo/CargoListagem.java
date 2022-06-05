@@ -73,6 +73,7 @@ public class CargoListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de cargo");
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setPreferredSize(new java.awt.Dimension(324, 40));
@@ -117,7 +118,7 @@ public class CargoListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setColumnSelectionAllowed(true);
+        jTableCargos.setCellSelectionEnabled(false);
         jScrollPane1.setViewportView(jTableCargos);
         jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 

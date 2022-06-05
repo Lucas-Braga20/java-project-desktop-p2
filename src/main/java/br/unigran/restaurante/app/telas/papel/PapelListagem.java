@@ -4,6 +4,7 @@
  */
 package br.unigran.restaurante.app.telas.papel;
 
+import br.unigran.restaurante.app.casouso.CargoUC;
 import br.unigran.restaurante.app.casouso.PapelUC;
 import br.unigran.restaurante.app.models.Papel;
 import java.util.List;
@@ -24,6 +25,8 @@ public class PapelListagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    
     public void carregarTabela() {
         try {
             List<Papel> papeis = new PapelUC().listarTodos();
@@ -31,11 +34,11 @@ public class PapelListagem extends javax.swing.JDialog {
             String[] colunas = new String[] {"Número do papel", "Descrição"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < papeis.size(); i++) {
-                System.out.println(i);
                 linhas[i][0] = papeis.get(i).getId();
                 linhas[i][1] = papeis.get(i).getDescricao();
             }
-            jTable1.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas);
+            jTable1.setModel(tableModel);
         } catch(Exception e) {
             System.out.println(e);
         }
@@ -53,7 +56,7 @@ public class PapelListagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonOcupar = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,7 +72,7 @@ public class PapelListagem extends javax.swing.JDialog {
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar Mesa");
+        jButtonAdicionar.setText("Adicionar Papel");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,10 +81,10 @@ public class PapelListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Mesa");
-        MenuBotoes.add(jButtonOcupar);
+        jButtonAtualizar.setText("Atualizar Papel");
+        MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover Mesa");
+        jButtonRemover.setText("Remover Papel");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -137,12 +140,12 @@ public class PapelListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        new PapelCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
@@ -198,7 +201,7 @@ public class PapelListagem extends javax.swing.JDialog {
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;

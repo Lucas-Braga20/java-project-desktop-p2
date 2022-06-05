@@ -2,49 +2,47 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.prato;
+package br.unigran.restaurante.app.telas.pratopedido;
 
-import br.unigran.restaurante.app.casouso.CargoUC;
-import br.unigran.restaurante.app.casouso.PapelUC;
-import br.unigran.restaurante.app.casouso.PratoUC;
-import br.unigran.restaurante.app.models.Papel;
-import br.unigran.restaurante.app.models.Prato;
-import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
+import br.unigran.restaurante.app.models.Pedido;
+import br.unigran.restaurante.app.models.PratoPedido;
+import br.unigran.restaurante.app.persistence.PratoPedidoDAO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author laboratorio
+ * @author Lucas
  */
-public class PratoListagem extends javax.swing.JDialog {
+public class PratoPedidoListagem extends javax.swing.JDialog {
 
     /**
-     * Creates new form PratoListagem
+     * Creates new form PratoPedidoListagem
      */
-    public PratoListagem(java.awt.Frame parent, boolean modal) {
+    public PratoPedidoListagem(java.awt.Frame parent, boolean modal, Pedido pedido) {
         super(parent, modal);
+        this.pedido = pedido;
         initComponents();
-        carregarTabela();
+        carregarTabela(pedido);
     }
     
+    Pedido pedido;
     DefaultTableModel tableModel;
     
-    public void carregarTabela() {
+    public void carregarTabela(Pedido pedido) {
         try {
-            List<Prato> pratos = new PratoUC().listarTodos();
+            List<PratoPedido> pratos = new PratoPedidoDAO().listarTodos(pedido);
             int tamanho = pratos.size();
-            String[] colunas = new String[] {"Id", "Nome", "Descrição", "Valor"};
+            String[] colunas = new String[] {"Prato", "Quantidade", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < pratos.size(); i++) {
-                linhas[i][0] = pratos.get(i).getId();
-                linhas[i][1] = pratos.get(i).getNome();
-                linhas[i][2] = pratos.get(i).getDescricao();
-                linhas[i][3] = pratos.get(i).getValor();
+                linhas[i][0] = pratos.get(i).getPrato().getDescricao();
+                linhas[i][1] = pratos.get(i).getQuantidade();
+                linhas[i][2] = pratos.get(i).getValor();
             }
             tableModel = new DefaultTableModel(linhas, colunas);
             jTable1.setModel(tableModel);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
@@ -61,9 +59,7 @@ public class PratoListagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -71,14 +67,15 @@ public class PratoListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listagem de pratos");
+        setTitle("Listagem de pratos para o pedido");
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
+        Cabecalho.setLayout(new java.awt.GridLayout());
 
-        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
+        MenuBotoes.setLayout(new java.awt.GridLayout());
 
-        jButtonAdicionar.setText("Adicionar");
+        jButtonAdicionar.setText("Adicionar Prato");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,10 +84,7 @@ public class PratoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonAtualizar.setText("Atualizar");
-        MenuBotoes.add(jButtonAtualizar);
-
-        jButtonRemover.setText("Remover");
+        jButtonRemover.setText("Remover Prato");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
@@ -98,27 +92,16 @@ public class PratoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
-        jButton1.setText("Ver Ingredientes");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        MenuBotoes.add(jButton1);
-
         Cabecalho.add(MenuBotoes);
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -154,8 +137,8 @@ public class PratoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new PratoCadastro(new javax.swing.JFrame(), true).setVisible(true);
-        carregarTabela();
+        new PratoPedidoCadastro(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        carregarTabela(pedido);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
@@ -166,17 +149,6 @@ public class PratoListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        try {
-            Integer id = (Integer) tableModel.getDataVector().elementAt(jTable1.getSelectedRow()).get(0);
-            Prato prato = new PratoUC().consultarPorId(id);
-            new IngredientePratoListagem(new javax.swing.JFrame(), true, prato).setVisible(true);
-        } catch(Exception e) {
-            System.err.println(e);
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,20 +167,20 @@ public class PratoListagem extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PratoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoListagem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PratoListagem dialog = new PratoListagem(new javax.swing.JFrame(), true);
+                PratoPedidoListagem dialog = new PratoPedidoListagem(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -225,9 +197,7 @@ public class PratoListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;

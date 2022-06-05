@@ -16,7 +16,7 @@ public class Cargo implements Serializable {
 
     @Column(columnDefinition = "TEXT")
     private String descricao;
-
+    
     public Integer getId() {
         return id;
     }

@@ -33,7 +33,6 @@ public class MesaCadastro extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
-        Numero = new javax.swing.JPanel();
         JLabelNumero = new javax.swing.JLabel();
         jTextFieldNumero = new javax.swing.JTextField();
         Rodape = new javax.swing.JPanel();
@@ -52,7 +51,7 @@ public class MesaCadastro extends javax.swing.JDialog {
         Cabecalho.setLayout(CabecalhoLayout);
         CabecalhoLayout.setHorizontalGroup(
             CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGap(0, 812, Short.MAX_VALUE)
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -71,34 +70,29 @@ public class MesaCadastro extends javax.swing.JDialog {
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        Corpo.setLayout(new java.awt.BorderLayout());
-
         JLabelNumero.setText("Número");
 
-        jTextFieldNumero.setPreferredSize(new java.awt.Dimension(500, 22));
+        jTextFieldNumero.setPreferredSize(new java.awt.Dimension(500, 35));
 
-        javax.swing.GroupLayout NumeroLayout = new javax.swing.GroupLayout(Numero);
-        Numero.setLayout(NumeroLayout);
-        NumeroLayout.setHorizontalGroup(
-            NumeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NumeroLayout.createSequentialGroup()
+        javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
+        Corpo.setLayout(CorpoLayout);
+        CorpoLayout.setHorizontalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CorpoLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JLabelNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        CorpoLayout.setVerticalGroup(
+            CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CorpoLayout.createSequentialGroup()
                 .addComponent(JLabelNumero)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 737, Short.MAX_VALUE)
+                .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
-        NumeroLayout.setVerticalGroup(
-            NumeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(NumeroLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(NumeroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JLabelNumero))
-                .addContainerGap())
-        );
-
-        Corpo.add(Numero, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
 
@@ -190,7 +184,6 @@ public class MesaCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel Cabecalho;
     private javax.swing.JPanel Corpo;
     private javax.swing.JLabel JLabelNumero;
-    private javax.swing.JPanel Numero;
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

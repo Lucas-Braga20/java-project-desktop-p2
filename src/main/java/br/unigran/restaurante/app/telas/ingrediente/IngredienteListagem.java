@@ -142,12 +142,12 @@ public class IngredienteListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        new IngredienteCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

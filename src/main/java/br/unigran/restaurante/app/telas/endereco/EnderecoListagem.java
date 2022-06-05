@@ -67,6 +67,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de endereços");
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
@@ -145,12 +146,12 @@ public class EnderecoListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        new EnderecoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

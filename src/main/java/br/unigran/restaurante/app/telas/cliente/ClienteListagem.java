@@ -30,7 +30,7 @@ public class ClienteListagem extends javax.swing.JDialog {
         try {
             List<Cliente> clientes = new ClienteUC().listarTodos();
             int tamanho = clientes.size();
-            String[] colunas = new String[] {"Número do Endereco", "Rua", "Numero", "Bairro", "Cidade"};
+            String[] colunas = new String[] {"Id", "Nome", "CPF", "Data de nascimento", "Endereço"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < clientes.size(); i++) {
                 linhas[i][0] = clientes.get(i).getId();
@@ -67,6 +67,7 @@ public class ClienteListagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de cliente");
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
@@ -140,12 +141,12 @@ public class ClienteListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new ClienteCadastro(parent, true).setVisible(true);
+        new ClienteCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

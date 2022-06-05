@@ -19,7 +19,7 @@ public class Funcionario extends Usuario {
     private String cpf;
 
     @ManyToOne
-    @JoinColumn(name = "cargoId", nullable = false)
+    @JoinColumn(name = "cargoId", nullable = true)
     private Cargo cargo;
 
     @ManyToOne

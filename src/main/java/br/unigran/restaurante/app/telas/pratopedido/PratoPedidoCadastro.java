@@ -2,12 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package br.unigran.restaurante.app.telas.ingrediente;
+package br.unigran.restaurante.app.telas.pratopedido;
 
-import br.unigran.restaurante.app.builder.IngredienteBuilder;
-import br.unigran.restaurante.app.casouso.IngredienteUC;
-import br.unigran.restaurante.app.enums.UnidadeMedida;
-import java.util.ArrayList;
+import br.unigran.restaurante.app.builder.PratoPedidoBuilder;
+import br.unigran.restaurante.app.casouso.PratoPedidoUC;
+import br.unigran.restaurante.app.casouso.PratoUC;
+import br.unigran.restaurante.app.models.Pedido;
+import br.unigran.restaurante.app.models.Prato;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
@@ -15,23 +16,27 @@ import javax.swing.DefaultComboBoxModel;
  *
  * @author Lucas
  */
-public class IngredienteCadastro extends javax.swing.JDialog {
+public class PratoPedidoCadastro extends javax.swing.JDialog {
 
     /**
-     * Creates new form IngredienteCadastro
+     * Creates new form PratoPedidoCadastro
      */
-    public IngredienteCadastro(java.awt.Frame parent, boolean modal) {
+    public PratoPedidoCadastro(java.awt.Frame parent, boolean modal, Pedido pedido) {
         super(parent, modal);
+        this.pedido = pedido;
         initComponents();
-        carregaUnidadeMedida();
+        carregarPratos();
     }
     
-    public void carregaUnidadeMedida() {
-        List<String> unidadeMedidas = new ArrayList<String>();
-        for (int i = 0; i < UnidadeMedida.values().length; i++) {
-            unidadeMedidas.add(UnidadeMedida.values()[i].toString());
+    Pedido pedido;
+    
+    public void carregarPratos() {
+        try {
+            List<Prato> pratos = new PratoUC().listarTodos();
+            jComboBox1.setModel(new DefaultComboBoxModel(pratos.toArray()));
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        jComboBox1.setModel(new DefaultComboBoxModel(unidadeMedidas.toArray()));
     }
 
     /**
@@ -47,30 +52,28 @@ public class IngredienteCadastro extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         Rodape = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de ingrediente");
+        setTitle("Cadastro de prato para o pedido");
+        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
-        jLabel2.setText("Cadastrar Ingrediente");
+        jLabel2.setText("Cadastrar prato para o pedido");
 
         javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
         Cabecalho.setLayout(CabecalhoLayout);
         CabecalhoLayout.setHorizontalGroup(
             CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 807, Short.MAX_VALUE)
+            .addGap(0, 800, Short.MAX_VALUE)
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -82,31 +85,25 @@ public class IngredienteCadastro extends javax.swing.JDialog {
             .addGap(0, 40, Short.MAX_VALUE)
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
-                    .addGap(0, 12, Short.MAX_VALUE)
+                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel2)
-                    .addGap(0, 12, Short.MAX_VALUE)))
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jLabel1.setText("Descrição");
-
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(500, 86));
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jLabel3.setText("Unidade de medida");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
-
-        jLabel4.setText("Quantidade");
+        jLabel1.setText("Valor");
 
         jTextField1.setPreferredSize(new java.awt.Dimension(64, 35));
 
-        jLabel5.setText("Valor");
+        jLabel3.setText("Quantidade");
+
+        jTextField2.setPreferredSize(new java.awt.Dimension(64, 35));
+
+        jLabel4.setText("Prato");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -116,41 +113,34 @@ public class IngredienteCadastro extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBox1, 0, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CorpoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(325, Short.MAX_VALUE))
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
 
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
-        Rodape.setLayout(new java.awt.GridLayout(1, 0));
+        Rodape.setLayout(new java.awt.GridLayout());
 
         jButton1.setText("Cancelar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -181,13 +171,11 @@ public class IngredienteCadastro extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-            String descricao = jTextArea1.getText();
-            String unidadeMedida = (String) jComboBox1.getSelectedItem();
-            Float quantidade = Float.parseFloat(jTextField1.getText());
-            Float valor = Float.parseFloat(jTextField2.getText());
-            IngredienteBuilder ingredienteBuilder = new IngredienteBuilder(descricao, UnidadeMedida.valueOf(unidadeMedida), valor);
-            ingredienteBuilder.quantidade(quantidade);
-            new IngredienteUC().salvar(ingredienteBuilder);
+            Float valor = Float.parseFloat(jTextField1.getText());
+            Integer quantidade = Integer.parseInt(jTextField2.getText());
+            Prato prato = (Prato) jComboBox1.getSelectedItem();
+            PratoPedidoBuilder pratoPedidoBuilder = new PratoPedidoBuilder(quantidade, valor, prato, pedido);
+            new PratoPedidoUC().salvar(pratoPedidoBuilder);
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -212,20 +200,20 @@ public class IngredienteCadastro extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(IngredienteCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(IngredienteCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(IngredienteCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(IngredienteCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PratoPedidoCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                IngredienteCadastro dialog = new IngredienteCadastro(new javax.swing.JFrame(), true);
+                PratoPedidoCadastro dialog = new PratoPedidoCadastro(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -248,9 +236,6 @@ public class IngredienteCadastro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

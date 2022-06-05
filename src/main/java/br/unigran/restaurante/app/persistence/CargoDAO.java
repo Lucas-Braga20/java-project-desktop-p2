@@ -1,6 +1,7 @@
 package br.unigran.restaurante.app.persistence;
 
 import br.unigran.restaurante.app.models.Cargo;
+import br.unigran.restaurante.app.models.CargoPapel;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -41,6 +42,14 @@ public class CargoDAO {
                 throw new Exception("Não foi possível remover um cargo com esse id.");
             }
             etx.begin();
+            /*
+            em.createQuery(
+                "UPDATE Funcionario f SET f.cargoid = null WHERE f.cargoId = :cargoId"
+            ).setParameter("cargoId", cargo.getId()).executeUpdate();
+            */
+            em.createQuery(
+                "DELETE FROM CargoPapel WHERE cargoid = :cargoId"
+            ).setParameter("cargoId", cargo.getId()).executeUpdate();
             em.remove(cargo);
             etx.commit();
         } catch (Exception e) {

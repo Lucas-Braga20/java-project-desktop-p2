@@ -33,7 +33,6 @@ public class ProdutoListagem extends javax.swing.JDialog {
             String[] colunas = new String[] {"Nome", "Descrição", "Valor"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < produtos.size(); i++) {
-                System.out.println(i);
                 linhas[i][0] = produtos.get(i).getNome();
                 linhas[i][1] = produtos.get(i).getDescricao();
                 linhas[i][2] = produtos.get(i).getValor();
@@ -66,12 +65,11 @@ public class ProdutoListagem extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listagem de produto");
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
-        Cabecalho.setLayout(new java.awt.GridLayout());
+        Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
-        MenuBotoes.setLayout(new java.awt.GridLayout());
+        MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
         jButtonAdicionar.setText("Adicionar");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
@@ -141,12 +139,12 @@ public class ProdutoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        new ProdutoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed

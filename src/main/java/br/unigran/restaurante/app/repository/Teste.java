@@ -1,99 +1,32 @@
 package br.unigran.restaurante.app.repository;
 
-import br.unigran.restaurante.app.enums.UnidadeMedida;
-import br.unigran.restaurante.app.persistence.DAO;
-import java.util.List;
+import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.models.Cargo;
+import br.unigran.restaurante.app.models.IngredientePrato;
+import br.unigran.restaurante.app.models.Prato;
+import br.unigran.restaurante.app.persistence.CargoDAO;
+import br.unigran.restaurante.app.persistence.DAO;
+import br.unigran.restaurante.app.persistence.IngredientePratoDAO;
+import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
+import java.util.List;
 
 public class Teste {
     public static void main(String[] args) {
-        for (int i = 0; i < UnidadeMedida.values().length; i++) {
-            System.out.println(UnidadeMedida.values()[i].toString());
-        }
-        /*
-            CRIAÇÃO GENÉRICO
-
-        Cargo cargoCriado = new Cargo();
-        cargoCriado.setDescricao("Teste dao generico");
-
-        DAO<Cargo> cargoDAO = new DAO<Cargo>();
-
         try {
-            cargoDAO.salvar(cargoCriado, Cargo.class, cargoCriado.getId());
+            Prato prato = new PratoUC().consultarPorId(201);
+            new IngredientePratoListagem(new javax.swing.JFrame(), true, prato).setVisible(true);
         } catch (Exception e) {
             System.out.println(e);
         }
-        */
-
-
-
         /*
-            CONSULTA GENÉRICO
-
-        DAO<Cargo> cargoDAO = new DAO<Cargo>();
         try {
-            Cargo cargoConsultado = cargoDAO.consultarPorId(801, Cargo.class);
-            System.out.println(cargoConsultado.toString());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        */
-
-
-
-        /*
-            CONSULTA TODOS
-
-        DAO<Cargo> cargoDAO = new DAO<Cargo>();
-        try {
-            List<Cargo> cargosConsultados = cargoDAO.listarTodos(Cargo.class);
-            for (int i = 0; i < cargosConsultados.size(); i++) {
-                System.out.println(cargosConsultados.get(i).toString());
+            List<Cargo> cargos = new CargoDAO().listarTodos();
+            for (int i = 0; i < cargos.size(); i++) {
+                System.out.println(cargos.get(i).toString());
             }
-        } catch (Exception e) {
+        } catch(Exception e) {
             System.out.println(e);
         }
         */
-
-
-
-        /*
-            ATUALIZAR
-
-        DAO<Cargo> cargoDAO = new DAO<Cargo>();
-        Cargo cargoConsultado;
-        try {
-            cargoConsultado = cargoDAO.consultarPorId(801, Cargo.class);
-            System.out.println(cargoConsultado.toString());
-
-            cargoConsultado.setDescricao("Descrição DAO atualizado");
-
-            cargoConsultado = cargoDAO.salvar(cargoConsultado, Cargo.class, cargoConsultado.getId());
-
-            System.out.println(cargoConsultado.toString());
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        */
-
-
-
-        /*
-            DELETAR
-        DAO<Cargo> cargoDAO = new DAO<Cargo>();
-        Cargo cargoConsultado;
-        try {
-            cargoConsultado = cargoDAO.consultarPorId(801, Cargo.class);
-            System.out.println(cargoConsultado.toString());
-
-            cargoDAO.remover(cargoConsultado.getId(), Cargo.class);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        */
-    }
-
-    private static boolean CartasEnum(int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

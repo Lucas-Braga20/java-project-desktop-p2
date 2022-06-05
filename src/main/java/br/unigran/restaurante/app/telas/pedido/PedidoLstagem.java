@@ -7,7 +7,12 @@ package br.unigran.restaurante.app.telas.pedido;
 import br.unigran.restaurante.app.telas.pedido.*;
 import br.unigran.restaurante.app.builder.PedidoBuilder;
 import br.unigran.restaurante.app.casouso.PedidoUC;
+import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.models.Pedido;
+import br.unigran.restaurante.app.models.Prato;
+import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
+import br.unigran.restaurante.app.telas.pratopedido.PratoPedidoListagem;
+import br.unigran.restaurante.app.telas.produtopedido.ProdutoPedidoListagem;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +31,8 @@ public class PedidoLstagem extends javax.swing.JDialog {
         carregarTabela();
     }
     
+    DefaultTableModel tableModel;
+    
     public void carregarTabela() {
         try {
             List<Pedido> pedidos = new PedidoUC().listarTodos();
@@ -41,7 +48,8 @@ public class PedidoLstagem extends javax.swing.JDialog {
                 linhas[i][5] = pedidos.get(i).getFuncionario();
                 linhas[i][6] = pedidos.get(i).getMesa();
             }
-            jTableCargos.setModel(new DefaultTableModel(linhas, colunas));
+            tableModel = new DefaultTableModel(linhas, colunas);
+            jTableCargos.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -60,8 +68,10 @@ public class PedidoLstagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonOcupar = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCargos = new javax.swing.JTable();
@@ -69,13 +79,14 @@ public class PedidoLstagem extends javax.swing.JDialog {
         jButtonSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listagem de pedidos");
 
         Cabecalho.setMinimumSize(new java.awt.Dimension(800, 100));
         Cabecalho.setLayout(new java.awt.GridLayout(1, 0));
 
         MenuBotoes.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButtonAdicionar.setText("Adicionar Endereco");
+        jButtonAdicionar.setText("Adicionar Pedido");
         jButtonAdicionar.setPreferredSize(new java.awt.Dimension(81, 40));
         jButtonAdicionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,16 +95,32 @@ public class PedidoLstagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Ocupar Endereco");
-        MenuBotoes.add(jButtonOcupar);
+        jButtonAtualizar.setText("Atualizar Pedido");
+        MenuBotoes.add(jButtonAtualizar);
 
-        jButtonRemover.setText("Remover Endereco");
+        jButtonRemover.setText("Remover Pedido");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRemoverActionPerformed(evt);
             }
         });
         MenuBotoes.add(jButtonRemover);
+
+        jButton1.setText("Ver Produtos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton1);
+
+        jButton2.setText("Ver Pratos");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        MenuBotoes.add(jButton2);
 
         Cabecalho.add(MenuBotoes);
 
@@ -107,7 +134,6 @@ public class PedidoLstagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(jTableCargos);
         jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
@@ -142,18 +168,40 @@ public class PedidoLstagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        // new MesaCadastro(parent, true).setVisible(true);
+        new PedidoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
-        System.out.println("Click no botão de remover");
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
     private void jButtonSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSairActionPerformed
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
+            Pedido pedido = new PedidoUC().consultarPorId(id);
+            new ProdutoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        } catch(Exception e) {
+            System.err.println(e);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
+            Pedido pedido = new PedidoUC().consultarPorId(id);
+            new PratoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,8 +257,10 @@ public class PedidoLstagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;
