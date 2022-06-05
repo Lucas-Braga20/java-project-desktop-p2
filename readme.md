@@ -14,7 +14,7 @@
 - [X] Produto
 - [ ] ProdutoPedido
 - [ ] Pedido
-- [ ] Cliente
+- [X] Cliente
 - [ ] Endereço
 - [X] Papel
 - [X] Cargo

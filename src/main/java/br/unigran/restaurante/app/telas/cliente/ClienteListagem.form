@@ -59,10 +59,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAdicionarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonOcupar">
+            <Component class="javax.swing.JButton" name="jButtonAtualizar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ocupar Cliente"/>
+                <Property name="text" type="java.lang.String" value="Atualizar Cliente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAtualizarActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonRemover">
               <Properties>

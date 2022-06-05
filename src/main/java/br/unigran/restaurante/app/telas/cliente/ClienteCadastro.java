@@ -7,6 +7,7 @@ package br.unigran.restaurante.app.telas.cliente;
 import br.unigran.restaurante.app.builder.ClienteBuilder;
 import br.unigran.restaurante.app.casouso.ClienteUC;
 import br.unigran.restaurante.app.casouso.EnderecoUC;
+import br.unigran.restaurante.app.models.Cliente;
 import br.unigran.restaurante.app.models.Endereco;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,10 +23,23 @@ public class ClienteCadastro extends javax.swing.JDialog {
     /**
      * Creates new form ClienteCadastro
      */
-    public ClienteCadastro(java.awt.Frame parent, boolean modal) {
+    public ClienteCadastro(java.awt.Frame parent, boolean modal, Cliente cliente) {
         super(parent, modal);
         initComponents();
         carregaEnderecos();
+        if (cliente != null) {
+            this.cliente = cliente;
+            carregarCliente();
+        }
+    }
+    
+    Cliente cliente;
+    
+    public void carregarCliente() {
+        jTextField1.setText(cliente.getNome());
+        jTextField2.setText(cliente.getCpf());
+        jComboBox1.setSelectedItem(cliente.getEndereco());
+        jtData.setDate(cliente.getDataNascimento());
     }
     
     public void carregaEnderecos() {
@@ -265,10 +279,15 @@ public class ClienteCadastro extends javax.swing.JDialog {
             String nome = jTextField1.getText();
             String cpf = jTextField2.getText();
             Date dataNascimento = jtData.getDate();
-            System.out.println(jtData.getDate());
             Endereco endereco = (Endereco) jComboBox1.getSelectedItem();
-            ClienteBuilder clienteBuilder = new ClienteBuilder(nome, dataNascimento, cpf, endereco);
-            new ClienteUC().salvar(clienteBuilder);
+            
+            if (cliente == null) {
+                ClienteBuilder clienteBuilder = new ClienteBuilder(nome, dataNascimento, cpf, endereco);
+                new ClienteUC().salvar(clienteBuilder);
+            } else {
+                ClienteBuilder clienteBuilder = new ClienteBuilder(nome, dataNascimento, cpf, endereco);
+                new ClienteUC().atualizar(clienteBuilder, cliente);
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
