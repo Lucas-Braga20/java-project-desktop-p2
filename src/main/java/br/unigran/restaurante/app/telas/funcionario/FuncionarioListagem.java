@@ -93,6 +93,11 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         MenuBotoes.add(jButtonAdicionar);
 
         jButtonAtualizar.setText("Atualizar");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAtualizarActionPerformed(evt);
+            }
+        });
         MenuBotoes.add(jButtonAtualizar);
 
         jButtonRemover.setText("Remover");
@@ -174,7 +179,7 @@ public class FuncionarioListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new FuncionarioCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new FuncionarioCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -193,6 +198,16 @@ public class FuncionarioListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
+
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new FuncionarioCadastro(new javax.swing.JFrame(), true, funcionarios.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments

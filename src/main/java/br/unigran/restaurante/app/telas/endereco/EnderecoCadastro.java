@@ -7,6 +7,7 @@ package br.unigran.restaurante.app.telas.endereco;
 import br.unigran.restaurante.app.builder.EnderecoBuilder;
 import br.unigran.restaurante.app.casouso.EnderecoUC;
 import br.unigran.restaurante.app.enums.Cidade;
+import br.unigran.restaurante.app.models.Endereco;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -20,11 +21,16 @@ public class EnderecoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form EnderecoCadastro
      */
-    public EnderecoCadastro(java.awt.Frame parent, boolean modal) {
+    public EnderecoCadastro(java.awt.Frame parent, boolean modal, Endereco endereco) {
         super(parent, modal);
         initComponents();
-        carregaCidades();
+        if (endereco != null){
+            this.endereco = endereco;
+            carregaCidades();        
+        }
     }
+    
+    Endereco endereco;
     
     public void carregaCidades() {
         List<String> unidadeMedidas = new ArrayList<String>();
@@ -299,7 +305,7 @@ public class EnderecoCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EnderecoCadastro dialog = new EnderecoCadastro(new javax.swing.JFrame(), true);
+                EnderecoCadastro dialog = new EnderecoCadastro(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

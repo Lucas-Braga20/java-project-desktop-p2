@@ -10,6 +10,7 @@ import br.unigran.restaurante.app.casouso.EnderecoUC;
 import br.unigran.restaurante.app.casouso.FuncionarioUC;
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.Endereco;
+import br.unigran.restaurante.app.models.Funcionario;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -23,12 +24,17 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     /**
      * Creates new form FuncionarioCadastro
      */
-    public FuncionarioCadastro(java.awt.Frame parent, boolean modal) {
+    public FuncionarioCadastro(java.awt.Frame parent, boolean modal, Funcionario funcionario) {
         super(parent, modal);
         initComponents();
-        carregaEnderecos();
-        carregaCargos();
+        if(funcionario != null){
+            this.funcionario = funcionario;
+            carregaEnderecos();
+            carregaCargos();
+        }
     }
+    
+    Funcionario funcionario;
     
     public void carregaEnderecos() {
         try {
@@ -416,7 +422,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FuncionarioCadastro dialog = new FuncionarioCadastro(new javax.swing.JFrame(), true);
+                FuncionarioCadastro dialog = new FuncionarioCadastro(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

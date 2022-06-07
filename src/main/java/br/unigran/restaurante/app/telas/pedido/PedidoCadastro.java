@@ -12,6 +12,7 @@ import br.unigran.restaurante.app.casouso.PedidoUC;
 import br.unigran.restaurante.app.models.Cliente;
 import br.unigran.restaurante.app.models.Funcionario;
 import br.unigran.restaurante.app.models.Mesa;
+import br.unigran.restaurante.app.models.Pedido;
 import java.util.Date;
 
 import java.util.List;
@@ -26,13 +27,19 @@ public class PedidoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form PedidoCadastro
      */
-    public PedidoCadastro(java.awt.Frame parent, boolean modal) {
+    public PedidoCadastro(java.awt.Frame parent, boolean modal, Pedido pedido) {
         super(parent, modal);
         initComponents();
-        carregarClientes();
-        carregarFuncionarios();
-        carregarMesas();
+        if (pedido != null) {
+            this.pedido = pedido;
+            initComponents();
+            carregarClientes();
+            carregarFuncionarios();
+            carregarMesas();        
+        }        
     }
+    
+    Pedido pedido;
     
     public void carregarClientes() {
         try {
@@ -297,7 +304,7 @@ public class PedidoCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                PedidoCadastro dialog = new PedidoCadastro(new javax.swing.JFrame(), true);
+                PedidoCadastro dialog = new PedidoCadastro(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

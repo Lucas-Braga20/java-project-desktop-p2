@@ -195,7 +195,7 @@ public class CargoPapelListagem extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CargoPapelListagem dialog = new CargoPapelListagem(new javax.swing.JFrame(), true);
+                CargoPapelListagem dialog = new CargoPapelListagem(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

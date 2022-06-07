@@ -68,7 +68,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
         Cabecalho = new javax.swing.JPanel();
         MenuBotoes = new javax.swing.JPanel();
         jButtonAdicionar = new javax.swing.JButton();
-        jButtonOcupar = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -93,13 +93,13 @@ public class EnderecoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonAdicionar);
 
-        jButtonOcupar.setText("Atualizar Endereco");
-        jButtonOcupar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAtualizar.setText("Atualizar Endereco");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonOcuparActionPerformed(evt);
+                jButtonAtualizarActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButtonOcupar);
+        MenuBotoes.add(jButtonAtualizar);
 
         jButtonRemover.setText("Remover Endereco");
         jButtonRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -156,7 +156,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
     
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new EnderecoCadastro(new javax.swing.JFrame(), true).setVisible(true);
+        new EnderecoCadastro(new javax.swing.JFrame(), true, null).setVisible(true);
         carregarTabela();
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -176,9 +176,15 @@ public class EnderecoListagem extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
 
-    private void jButtonOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOcuparActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonOcuparActionPerformed
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+        try {
+            Integer indice = jTable1.getSelectedRow();
+            new EnderecoCadastro(new javax.swing.JFrame(), true, enderecos.get(indice)).setVisible(true);
+            carregarTabela();
+        } catch (Exception e) {
+            System.out.println(e);
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -231,7 +237,7 @@ public class EnderecoListagem extends javax.swing.JDialog {
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButtonAdicionar;
-    private javax.swing.JButton jButtonOcupar;
+    private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
     private javax.swing.JScrollPane jScrollPane1;

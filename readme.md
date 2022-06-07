@@ -12,15 +12,15 @@
 ### Update
 
 - [X] Produto
-- [ ] ProdutoPedido
-- [ ] Pedido
+- [X] ProdutoPedido
+- [X] Pedido
 - [X] Cliente
-- [ ] Endereço
+- [X] Endereço
 - [X] Papel
 - [X] Cargo
-- [ ] Funcionário
+- [X] Funcionário
 - [X] Mesa
-- [ ] PratoPedido
+- [X] PratoPedido
 - [X] Prato
-- [ ] IngredientePrato
+- [X] IngredientePrato
 - [X] Ingrediente

@@ -220,7 +220,7 @@ public class ProdutoCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ProdutoCadastro dialog = new ProdutoCadastro(new javax.swing.JFrame(), true);
+                ProdutoCadastro dialog = new ProdutoCadastro(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -77,7 +77,6 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de ingrediente no prato");
-        setPreferredSize(new java.awt.Dimension(800, 600));
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
@@ -239,7 +238,7 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                IngredientePratoCadastro dialog = new IngredientePratoCadastro(new javax.swing.JFrame(), true);
+                IngredientePratoCadastro dialog = new IngredientePratoCadastro(new javax.swing.JFrame(), true, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
