@@ -21,13 +21,6 @@ public class IngredientePratoBuilder {
         this.ingrediente = ingrediente;
         this.prato = prato;
     }
-    public IngredientePratoBuilder(IngredientePrato ingredientePrato) {
-        this.quantidade = ingredientePrato.getQuantidade();
-        this.valor = ingredientePrato.getValor();
-        this.unidadeMedida = ingredientePrato.getUnidadeMedida();
-        this.ingrediente = ingredientePrato.getIngrediente();
-        this.prato = ingredientePrato.getPrato();
-    }
 
     public IngredientePratoBuilder unidadeMedida(UnidadeMedida unidadeMedida) {
         this.unidadeMedida = unidadeMedida;

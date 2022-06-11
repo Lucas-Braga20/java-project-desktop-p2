@@ -7,13 +7,14 @@ package br.unigran.restaurante.app.telas.ingredienteprato;
 import br.unigran.restaurante.app.builder.IngredientePratoBuilder;
 import br.unigran.restaurante.app.casouso.IngredientePratoUC;
 import br.unigran.restaurante.app.casouso.IngredienteUC;
-import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.enums.UnidadeMedida;
 import br.unigran.restaurante.app.models.Ingrediente;
+import br.unigran.restaurante.app.models.IngredientePrato;
 import br.unigran.restaurante.app.models.Prato;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,30 +25,42 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
     /**
      * Creates new form IngredientePratoCadastro
      */
-    public IngredientePratoCadastro(java.awt.Frame parent, boolean modal, Prato prato) {
+    public IngredientePratoCadastro(java.awt.Frame parent, boolean modal, Prato prato, IngredientePrato ingredientePrato) {
         super(parent, modal);
         this.prato = prato;
         initComponents();
         carregaUnidadeMedida();
         carregaIngredientes();
+        if (ingredientePrato != null) {
+            this.ingredientePrato = ingredientePrato;
+            carregaIngredientePrato();
+        }
     }
     
+    IngredientePrato ingredientePrato;
     Prato prato;
+    
+    public void carregaIngredientePrato() {
+        jComboBoxIngrediente.setSelectedItem(ingredientePrato.getIngrediente());
+        jComboBoxUnidadeMedida.setSelectedItem(ingredientePrato.getUnidadeMedida());
+        jTextFieldQuantidade.setText(ingredientePrato.getQuantidade().toString());
+        jTextFieldValor.setText(ingredientePrato.getValor().toString());
+    }
     
     public void carregaUnidadeMedida() {
         List<String> unidadeMedidas = new ArrayList<String>();
         for (int i = 0; i < UnidadeMedida.values().length; i++) {
             unidadeMedidas.add(UnidadeMedida.values()[i].toString());
         }
-        jComboBox1.setModel(new DefaultComboBoxModel(unidadeMedidas.toArray()));
+        jComboBoxUnidadeMedida.setModel(new DefaultComboBoxModel(unidadeMedidas.toArray()));
     }
     
     public void carregaIngredientes() {
         try {
             List<Ingrediente> ingredientes = new IngredienteUC().listarTodos();
-            jComboBox2.setModel(new DefaultComboBoxModel(ingredientes.toArray()));
-        } catch(Exception e) {
-            System.out.println(e);
+            jComboBoxIngrediente.setModel(new DefaultComboBoxModel(ingredientes.toArray()));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -61,26 +74,26 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
     private void initComponents() {
 
         Cabecalho = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabelUnidadeMedida = new javax.swing.JLabel();
+        jComboBoxUnidadeMedida = new javax.swing.JComboBox<>();
+        jLabelQuantidade = new javax.swing.JLabel();
+        jTextFieldQuantidade = new javax.swing.JTextField();
+        jLabelValor = new javax.swing.JLabel();
+        jTextFieldValor = new javax.swing.JTextField();
+        jLabelIngrediente = new javax.swing.JLabel();
+        jComboBoxIngrediente = new javax.swing.JComboBox<>();
         Rodape = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
+        jButtonSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de ingrediente no prato");
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
-        jLabel2.setText("Cadastrar Ingrediente no prato");
+        jLabelTitulo.setText("Cadastrar Ingrediente no prato");
 
         javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
         Cabecalho.setLayout(CabecalhoLayout);
@@ -90,7 +103,7 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         CabecalhoLayout.setVerticalGroup(
@@ -99,29 +112,31 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jLabel1.setText("Unidade de medida");
+        Corpo.setPreferredSize(new java.awt.Dimension(808, 600));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
+        jLabelUnidadeMedida.setText("Unidade de medida");
 
-        jLabel3.setText("Quantidade");
+        jComboBoxUnidadeMedida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxUnidadeMedida.setPreferredSize(new java.awt.Dimension(72, 35));
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(64, 35));
+        jLabelQuantidade.setText("Quantidade");
 
-        jLabel4.setText("Valor");
+        jTextFieldQuantidade.setPreferredSize(new java.awt.Dimension(64, 35));
 
-        jTextField2.setPreferredSize(new java.awt.Dimension(64, 35));
+        jLabelValor.setText("Valor");
 
-        jLabel5.setText("Ingrediente");
+        jTextFieldValor.setPreferredSize(new java.awt.Dimension(64, 35));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(72, 35));
+        jLabelIngrediente.setText("Ingrediente");
+
+        jComboBoxIngrediente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxIngrediente.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -130,34 +145,34 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
             .addGroup(CorpoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, 796, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, 0, 796, Short.MAX_VALUE))
+                    .addComponent(jLabelUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxUnidadeMedida, 0, 796, Short.MAX_VALUE)
+                    .addComponent(jLabelQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldQuantidade, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+                    .addComponent(jLabelValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldValor, javax.swing.GroupLayout.DEFAULT_SIZE, 796, Short.MAX_VALUE)
+                    .addComponent(jLabelIngrediente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxIngrediente, 0, 796, Short.MAX_VALUE))
                 .addContainerGap())
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CorpoLayout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jLabelUnidadeMedida)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel3)
+                .addComponent(jLabelQuantidade)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addComponent(jLabelValor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(jLabelIngrediente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxIngrediente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(190, Short.MAX_VALUE))
         );
 
@@ -166,47 +181,53 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
         Rodape.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
-        Rodape.add(jButton1);
+        Rodape.add(jButtonCancelar);
 
-        jButton2.setText("Salvar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSalvarActionPerformed(evt);
             }
         });
-        Rodape.add(jButton2);
+        Rodape.add(jButtonSalvar);
 
         getContentPane().add(Rodape, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
         try {
-            Float quantidade = Float.parseFloat(jTextField1.getText());
-            Float valor = Float.parseFloat(jTextField2.getText());
-            String unidadeMedida = (String) jComboBox1.getSelectedItem();
-            Ingrediente ingrediente = (Ingrediente) jComboBox2.getSelectedItem();
+            Float quantidade = Float.parseFloat(jTextFieldQuantidade.getText());
+            Float valor = Float.parseFloat(jTextFieldValor.getText());
+            String unidadeMedida = (String) jComboBoxUnidadeMedida.getSelectedItem();
+            Ingrediente ingrediente = (Ingrediente) jComboBoxIngrediente.getSelectedItem();
+            
             IngredientePratoBuilder ingredientePratoBuilder = new IngredientePratoBuilder(quantidade, valor, ingrediente, prato, UnidadeMedida.valueOf(unidadeMedida));
-            new IngredientePratoUC().salvar(ingredientePratoBuilder);
+            
+            if (ingredientePrato == null) {
+                IngredientePratoUC.salvar(ingredientePratoBuilder);
+            } else {
+                IngredientePratoUC.atualizar(ingredientePratoBuilder, ingredientePrato);
+            }
+            
+            dispose();
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-
-        dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,7 +259,7 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                IngredientePratoCadastro dialog = new IngredientePratoCadastro(new javax.swing.JFrame(), true, null);
+                IngredientePratoCadastro dialog = new IngredientePratoCadastro(new javax.swing.JFrame(), true, null, null);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -254,16 +275,16 @@ public class IngredientePratoCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel Cabecalho;
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JComboBox<String> jComboBoxIngrediente;
+    private javax.swing.JComboBox<String> jComboBoxUnidadeMedida;
+    private javax.swing.JLabel jLabelIngrediente;
+    private javax.swing.JLabel jLabelQuantidade;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelUnidadeMedida;
+    private javax.swing.JLabel jLabelValor;
+    private javax.swing.JTextField jTextFieldQuantidade;
+    private javax.swing.JTextField jTextFieldValor;
     // End of variables declaration//GEN-END:variables
 }

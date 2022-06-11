@@ -11,6 +11,7 @@ import br.unigran.restaurante.app.models.Mesa;
 import br.unigran.restaurante.app.models.Prato;
 import br.unigran.restaurante.app.persistence.IngredientePratoDAO;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,10 +53,9 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTable1.setModel(tableModel);
-        } catch(Exception e) {
-            System.err.println("\n\nError: \n" + e);
-            dispose();
+            jTableIngredientePratos.setModel(tableModel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -74,8 +74,8 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
         jButtonRemover = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPaneTabela = new javax.swing.JScrollPane();
+        jTableIngredientePratos = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -116,7 +116,7 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableIngredientePratos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -124,18 +124,18 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTable1.setCellEditor(null);
-        jScrollPane1.setViewportView(jTable1);
+        jTableIngredientePratos.setCellEditor(null);
+        jScrollPaneTabela.setViewportView(jTableIngredientePratos);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
         CorpoLayout.setHorizontalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -158,18 +158,20 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new IngredientePratoCadastro(new javax.swing.JFrame(), true, prato).setVisible(true);
+        new IngredientePratoCadastro(new javax.swing.JFrame(), true, prato, null).setVisible(true);
         carregarTabela(prato);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
-            new IngredientePratoUC().remover(ingredientes.get(indice).getId());
+            Integer indice = jTableIngredientePratos.getSelectedRow();
+            IngredientePratoUC.remover(ingredientes.get(indice).getId());
             carregarTabela(prato);
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -181,11 +183,13 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
-            new IngredientePratoCadastro(new javax.swing.JFrame(), true, prato).setVisible(true);
+            Integer indice = jTableIngredientePratos.getSelectedRow();
+            new IngredientePratoCadastro(new javax.swing.JFrame(), true, prato, ingredientes.get(indice)).setVisible(true);
             carregarTabela(prato);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
@@ -240,7 +244,7 @@ public class IngredientePratoListagem extends javax.swing.JDialog {
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPaneTabela;
+    private javax.swing.JTable jTableIngredientePratos;
     // End of variables declaration//GEN-END:variables
 }

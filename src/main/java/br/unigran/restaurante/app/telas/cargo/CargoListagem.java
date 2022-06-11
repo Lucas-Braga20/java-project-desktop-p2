@@ -12,6 +12,7 @@ import br.unigran.restaurante.app.persistence.DAO;
 import br.unigran.restaurante.app.telas.cargopapel.CargoPapelListagem;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -40,7 +41,7 @@ public class CargoListagem extends javax.swing.JDialog {
             String[] colunas = new String[] {"Número do Cargo", "Descrição"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < cargos.size(); i++) {
-                linhas[i][0] = cargos.get(i).getId();
+                linhas[i][0] = cargos.get(i).getNumero();
                 linhas[i][1] = cargos.get(i).getDescricao();
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
@@ -49,10 +50,9 @@ public class CargoListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTable1.setModel(tableModel);
-        } catch(Exception e) {
-            System.err.println("\n\nError: \n" + e);
-            dispose();
+            jTableCargos.setModel(tableModel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -70,10 +70,10 @@ public class CargoListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jButtonPapeis = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPaneTabela = new javax.swing.JScrollPane();
+        jTableCargos = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -111,19 +111,19 @@ public class CargoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
-        jButton1.setText("Ver Papeis");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPapeis.setText("Ver Papeis");
+        jButtonPapeis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonPapeisActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButton1);
+        MenuBotoes.add(jButtonPapeis);
 
         Cabecalho.add(MenuBotoes);
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -131,19 +131,19 @@ public class CargoListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTable1.setCellEditor(null);
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableCargos.setCellEditor(null);
+        jScrollPaneTabela.setViewportView(jTableCargos);
+        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
         CorpoLayout.setHorizontalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -173,11 +173,13 @@ public class CargoListagem extends javax.swing.JDialog {
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
-            new DAO<Cargo>().remover(cargos.get(indice).getId(), Cargo.class);
+            Integer indice = jTableCargos.getSelectedRow();
+            CargoUC.remover(cargos.get(indice).getId());
             carregarTabela();
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -189,23 +191,27 @@ public class CargoListagem extends javax.swing.JDialog {
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
+            Integer indice = jTableCargos.getSelectedRow();
             new CargoCadastro(new javax.swing.JFrame(), true, cargos.get(indice)).setVisible(true);
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonPapeisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPapeisActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
+            Integer indice = jTableCargos.getSelectedRow();
             new CargoPapelListagem(new javax.swing.JFrame(), true, cargos.get(indice)).setVisible(true);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonPapeisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -257,12 +263,12 @@ public class CargoListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonPapeis;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPaneTabela;
+    private javax.swing.JTable jTableCargos;
     // End of variables declaration//GEN-END:variables
 }

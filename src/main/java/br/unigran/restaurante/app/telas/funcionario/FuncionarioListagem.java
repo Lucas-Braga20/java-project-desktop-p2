@@ -9,6 +9,7 @@ import br.unigran.restaurante.app.casouso.MesaUC;
 import br.unigran.restaurante.app.models.Funcionario;
 import br.unigran.restaurante.app.models.Mesa;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -189,8 +190,10 @@ public class FuncionarioListagem extends javax.swing.JDialog {
             Integer indice = jTable1.getSelectedRow();
             new FuncionarioUC().remover(funcionarios.get(indice).getId());
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -204,8 +207,10 @@ public class FuncionarioListagem extends javax.swing.JDialog {
             Integer indice = jTable1.getSelectedRow();
             new FuncionarioCadastro(new javax.swing.JFrame(), true, funcionarios.get(indice)).setVisible(true);
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 

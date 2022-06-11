@@ -26,15 +26,6 @@ public class FuncionarioBuilder {
         this.cargo = cargo;
         this.endereco = endereco;
     }
-    public FuncionarioBuilder(Funcionario funcionario) {
-        this.nome = funcionario.getNome();
-        this.apelido = funcionario.getApelido();
-        this.senha = funcionario.getSenha();
-        this.dataNascimento = funcionario.getDataNascimento();
-        this.cpf = funcionario.getCpf();
-        this.cargo = funcionario.getCargo();
-        this.endereco = funcionario.getEndereco();
-    }
 
     public FuncionarioBuilder unidadeMedida(String nome) {
         this.nome = nome;

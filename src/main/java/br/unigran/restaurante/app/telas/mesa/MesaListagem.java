@@ -8,6 +8,7 @@ import br.unigran.restaurante.app.builder.MesaBuilder;
 import br.unigran.restaurante.app.casouso.MesaUC;
 import br.unigran.restaurante.app.models.Mesa;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,7 +37,7 @@ public class MesaListagem extends javax.swing.JDialog {
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < mesas.size(); i++) {
                 linhas[i][0] = mesas.get(i).getNumero();
-                linhas[i][1] = mesas.get(i).getOcupada();
+                linhas[i][1] = mesas.get(i).getOcupada() ? "Sim" : "Não";
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
                 @Override
@@ -44,10 +45,9 @@ public class MesaListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTableCargos.setModel(tableModel);
-        } catch(Exception e) {
-            System.err.println("\n\nError: \n" + e);
-            dispose();
+            jTableMesas.setModel(tableModel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -65,11 +65,11 @@ public class MesaListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonOcupar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonAtualizar = new javax.swing.JButton();
+        jButtonDesocupar = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCargos = new javax.swing.JTable();
+        jScrollPaneTabela = new javax.swing.JScrollPane();
+        jTableMesas = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -106,27 +106,27 @@ public class MesaListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
-        jButton1.setText("Atualizar Mesa");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAtualizar.setText("Atualizar Mesa");
+        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAtualizarActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButton1);
+        MenuBotoes.add(jButtonAtualizar);
 
-        jButton2.setText("Desocupar Mesa");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonDesocupar.setText("Desocupar Mesa");
+        jButtonDesocupar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonDesocuparActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButton2);
+        MenuBotoes.add(jButtonDesocupar);
 
         Cabecalho.add(MenuBotoes);
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -134,19 +134,19 @@ public class MesaListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setCellEditor(null);
-        jScrollPane1.setViewportView(jTableCargos);
-        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTableMesas.setCellEditor(null);
+        jScrollPaneTabela.setViewportView(jTableMesas);
+        jTableMesas.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
         CorpoLayout.setHorizontalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -176,11 +176,13 @@ public class MesaListagem extends javax.swing.JDialog {
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
+            Integer indice = jTableMesas.getSelectedRow();
             new MesaUC().remover(mesas.get(indice).getId());
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -192,35 +194,41 @@ public class MesaListagem extends javax.swing.JDialog {
     private void jButtonOcuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOcuparActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
+            Integer indice = jTableMesas.getSelectedRow();
             new MesaUC().OcuparMesa(mesas.get(indice).getId());
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonOcuparActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
+            Integer indice = jTableMesas.getSelectedRow();
             new MesaCadastro(new javax.swing.JFrame(), true, mesas.get(indice)).setVisible(true);
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonDesocuparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDesocuparActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
+            Integer indice = jTableMesas.getSelectedRow();
             new MesaUC().DesocuparMesa(mesas.get(indice).getId());
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonDesocuparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -270,13 +278,13 @@ public class MesaListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
+    private javax.swing.JButton jButtonAtualizar;
+    private javax.swing.JButton jButtonDesocupar;
     private javax.swing.JButton jButtonOcupar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCargos;
+    private javax.swing.JScrollPane jScrollPaneTabela;
+    private javax.swing.JTable jTableMesas;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,34 +6,32 @@ import br.unigran.restaurante.app.builder.ProdutoPedidoBuilder;
 import br.unigran.restaurante.app.models.ProdutoPedido;
 import br.unigran.restaurante.app.persistence.DAO;
 
-public class ProdutoPedidoUC {
-  public ProdutoPedido salvar(ProdutoPedidoBuilder produtoPedidoBuilder) throws Exception {
-    ProdutoPedido produtoPedido = produtoPedidoBuilder.build();
-    produtoPedido = new DAO<ProdutoPedido>().salvar(produtoPedido, ProdutoPedido.class, produtoPedido.getId());
+public final class ProdutoPedidoUC {
+    private static DAO<ProdutoPedido> DAO = new DAO<ProdutoPedido>();
+    
+    public static ProdutoPedido salvar(ProdutoPedidoBuilder produtoPedidoBuilder) throws Exception {
+        ProdutoPedido produtoPedido = produtoPedidoBuilder.build();
+        produtoPedido = DAO.salvar(produtoPedido, ProdutoPedido.class, produtoPedido.getId());
+        return produtoPedido;
+    }
 
-    return produtoPedido;
-  }
+    public static ProdutoPedido atualizar(ProdutoPedidoBuilder produtoPedidoBuilder, ProdutoPedido produtoPedido) throws Exception {
+        ProdutoPedido produtoPedidoAnterior = produtoPedidoBuilder.build(produtoPedido);
+        ProdutoPedido produtoPedidoAtualizado = DAO.salvar(produtoPedidoAnterior, ProdutoPedido.class, produtoPedidoAnterior.getId());
+        return produtoPedidoAtualizado;
+    }
 
-  public ProdutoPedido atualizar(ProdutoPedidoBuilder produtoPedidoBuilder, ProdutoPedido produtoPedido) throws Exception {
-    ProdutoPedido produtoPedidoAnterior = produtoPedidoBuilder.build(produtoPedido);
-    ProdutoPedido produtoPedidoAtualizado = new DAO<ProdutoPedido>().salvar(produtoPedidoAnterior, ProdutoPedido.class, produtoPedidoAnterior.getId());
+    public static void remover(Integer id) throws Exception {
+        DAO.remover(id, ProdutoPedido.class);
+    }
 
-    return produtoPedidoAtualizado;
-  }
+    public static List<ProdutoPedido> listarTodos() throws Exception {
+        List<ProdutoPedido> produtoPedidos = DAO.listarTodos(ProdutoPedido.class);
+        return produtoPedidos;
+    }
 
-  public void remover(Integer id) throws Exception {
-    new DAO<ProdutoPedido>().remover(id, ProdutoPedido.class);
-  }
-
-  public List<ProdutoPedido> listarTodos() throws Exception {
-    List<ProdutoPedido> produtoPedidos = new DAO<ProdutoPedido>().listarTodos(ProdutoPedido.class);
-
-    return produtoPedidos;
-  }
-
-  public ProdutoPedido consultarPorId(Long id) throws Exception {
-    ProdutoPedido produtoPedido = new DAO<ProdutoPedido>().consultarPorId(id.intValue(), ProdutoPedido.class);
-
-    return produtoPedido;
-  }
+    public static ProdutoPedido consultarPorId(Long id) throws Exception {
+        ProdutoPedido produtoPedido = DAO.consultarPorId(id.intValue(), ProdutoPedido.class);
+        return produtoPedido;
+    }
 }

@@ -6,34 +6,32 @@ import br.unigran.restaurante.app.builder.PratoPedidoBuilder;
 import br.unigran.restaurante.app.models.PratoPedido;
 import br.unigran.restaurante.app.persistence.DAO;
 
-public class PratoPedidoUC {
-  public PratoPedido salvar(PratoPedidoBuilder pratoPedidoBuilder) throws Exception {
-    PratoPedido pratoPedido = pratoPedidoBuilder.build();
-    pratoPedido = new DAO<PratoPedido>().salvar(pratoPedido, PratoPedido.class, pratoPedido.getId());
+public final class PratoPedidoUC {
+    private static DAO<PratoPedido> DAO = new DAO<PratoPedido>();
+    
+    public static PratoPedido salvar(PratoPedidoBuilder pratoPedidoBuilder) throws Exception {
+        PratoPedido pratoPedido = pratoPedidoBuilder.build();
+        pratoPedido = DAO.salvar(pratoPedido, PratoPedido.class, pratoPedido.getId());
+        return pratoPedido;
+    }
 
-    return pratoPedido;
-  }
+    public static PratoPedido atualizar(PratoPedidoBuilder pratoPedidoBuilder, PratoPedido pratoPedido) throws Exception {
+        PratoPedido pratoPedidoAnterior = pratoPedidoBuilder.build(pratoPedido);
+        PratoPedido pratoPedidoAtualizado = DAO.salvar(pratoPedidoAnterior, PratoPedido.class, pratoPedidoAnterior.getId());
+        return pratoPedidoAtualizado;
+    }
 
-  public PratoPedido atualizar(PratoPedidoBuilder pratoPedidoBuilder, PratoPedido pratoPedido) throws Exception {
-    PratoPedido pratoPedidoAnterior = pratoPedidoBuilder.build(pratoPedido);
-    PratoPedido pratoPedidoAtualizado = new DAO<PratoPedido>().salvar(pratoPedidoAnterior, PratoPedido.class, pratoPedidoAnterior.getId());
+    public static void remover(Integer id) throws Exception {
+        DAO.remover(id, PratoPedido.class);
+    }
 
-    return pratoPedidoAtualizado;
-  }
+    public static List<PratoPedido> listarTodos() throws Exception {
+        List<PratoPedido> pratoPedidos = DAO.listarTodos(PratoPedido.class);
+        return pratoPedidos;
+    }
 
-  public void remover(Integer id) throws Exception {
-    new DAO<PratoPedido>().remover(id, PratoPedido.class);
-  }
-
-  public List<PratoPedido> listarTodos() throws Exception {
-    List<PratoPedido> pratoPedidos = new DAO<PratoPedido>().listarTodos(PratoPedido.class);
-
-    return pratoPedidos;
-  }
-
-  public PratoPedido consultarPorId(Integer id) throws Exception {
-    PratoPedido pratoPedido = new DAO<PratoPedido>().consultarPorId(id, PratoPedido.class);
-
-    return pratoPedido;
-  }
+    public static PratoPedido consultarPorId(Integer id) throws Exception {
+        PratoPedido pratoPedido = DAO.consultarPorId(id, PratoPedido.class);
+        return pratoPedido;
+    }
 }

@@ -5,15 +5,12 @@
 package br.unigran.restaurante.app.telas.pedido;
 
 import br.unigran.restaurante.app.telas.pedido.*;
-import br.unigran.restaurante.app.builder.PedidoBuilder;
 import br.unigran.restaurante.app.casouso.PedidoUC;
-import br.unigran.restaurante.app.casouso.PratoUC;
 import br.unigran.restaurante.app.models.Pedido;
-import br.unigran.restaurante.app.models.Prato;
-import br.unigran.restaurante.app.telas.ingredienteprato.IngredientePratoListagem;
 import br.unigran.restaurante.app.telas.pratopedido.PratoPedidoListagem;
 import br.unigran.restaurante.app.telas.produtopedido.ProdutoPedidoListagem;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,7 +40,7 @@ public class PedidoListagem extends javax.swing.JDialog {
             for (int i = 0; i < pedidos.size(); i++) {
                 linhas[i][0] = pedidos.get(i).getId();
                 linhas[i][1] = pedidos.get(i).getData();
-                linhas[i][2] = pedidos.get(i).getFinalizado();
+                linhas[i][2] = pedidos.get(i).getFinalizado() ? "Finalizado" : "Não finalizado";
                 linhas[i][3] = pedidos.get(i).getTotal();
                 linhas[i][4] = pedidos.get(i).getCliente();
                 linhas[i][5] = pedidos.get(i).getFuncionario();
@@ -55,7 +52,7 @@ public class PedidoListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTableCargos.setModel(tableModel);
+            jTablePedidos.setModel(tableModel);
         } catch(Exception e) {
             System.err.println("\n\nError: \n" + e);
             dispose();
@@ -76,11 +73,11 @@ public class PedidoListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonAtualizar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonProdutos = new javax.swing.JButton();
+        jButtonPratos = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTableCargos = new javax.swing.JTable();
+        jScrollPaneTabela = new javax.swing.JScrollPane();
+        jTablePedidos = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -117,27 +114,27 @@ public class PedidoListagem extends javax.swing.JDialog {
         });
         MenuBotoes.add(jButtonRemover);
 
-        jButton1.setText("Ver Produtos");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonProdutos.setText("Ver Produtos");
+        jButtonProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonProdutosActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButton1);
+        MenuBotoes.add(jButtonProdutos);
 
-        jButton2.setText("Ver Pratos");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPratos.setText("Ver Pratos");
+        jButtonPratos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonPratosActionPerformed(evt);
             }
         });
-        MenuBotoes.add(jButton2);
+        MenuBotoes.add(jButtonPratos);
 
         Cabecalho.add(MenuBotoes);
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -145,19 +142,19 @@ public class PedidoListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTableCargos.setCellEditor(null);
-        jScrollPane1.setViewportView(jTableCargos);
-        jTableCargos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        jTablePedidos.setCellEditor(null);
+        jScrollPaneTabela.setViewportView(jTablePedidos);
+        jTablePedidos.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
         CorpoLayout.setHorizontalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -187,11 +184,13 @@ public class PedidoListagem extends javax.swing.JDialog {
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
-            new PedidoUC().remover(pedidos.get(indice).getId());
+            Integer indice = jTablePedidos.getSelectedRow();
+            PedidoUC.remover(pedidos.get(indice).getId());
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -200,36 +199,42 @@ public class PedidoListagem extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonSairActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProdutosActionPerformed
         // TODO add your handling code here:
         try {
-            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
-            Pedido pedido = new PedidoUC().consultarPorId(id);
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTablePedidos.getSelectedRow()).get(0);
+            Pedido pedido = PedidoUC.consultarPorId(id);
             new ProdutoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonProdutosActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonPratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPratosActionPerformed
         // TODO add your handling code here:
         try {
-            Integer id = (Integer) tableModel.getDataVector().elementAt(jTableCargos.getSelectedRow()).get(0);
-            Pedido pedido = new PedidoUC().consultarPorId(id);
+            Integer id = (Integer) tableModel.getDataVector().elementAt(jTablePedidos.getSelectedRow()).get(0);
+            Pedido pedido = PedidoUC.consultarPorId(id);
             new PratoPedidoListagem(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonPratosActionPerformed
 
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTableCargos.getSelectedRow();
+            Integer indice = jTablePedidos.getSelectedRow();
             new PedidoCadastro(new javax.swing.JFrame(), true, pedidos.get(indice)).setVisible(true);
             carregarTabela();
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
@@ -295,13 +300,13 @@ public class PedidoListagem extends javax.swing.JDialog {
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel MenuBotoes;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonAtualizar;
+    private javax.swing.JButton jButtonPratos;
+    private javax.swing.JButton jButtonProdutos;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableCargos;
+    private javax.swing.JScrollPane jScrollPaneTabela;
+    private javax.swing.JTable jTablePedidos;
     // End of variables declaration//GEN-END:variables
 }

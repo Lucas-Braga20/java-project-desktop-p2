@@ -4,6 +4,7 @@
  */
 package br.unigran.restaurante.app.telas;
 
+import br.unigran.restaurante.app.persistence.SingletonDao;
 import br.unigran.restaurante.app.telas.cargo.CargoListagem;
 import br.unigran.restaurante.app.telas.cliente.ClienteListagem;
 import br.unigran.restaurante.app.telas.endereco.EnderecoListagem;
@@ -25,6 +26,7 @@ public class PrincipalTela extends javax.swing.JFrame {
      * Creates new form PrincipalTela
      */
     public PrincipalTela() {
+        SingletonDao.getInstance();
         initComponents();
     }
 
@@ -247,12 +249,7 @@ public class PrincipalTela extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            javax.swing.UIManager.setLookAndFeel("com.formdev.flatlaf.intellijthemes.FlatMaterialDesignDarkIJTheme");
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(PrincipalTela.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

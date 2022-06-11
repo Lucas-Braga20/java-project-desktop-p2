@@ -12,11 +12,6 @@ public class ProdutoBuilder {
         this.descricao = "";
         this.valor = valor;
     }
-    public ProdutoBuilder(Produto produto) {
-        this.nome = produto.getNome();
-        this.descricao = produto.getDescricao();
-        this.valor = produto.getValor();
-    }
 
     public ProdutoBuilder nome(String nome) {
         this.nome = nome;

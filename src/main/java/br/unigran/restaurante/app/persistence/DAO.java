@@ -24,7 +24,6 @@ public class DAO<T> {
             }
             etx.commit();
         } catch(Exception e) {
-            etx.rollback();
             throw e;
         }
         
@@ -44,7 +43,6 @@ public class DAO<T> {
             em.remove(objeto);
             etx.commit();
         } catch (Exception e) {
-            etx.rollback();
             throw e;
         }
     }

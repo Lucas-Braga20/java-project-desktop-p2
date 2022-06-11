@@ -16,12 +16,6 @@ public class PratoPedidoBuilder {
         this.prato = prato;
         this.pedido = pedido;
     }
-    public PratoPedidoBuilder(PratoPedido pratoPedido) {
-        this.quantidade = pratoPedido.getQuantidade();
-        this.valor = pratoPedido.getValor();
-        this.prato = pratoPedido.getPrato();
-        this.pedido = pratoPedido.getPedido();
-    }
 
     public void validate() throws Exception {
         if (valor <= 0) {

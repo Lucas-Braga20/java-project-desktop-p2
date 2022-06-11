@@ -12,6 +12,7 @@ import br.unigran.restaurante.app.models.ProdutoPedido;
 import br.unigran.restaurante.app.persistence.IngredientePratoDAO;
 import br.unigran.restaurante.app.persistence.ProdutoPedidoDAO;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -52,9 +53,8 @@ public class ProdutoPedidoListagem extends javax.swing.JDialog {
                 }
             };
             jTable1.setModel(tableModel);
-        } catch(Exception e) {
-            System.err.println("\n\nError: \n" + e);
-            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -157,7 +157,7 @@ public class ProdutoPedidoListagem extends javax.swing.JDialog {
 
     private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
         // TODO add your handling code here:
-        new ProdutoPedidoCadastro(new javax.swing.JFrame(), true, pedido).setVisible(true);
+        new ProdutoPedidoCadastro(new javax.swing.JFrame(), true, pedido, null).setVisible(true);
         carregarTabela(pedido);
     }//GEN-LAST:event_jButtonAdicionarActionPerformed
 
@@ -167,8 +167,10 @@ public class ProdutoPedidoListagem extends javax.swing.JDialog {
             Integer indice = jTable1.getSelectedRow();
             new ProdutoPedidoUC().remover(produtos.get(indice).getId());
             carregarTabela(pedido);
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -181,10 +183,12 @@ public class ProdutoPedidoListagem extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             Integer indice = jTable1.getSelectedRow();
-            new ProdutoPedidoCadastro(new javax.swing.JFrame(), true, pedido).setVisible(true);
+            new ProdutoPedidoCadastro(new javax.swing.JFrame(), true, pedido, produtos.get(indice)).setVisible(true);
             carregarTabela(pedido);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAtualizar2ActionPerformed
 

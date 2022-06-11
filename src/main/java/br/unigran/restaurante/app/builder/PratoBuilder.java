@@ -12,11 +12,6 @@ public class PratoBuilder {
         this.descricao = "";
         this.valor = valor;
     }
-    public PratoBuilder(Prato prato) {
-        this.nome = prato.getNome();
-        this.descricao = prato.getDescricao();
-        this.valor = prato.getValor();
-    }
 
     public PratoBuilder descricao(String descricao) {
         this.descricao = descricao;

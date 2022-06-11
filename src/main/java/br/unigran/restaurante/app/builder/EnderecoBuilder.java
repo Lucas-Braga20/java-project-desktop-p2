@@ -15,12 +15,6 @@ public class EnderecoBuilder {
         this.bairro = bairro;
         this.cidade = cidade;
     }
-    public EnderecoBuilder(Endereco endereco) {
-        this.rua = endereco.getRua();
-        this.numero = endereco.getNumero();
-        this.bairro = endereco.getBairro();
-        this.cidade = endereco.getCidade();
-    }
 
     public void validate() throws Exception {
         if (rua.isBlank() || rua.isEmpty()) {

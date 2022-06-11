@@ -10,10 +10,6 @@ public class MesaBuilder {
         this.ocupada = ocupada;
         this.numero = numero;
     }
-    public MesaBuilder(Mesa mesa) {
-        this.ocupada = mesa.getOcupada();
-        this.numero = mesa.getNumero();
-    }
 
     public void validate() throws Exception {
         if (ocupada == null) {

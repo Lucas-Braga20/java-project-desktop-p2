@@ -14,6 +14,7 @@ import br.unigran.restaurante.app.models.Funcionario;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -27,21 +28,30 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     public FuncionarioCadastro(java.awt.Frame parent, boolean modal, Funcionario funcionario) {
         super(parent, modal);
         initComponents();
+        carregaEnderecos();
+        carregaCargos();
         if(funcionario != null){
             this.funcionario = funcionario;
-            carregaEnderecos();
-            carregaCargos();
+            carregaFuncionario();
         }
     }
     
     Funcionario funcionario;
     
+    public void carregaFuncionario() {
+        jTextField1.setText(funcionario.getNome());
+        jtData.setDate(funcionario.getDataNascimento());
+        jTextField2.setText(funcionario.getCpf());
+        jComboBox1.setSelectedItem(funcionario.getEndereco());
+        jComboBox2.setSelectedItem(funcionario.getCargo());
+    }
+    
     public void carregaEnderecos() {
         try {
-            List<Endereco> enderecos = new EnderecoUC().listarTodos();
+            List<Endereco> enderecos = EnderecoUC.listarTodos();
             jComboBox1.setModel(new DefaultComboBoxModel(enderecos.toArray()));
-        } catch(Exception e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -49,8 +59,8 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
         try {
             List<Cargo> cargos = new CargoUC().listarTodos();
             jComboBox2.setModel(new DefaultComboBoxModel(cargos.toArray()));
-        } catch(Exception e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -383,13 +393,19 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             Cargo cargo = (Cargo) jComboBox2.getSelectedItem();
             String apelido = jTextField3.getText();
             String senha = jTextField4.getText();
+            
             FuncionarioBuilder funcionarioBuilder = new FuncionarioBuilder(nome, dataNascimento, cpf, cargo, endereco, apelido, senha);
-            new FuncionarioUC().salvar(funcionarioBuilder);
+            
+            if (funcionario == null) {
+                FuncionarioUC.salvar(funcionarioBuilder);
+            } else {
+                FuncionarioUC.atualizar(funcionarioBuilder, funcionario);
+            }
+            
+            dispose();
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-
-        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

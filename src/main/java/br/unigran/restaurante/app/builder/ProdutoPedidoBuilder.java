@@ -16,12 +16,6 @@ public class ProdutoPedidoBuilder {
         this.produto = produto;
         this.pedido = pedido;
     }
-    public ProdutoPedidoBuilder(ProdutoPedido produtoPedido) {
-        this.valorUnitario = produtoPedido.getValorUnitario();
-        this.quantidade = produtoPedido.getQuantidade();
-        this.produto = produtoPedido.getProduto();
-        this.pedido = produtoPedido.getPedido();
-    }
 
     public void validate() throws Exception {
         if (valorUnitario < 0) {

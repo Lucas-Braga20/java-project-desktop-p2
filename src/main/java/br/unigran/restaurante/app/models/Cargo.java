@@ -17,6 +17,9 @@ public class Cargo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+    @Column(unique=true)
+    private Integer numero;
 
     @Column(columnDefinition = "TEXT")
     private String descricao;
@@ -39,6 +42,22 @@ public class Cargo implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public List<CargoPapel> getCargoPapeis() {
+        return cargoPapeis;
+    }
+
+    public void setCargoPapeis(List<CargoPapel> cargoPapeis) {
+        this.cargoPapeis = cargoPapeis;
     }
 
     @Override

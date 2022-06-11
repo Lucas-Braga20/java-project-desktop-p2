@@ -23,18 +23,22 @@ public class PedidoBuilder {
         this.funcionario = funcionario;
         this.mesa = mesa;
     }
-    public PedidoBuilder(Pedido pedido) {
-        this.total = pedido.getTotal();
-        this.data = pedido.getData();
-        this.finalizado = pedido.getFinalizado();
-        this.cliente = pedido.getCliente();
-        this.funcionario = pedido.getFuncionario();
-        this.mesa = pedido.getMesa();
-    }
 
     public void validate() throws Exception {
         if (total <= 0) {
             throw new Exception("Total não pode ser negativo ou nulo.");
+        }
+        
+        if (data == null) {
+            throw new Exception("Data não pode ser nula.");
+        }
+        
+        if (cliente == null) {
+            throw new Exception("Cliente não pode ser nula.");
+        }
+        
+        if (funcionario == null) {
+            throw new Exception("Funcionário não pode ser nulo.");
         }
     }
 
