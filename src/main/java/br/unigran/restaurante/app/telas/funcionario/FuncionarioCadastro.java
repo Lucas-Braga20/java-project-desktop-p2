@@ -11,6 +11,7 @@ import br.unigran.restaurante.app.casouso.FuncionarioUC;
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.Endereco;
 import br.unigran.restaurante.app.models.Funcionario;
+import br.unigran.restaurante.app.util.Util;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -39,17 +40,17 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     Funcionario funcionario;
     
     public void carregaFuncionario() {
-        jTextField1.setText(funcionario.getNome());
+        jTextFieldNome.setText(funcionario.getNome());
         jtData.setDate(funcionario.getDataNascimento());
-        jTextField2.setText(funcionario.getCpf());
-        jComboBox1.setSelectedItem(funcionario.getEndereco());
-        jComboBox2.setSelectedItem(funcionario.getCargo());
+        jTextFieldCPF.setText(funcionario.getCpf());
+        jComboBoxEndereco.setSelectedItem(funcionario.getEndereco());
+        jComboBoxCargo.setSelectedItem(funcionario.getCargo());
     }
     
     public void carregaEnderecos() {
         try {
             List<Endereco> enderecos = EnderecoUC.listarTodos();
-            jComboBox1.setModel(new DefaultComboBoxModel(enderecos.toArray()));
+            jComboBoxEndereco.setModel(new DefaultComboBoxModel(enderecos.toArray()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
@@ -58,7 +59,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     public void carregaCargos() {
         try {
             List<Cargo> cargos = new CargoUC().listarTodos();
-            jComboBox2.setModel(new DefaultComboBoxModel(cargos.toArray()));
+            jComboBoxCargo.setModel(new DefaultComboBoxModel(cargos.toArray()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
@@ -74,29 +75,29 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     private void initComponents() {
 
         Cabecalho = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jLabelNome = new javax.swing.JLabel();
+        jTextFieldNome = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelDataNascimento = new javax.swing.JLabel();
         jtData = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jLabelCPF = new javax.swing.JLabel();
+        jTextFieldCPF = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabelEndereco = new javax.swing.JLabel();
+        jComboBoxEndereco = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabelCargo = new javax.swing.JLabel();
+        jComboBoxCargo = new javax.swing.JComboBox<>();
         jPanel6 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jLabelApelido = new javax.swing.JLabel();
+        jTextFieldApelido = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jLabelSenha = new javax.swing.JLabel();
+        jPasswordFieldSenha = new javax.swing.JPasswordField();
         Rodape = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -107,7 +108,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
-        jLabel2.setText("Cadastrar Funcionário");
+        jLabelTitulo.setText("Cadastrar Funcionário");
 
         javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
         Cabecalho.setLayout(CabecalhoLayout);
@@ -117,7 +118,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         CabecalhoLayout.setVerticalGroup(
@@ -126,15 +127,15 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 12, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 12, Short.MAX_VALUE)))
         );
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jLabel1.setText("Nome");
+        jLabelNome.setText("Nome");
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(64, 35));
+        jTextFieldNome.setPreferredSize(new java.awt.Dimension(64, 35));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,23 +144,21 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 770, Short.MAX_VALUE))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabelNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel3.setText("Data de nascimento");
+        jLabelDataNascimento.setText("Data de nascimento");
 
         jtData.setDateFormatString("d'/'MM'/'y");
         jtData.setPreferredSize(new java.awt.Dimension(105, 35));
@@ -171,25 +170,23 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 698, Short.MAX_VALUE))
-                    .addComponent(jtData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jtData, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelDataNascimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(jLabelDataNascimento)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel4.setText("CPF");
+        jLabelCPF.setText("CPF");
 
-        jTextField2.setPreferredSize(new java.awt.Dimension(64, 35));
+        jTextFieldCPF.setPreferredSize(new java.awt.Dimension(64, 35));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -198,25 +195,23 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 782, Short.MAX_VALUE))
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextFieldCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelCPF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel4)
+                .addComponent(jLabelCPF)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
-        jLabel5.setText("Endereço");
+        jLabelEndereco.setText("Endereço");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
+        jComboBoxEndereco.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxEndereco.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -225,26 +220,24 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 754, Short.MAX_VALUE))
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBoxEndereco, 0, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5)
+                .addComponent(jLabelEndereco)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel6.setText("Cargo");
+        jLabelCargo.setText("Cargo");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(72, 35));
+        jComboBoxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCargo.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -253,25 +246,23 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(0, 771, Short.MAX_VALUE))
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jComboBoxCargo, 0, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelCargo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6)
+                .addComponent(jLabelCargo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel7.setText("Apelido");
+        jLabelApelido.setText("Apelido");
 
-        jTextField3.setPreferredSize(new java.awt.Dimension(64, 35));
+        jTextFieldApelido.setPreferredSize(new java.awt.Dimension(64, 35));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -280,23 +271,21 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addGap(0, 762, Short.MAX_VALUE))
-                    .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTextFieldApelido, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+                    .addComponent(jLabelApelido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel7)
+                .addComponent(jLabelApelido)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jTextFieldApelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel8.setText("Senha");
+        jLabelSenha.setText("Senha");
 
-        jTextField4.setPreferredSize(new java.awt.Dimension(64, 35));
+        jPasswordFieldSenha.setPreferredSize(new java.awt.Dimension(90, 35));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -305,20 +294,18 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addGap(0, 771, Short.MAX_VALUE))
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel8)
+                .addComponent(jLabelSenha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPasswordFieldSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
@@ -349,7 +336,7 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 15, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -386,13 +373,13 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         try {
-            String nome = jTextField1.getText();
+            String nome = jTextFieldNome.getText();
             Date dataNascimento = jtData.getDate();
-            String cpf = jTextField2.getText();
-            Endereco endereco = (Endereco) jComboBox1.getSelectedItem();
-            Cargo cargo = (Cargo) jComboBox2.getSelectedItem();
-            String apelido = jTextField3.getText();
-            String senha = jTextField4.getText();
+            String cpf = jTextFieldCPF.getText();
+            Endereco endereco = (Endereco) jComboBoxEndereco.getSelectedItem();
+            Cargo cargo = (Cargo) jComboBoxCargo.getSelectedItem();
+            String apelido = jTextFieldApelido.getText();
+            String senha = Util.geraSenha(jPasswordFieldSenha.getPassword());
             
             FuncionarioBuilder funcionarioBuilder = new FuncionarioBuilder(nome, dataNascimento, cpf, cargo, endereco, apelido, senha);
             
@@ -456,16 +443,16 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel Rodape;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JComboBox<String> jComboBoxCargo;
+    private javax.swing.JComboBox<String> jComboBoxEndereco;
+    private javax.swing.JLabel jLabelApelido;
+    private javax.swing.JLabel jLabelCPF;
+    private javax.swing.JLabel jLabelCargo;
+    private javax.swing.JLabel jLabelDataNascimento;
+    private javax.swing.JLabel jLabelEndereco;
+    private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelSenha;
+    private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -473,10 +460,10 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPasswordField jPasswordFieldSenha;
+    private javax.swing.JTextField jTextFieldApelido;
+    private javax.swing.JTextField jTextFieldCPF;
+    private javax.swing.JTextField jTextFieldNome;
     private com.toedter.calendar.JDateChooser jtData;
     // End of variables declaration//GEN-END:variables
 }

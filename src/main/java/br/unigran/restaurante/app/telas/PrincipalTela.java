@@ -15,6 +15,8 @@ import br.unigran.restaurante.app.telas.papel.PapelListagem;
 import br.unigran.restaurante.app.telas.pedido.PedidoListagem;
 import br.unigran.restaurante.app.telas.prato.PratoListagem;
 import br.unigran.restaurante.app.telas.produto.ProdutoListagem;
+import br.unigran.restaurante.app.util.Util;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +30,14 @@ public class PrincipalTela extends javax.swing.JFrame {
     public PrincipalTela() {
         SingletonDao.getInstance();
         initComponents();
+    }
+    
+    public Boolean verificarLogado() throws Exception {
+        if (Util.getLogado() == null) {
+            throw new Exception("Você não está logado.");
+        }
+        
+        return true;
     }
 
     /**
@@ -55,6 +65,10 @@ public class PrincipalTela extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Restaurante APP");
@@ -135,7 +149,7 @@ public class PrincipalTela extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGap(0, 197, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -186,58 +200,150 @@ public class PrincipalTela extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, java.awt.BorderLayout.PAGE_END);
 
+        jMenu1.setText("Usuário");
+
+        jMenuItem1.setText("Entrar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Sair");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        new CargoListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new CargoListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        new PapelListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new PapelListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        new FuncionarioListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new FuncionarioListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        new EnderecoListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new EnderecoListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        new ClienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new ClienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        new MesaListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new MesaListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        new ProdutoListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new ProdutoListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        new PratoListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new PratoListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        new IngredienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new IngredienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        new PedidoListagem(new javax.swing.JFrame(), true).setVisible(true);
+        try {
+            if (verificarLogado()) {
+                new PedidoListagem(new javax.swing.JFrame(), true).setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        new Login(new javax.swing.JFrame(), true).setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        Util.setLogado(null);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,6 +388,10 @@ public class PrincipalTela extends javax.swing.JFrame {
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
