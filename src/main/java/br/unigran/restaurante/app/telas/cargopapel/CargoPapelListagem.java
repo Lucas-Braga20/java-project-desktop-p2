@@ -4,11 +4,11 @@
  */
 package br.unigran.restaurante.app.telas.cargopapel;
 
+import br.unigran.restaurante.app.casouso.CargoPapelUC;
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.CargoPapel;
-import br.unigran.restaurante.app.persistence.CargoPapelDAO;
-import br.unigran.restaurante.app.persistence.DAO;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,13 +33,12 @@ public class CargoPapelListagem extends javax.swing.JDialog {
     
     public void carregarTabela(Cargo cargo) {
         try {
-            papeis = new CargoPapelDAO().listarTodos(cargo);
+            papeis = CargoPapelUC.buscarPapeis(cargo);
             int tamanho = papeis.size();
-            String[] colunas = new String[] {"Número do papel", "Descrição"};
+            String[] colunas = new String[] {"Papel"};
             Object[][] linhas = new Object[tamanho][colunas.length];
             for (int i = 0; i < papeis.size(); i++) {
-                linhas[i][0] = papeis.get(i).getPapel().getNumero();
-                linhas[i][1] = papeis.get(i).getPapel().getDescricao();
+                linhas[i][0] = papeis.get(i).getPapel();
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
                 @Override
@@ -47,10 +46,9 @@ public class CargoPapelListagem extends javax.swing.JDialog {
                     return false;
                 }
             };
-            jTable1.setModel(tableModel);
-        } catch(Exception e) {
-            System.err.println("\n\nError: \n" + e);
-            dispose();
+            jTableCargoPapel.setModel(tableModel);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -68,8 +66,8 @@ public class CargoPapelListagem extends javax.swing.JDialog {
         jButtonAdicionar = new javax.swing.JButton();
         jButtonRemover = new javax.swing.JButton();
         Corpo = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jScrollPaneTabela = new javax.swing.JScrollPane();
+        jTableCargoPapel = new javax.swing.JTable();
         Rodape = new javax.swing.JPanel();
         jButtonSair = new javax.swing.JButton();
 
@@ -103,7 +101,7 @@ public class CargoPapelListagem extends javax.swing.JDialog {
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCargoPapel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -111,18 +109,18 @@ public class CargoPapelListagem extends javax.swing.JDialog {
 
             }
         ));
-        jTable1.setCellEditor(null);
-        jScrollPane1.setViewportView(jTable1);
+        jTableCargoPapel.setCellEditor(null);
+        jScrollPaneTabela.setViewportView(jTableCargoPapel);
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
         CorpoLayout.setHorizontalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+            .addComponent(jScrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
         );
 
         getContentPane().add(Corpo, java.awt.BorderLayout.CENTER);
@@ -152,11 +150,13 @@ public class CargoPapelListagem extends javax.swing.JDialog {
     private void jButtonRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverActionPerformed
         // TODO add your handling code here:
         try {
-            Integer indice = jTable1.getSelectedRow();
-            new DAO<CargoPapel>().remover(papeis.get(indice).getId(), CargoPapel.class);
+            Integer indice = jTableCargoPapel.getSelectedRow();
+            CargoPapelUC.remover(papeis.get(indice).getId());
             carregarTabela(cargo);
-        } catch(Exception e) {
-            System.err.println(e);
+        } catch(IndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Selecione uma linha.", "Erro!", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonRemoverActionPerformed
 
@@ -215,7 +215,7 @@ public class CargoPapelListagem extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAdicionar;
     private javax.swing.JButton jButtonRemover;
     private javax.swing.JButton jButtonSair;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPaneTabela;
+    private javax.swing.JTable jTableCargoPapel;
     // End of variables declaration//GEN-END:variables
 }

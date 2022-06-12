@@ -13,9 +13,8 @@ import javax.persistence.EntityManager;
  *
  * @author Lucas
  */
-public class CargoPapelDAO {
-    @SuppressWarnings("uncheked")
-    public List<CargoPapel> listarTodos(Cargo cargo) throws Exception {
+public class CargoPapelDAO extends DAO<CargoPapel> {
+    public List<CargoPapel> buscarPapeis(Cargo cargo) throws Exception {
         EntityManager em = SingletonDao.getInstance().getEM();
         List<CargoPapel> cargoPapeis = null;
 

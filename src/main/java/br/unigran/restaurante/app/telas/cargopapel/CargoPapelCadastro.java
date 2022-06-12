@@ -6,11 +6,13 @@ package br.unigran.restaurante.app.telas.cargopapel;
 
 import br.unigran.restaurante.app.builder.CargoPapelBuilder;
 import br.unigran.restaurante.app.casouso.CargoPapelUC;
-import br.unigran.restaurante.app.casouso.PapelUC;
+import br.unigran.restaurante.app.enums.Papel;
 import br.unigran.restaurante.app.models.Cargo;
-import br.unigran.restaurante.app.models.Papel;
+import br.unigran.restaurante.app.models.CargoPapel;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -32,10 +34,13 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
     
     public void carregarPapeis() {
         try {
-            List<Papel> papeis = new PapelUC().listarTodos();
-            jComboBox1.setModel(new DefaultComboBoxModel(papeis.toArray()));
+            List<String> papeis = new ArrayList<String>();
+            for (int i = 0; i < Papel.values().length; i++) {
+                papeis.add(Papel.values()[i].toString());
+            }
+            jComboBoxPapel.setModel(new DefaultComboBoxModel(papeis.toArray()));
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -49,13 +54,13 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
     private void initComponents() {
 
         Cabecalho = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
         Corpo = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabelPapel = new javax.swing.JLabel();
+        jComboBoxPapel = new javax.swing.JComboBox<>();
         Rodape = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
+        jButtonSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de papel no cargo");
@@ -63,7 +68,7 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
 
         Cabecalho.setPreferredSize(new java.awt.Dimension(800, 40));
 
-        jLabel2.setText("Cadastrar papel no cargo");
+        jLabelTitulo.setText("Cadastrar papel no cargo");
 
         javax.swing.GroupLayout CabecalhoLayout = new javax.swing.GroupLayout(Cabecalho);
         Cabecalho.setLayout(CabecalhoLayout);
@@ -73,7 +78,7 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         CabecalhoLayout.setVerticalGroup(
@@ -82,16 +87,16 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
             .addGroup(CabecalhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(CabecalhoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
+                    .addComponent(jLabelTitulo)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         getContentPane().add(Cabecalho, java.awt.BorderLayout.PAGE_START);
 
-        jLabel1.setText("Papel");
+        jLabelPapel.setText("Papel");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(72, 35));
+        jComboBoxPapel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxPapel.setPreferredSize(new java.awt.Dimension(72, 35));
 
         javax.swing.GroupLayout CorpoLayout = new javax.swing.GroupLayout(Corpo);
         Corpo.setLayout(CorpoLayout);
@@ -100,16 +105,16 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
             .addGroup(CorpoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, 788, Short.MAX_VALUE))
+                    .addComponent(jLabelPapel, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(jComboBoxPapel, javax.swing.GroupLayout.Alignment.TRAILING, 0, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         CorpoLayout.setVerticalGroup(
             CorpoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CorpoLayout.createSequentialGroup()
-                .addComponent(jLabel1)
+                .addComponent(jLabelPapel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxPapel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(347, Short.MAX_VALUE))
         );
 
@@ -118,44 +123,47 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
         Rodape.setPreferredSize(new java.awt.Dimension(800, 40));
         Rodape.setLayout(new java.awt.GridLayout(1, 0));
 
-        jButton1.setText("Cancelar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
-        Rodape.add(jButton1);
+        Rodape.add(jButtonCancelar);
 
-        jButton2.setText("Salvar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonSalvarActionPerformed(evt);
             }
         });
-        Rodape.add(jButton2);
+        Rodape.add(jButtonSalvar);
 
         getContentPane().add(Rodape, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         // TODO add your handling code here:
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         // TODO add your handling code here:
         try {
-            Papel papel = (Papel) jComboBox1.getSelectedItem();
-            CargoPapelBuilder cargoPapelBuilder = new CargoPapelBuilder(papel, cargo);
-            new CargoPapelUC().salvar(cargoPapelBuilder);
+            
+            String papel = (String) jComboBoxPapel.getSelectedItem();
+            
+            CargoPapelBuilder cargoPapelBuilder = new CargoPapelBuilder(Papel.valueOf(papel), cargo);
+            
+            CargoPapelUC.salvar(cargoPapelBuilder);
+            
+            dispose();
         } catch (Exception e) {
-            System.out.println(e);
+            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
-
-        dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,10 +211,10 @@ public class CargoPapelCadastro extends javax.swing.JDialog {
     private javax.swing.JPanel Cabecalho;
     private javax.swing.JPanel Corpo;
     private javax.swing.JPanel Rodape;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonSalvar;
+    private javax.swing.JComboBox<String> jComboBoxPapel;
+    private javax.swing.JLabel jLabelPapel;
+    private javax.swing.JLabel jLabelTitulo;
     // End of variables declaration//GEN-END:variables
 }
