@@ -15,7 +15,6 @@
     <class>br.unigran.restaurante.app.models.ProdutoPedido</class>
     <class>br.unigran.restaurante.app.models.PratoPedido</class>
     <class>br.unigran.restaurante.app.models.CargoPapel</class>
-    <class>br.unigran.restaurante.app.models.Papel</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/restaurante_app"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

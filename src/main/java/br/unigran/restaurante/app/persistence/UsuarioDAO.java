@@ -4,6 +4,7 @@
  */
 package br.unigran.restaurante.app.persistence;
 
+import br.unigran.restaurante.app.models.CargoPapel;
 import br.unigran.restaurante.app.models.Funcionario;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -22,6 +23,21 @@ public class UsuarioDAO {
             List<Funcionario> funcionario = em.createQuery(
                 "FROM Funcionario f WHERE f.apelido = :apelido AND f.senha = :senha"
             ).setParameter("apelido", apelido).setParameter("senha", senha).getResultList();
+            
+            return funcionario;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    public List<Funcionario> buscarPorApelido(String apelido) throws Exception {
+        EntityManager em = SingletonDao.getInstance().getEM();
+        EntityTransaction etx = SingletonDao.getInstance().getTX();
+        
+        try {
+            List<Funcionario> funcionario = em.createQuery(
+                "FROM Funcionario f WHERE f.apelido = :apelido"
+            ).setParameter("apelido", apelido).getResultList();
             
             return funcionario;
         } catch (Exception e) {

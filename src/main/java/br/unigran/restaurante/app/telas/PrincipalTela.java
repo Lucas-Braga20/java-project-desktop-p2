@@ -4,6 +4,7 @@
  */
 package br.unigran.restaurante.app.telas;
 
+import br.unigran.restaurante.app.enums.Papel;
 import br.unigran.restaurante.app.persistence.SingletonDao;
 import br.unigran.restaurante.app.telas.cargo.CargoListagem;
 import br.unigran.restaurante.app.telas.cliente.ClienteListagem;
@@ -11,7 +12,6 @@ import br.unigran.restaurante.app.telas.endereco.EnderecoListagem;
 import br.unigran.restaurante.app.telas.funcionario.FuncionarioListagem;
 import br.unigran.restaurante.app.telas.ingrediente.IngredienteListagem;
 import br.unigran.restaurante.app.telas.mesa.MesaListagem;
-import br.unigran.restaurante.app.telas.papel.PapelListagem;
 import br.unigran.restaurante.app.telas.pedido.PedidoListagem;
 import br.unigran.restaurante.app.telas.prato.PratoListagem;
 import br.unigran.restaurante.app.telas.produto.ProdutoListagem;
@@ -52,7 +52,6 @@ public class PrincipalTela extends javax.swing.JFrame {
         Cabecalho = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
@@ -87,14 +86,6 @@ public class PrincipalTela extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton1);
-
-        jButton2.setText("Papel");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton2);
 
         jButton3.setText("Funcionário");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -229,29 +220,26 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new CargoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_CARGOS)) {
+                    new CargoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (verificarLogado()) {
-                new PapelListagem(new javax.swing.JFrame(), true).setVisible(true);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new FuncionarioListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_FUNCIONARIOS)) {
+                    new FuncionarioListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -262,7 +250,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new EnderecoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_ENDERECOS)) {
+                    new EnderecoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -273,7 +265,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new ClienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_CLIENTES)) {
+                    new ClienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -284,7 +280,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new MesaListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_MESAS)) {
+                    new MesaListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -295,7 +295,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new ProdutoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_PRODUTOS)) {
+                    new ProdutoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -306,7 +310,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new PratoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_PRATOS)) {
+                    new PratoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -317,7 +325,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new IngredienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_INGREDIENTES)) {
+                    new IngredienteListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -328,7 +340,11 @@ public class PrincipalTela extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             if (verificarLogado()) {
-                new PedidoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                if (Util.verificarPermissao(Util.getLogado().getCargo(), Papel.GERENCIAR_PEDIDOS)) {
+                    new PedidoListagem(new javax.swing.JFrame(), true).setVisible(true);
+                } else {
+                    throw new Exception("Você não possui permissão.");
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Houve um erro, tente novamente!\n"+e.getMessage(), "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -380,7 +396,6 @@ public class PrincipalTela extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

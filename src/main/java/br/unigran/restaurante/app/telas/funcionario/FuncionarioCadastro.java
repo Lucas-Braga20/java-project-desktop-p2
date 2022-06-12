@@ -11,6 +11,7 @@ import br.unigran.restaurante.app.casouso.FuncionarioUC;
 import br.unigran.restaurante.app.models.Cargo;
 import br.unigran.restaurante.app.models.Endereco;
 import br.unigran.restaurante.app.models.Funcionario;
+import br.unigran.restaurante.app.persistence.UsuarioDAO;
 import br.unigran.restaurante.app.util.Util;
 import java.util.Date;
 import java.util.List;
@@ -380,6 +381,10 @@ public class FuncionarioCadastro extends javax.swing.JDialog {
             Cargo cargo = (Cargo) jComboBoxCargo.getSelectedItem();
             String apelido = jTextFieldApelido.getText();
             String senha = Util.geraSenha(jPasswordFieldSenha.getPassword());
+            
+            if (new UsuarioDAO().buscarPorApelido(apelido).size() > 0) {
+                throw new Exception("Já existe um usuário com este apelido.");
+            }
             
             FuncionarioBuilder funcionarioBuilder = new FuncionarioBuilder(nome, dataNascimento, cpf, cargo, endereco, apelido, senha);
             
