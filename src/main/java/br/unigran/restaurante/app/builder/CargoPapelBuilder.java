@@ -12,6 +12,16 @@ public class CargoPapelBuilder {
         this.papel = papel; 
         this.cargo = cargo;
     }
+    
+    public void validate() throws Exception {
+        if (papel == null) {
+            throw new Exception("Papel não pode ser nulo.");
+        }
+        
+        if (cargo == null) {
+            throw new Exception("Cargo não pode ser nulo.");
+        }
+    }
 
     public CargoPapel build() throws Exception {
         CargoPapel cargoPapel = new CargoPapel();

@@ -45,6 +45,14 @@ public class IngredientePratoBuilder {
         if (valor <= 0) {
             throw new Exception("Valor não pode ser negativo ou nulo.");
         }
+        
+        if (ingrediente == null) {
+            throw new Exception("Ingrediente não pode ser nulo.");
+        }
+        
+        if (prato == null) {
+            throw new Exception("Prato não pode ser nulo.");
+        }
     }
 
     public IngredientePrato build() throws Exception {

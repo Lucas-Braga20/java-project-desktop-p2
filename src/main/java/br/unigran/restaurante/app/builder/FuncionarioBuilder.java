@@ -54,6 +54,18 @@ public class FuncionarioBuilder {
         if (cpf.isEmpty() || cpf.isBlank()) {
             throw new Exception("CPF não pode vazio.");
         }
+        
+        if (senha == null) {
+            throw new Exception("Senha não pode ser nula.");
+        }
+        
+        if (dataNascimento == null) {
+            throw new Exception("Data de nascimento não pode ser nulo.");
+        }
+        
+        if (cargo == null) {
+            throw new Exception("Cargo não pode ser nulo.");
+        }
     }
 
     public Funcionario build() throws Exception {
