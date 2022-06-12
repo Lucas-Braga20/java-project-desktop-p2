@@ -6,6 +6,7 @@ package br.unigran.restaurante.app.telas;
 
 import br.unigran.restaurante.app.enums.Papel;
 import br.unigran.restaurante.app.persistence.SingletonDao;
+import br.unigran.restaurante.app.repository.IniciarDadosBase;
 import br.unigran.restaurante.app.telas.cargo.CargoListagem;
 import br.unigran.restaurante.app.telas.cliente.ClienteListagem;
 import br.unigran.restaurante.app.telas.endereco.EnderecoListagem;
@@ -29,6 +30,7 @@ public class PrincipalTela extends javax.swing.JFrame {
      */
     public PrincipalTela() {
         SingletonDao.getInstance();
+        IniciarDadosBase.carregar();
         initComponents();
     }
     

@@ -41,7 +41,11 @@ public class ClienteListagem extends javax.swing.JDialog {
                 linhas[i][1] = clientes.get(i).getNome();
                 linhas[i][2] = clientes.get(i).getCpf();
                 linhas[i][3] = clientes.get(i).getDataNascimento();
-                linhas[i][4] = clientes.get(i).getEndereco().getRua()+ ", " + clientes.get(i).getEndereco().getNumero();
+                if (clientes.get(i).getEndereco() != null) {
+                    linhas[i][4] = clientes.get(i).getEndereco().getRua()+ ", " + clientes.get(i).getEndereco().getNumero();
+                } else {
+                    linhas[i][4] = "Sem endereço";
+                }
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
                 @Override

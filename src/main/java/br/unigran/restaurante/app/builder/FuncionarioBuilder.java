@@ -51,8 +51,8 @@ public class FuncionarioBuilder {
             throw new Exception("Apelido não pode ser vazio.");
         }
 
-        if (cpf.length() > 11) {
-            throw new Exception("Quantidade não pode ser negativo ou nulo.");
+        if (cpf.isEmpty() || cpf.isBlank()) {
+            throw new Exception("CPF não pode vazio.");
         }
     }
 

@@ -41,7 +41,11 @@ public class FuncionarioListagem extends javax.swing.JDialog {
                 linhas[i][1] = funcionarios.get(i).getDataNascimento();
                 linhas[i][2] = funcionarios.get(i).getCpf();
                 linhas[i][3] = funcionarios.get(i).getCargo().getDescricao();
-                linhas[i][4] = funcionarios.get(i).getEndereco().getRua() + funcionarios.get(i).getEndereco().getNumero();
+                if (funcionarios.get(i).getEndereco() != null) {
+                    linhas[i][4] = funcionarios.get(i).getEndereco().getRua() + funcionarios.get(i).getEndereco().getNumero();
+                } else {
+                    linhas[i][4] = "Sem endereço";
+                }
             }
             tableModel = new DefaultTableModel(linhas, colunas) {
                 @Override

@@ -23,16 +23,12 @@ public class ClienteBuilder {
             throw new Exception("Nome não pode ser vazio.");
         }
 
-        if (cpf.length() > 11) {
+        if (cpf.isEmpty() || cpf.isBlank()) {
             throw new Exception("Quantidade não pode ser negativo ou nulo.");
         }
         
         if (dataNascimento == null) {
             throw new Exception("Data de nascimento não pode ser nulo.");
-        }
-        
-        if (endereco == null) {
-            throw new Exception("Endereço não pode ser nulo.");
         }
     }
 

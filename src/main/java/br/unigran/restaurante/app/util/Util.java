@@ -44,6 +44,18 @@ public class Util {
         return retorno.toString();
     }
     
+    public static String geraSenha(String password) throws NoSuchAlgorithmException {
+        String senha = password;
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(senha.getBytes(Charset.forName("UTF-8")));
+        byte[] digest = md.digest();
+        StringBuffer retorno = new StringBuffer();
+        for (byte b : digest) {
+            retorno.append(Integer.toHexString(b));
+        }
+        return retorno.toString();
+    }
+    
     public static Boolean verificarPermissao(Cargo cargo, Papel papel) throws Exception {
         if (logado != null) {
             List<CargoPapel> papeis = new CargoPapelDAO().buscarPapeis(cargo);

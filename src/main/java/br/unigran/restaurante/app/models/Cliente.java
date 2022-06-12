@@ -26,11 +26,11 @@ public class Cliente implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataNascimento;
 
-    @Column(length = 11)
+    @Column(length = 14)
     private String cpf;
 
     @ManyToOne
-    @JoinColumn(name = "enderecoId", nullable = false)
+    @JoinColumn(name = "enderecoId")
     private Endereco endereco;
     
     @OneToMany(cascade = CascadeType.ALL)
